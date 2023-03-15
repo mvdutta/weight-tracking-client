@@ -10,7 +10,6 @@ export const Login = () => {
 
 
 
-
 const handleLogin = (e) => {
     e.preventDefault()
   if (username === "") {
@@ -33,24 +32,40 @@ const handleLogin = (e) => {
   })
     .then((res) => res.json())
     .then((authInfo) => {
-        console.log(authInfo)
-      if (authInfo.valid) {
+      if (authInfo && authInfo.valid) {
         localStorage.setItem(
           "wt_token",
           JSON.stringify({
             id: authInfo.id,
             token: authInfo.token,
             name: authInfo.name,
-            role: authInfo.role
+            role: authInfo.role,
           })
         );
         setLoggedIn(true);
-        window.alert("Login successful")
-        navigate("/home");
       } else {
         window.alert("Invalid login");
       }
-    });
+    })
+    .then(() => {
+
+    const wtToken = localStorage.getItem("wt_token")
+    const wtTokenParsed = JSON.parse(wtToken)
+    console.log(wtToken)
+    const role = wtTokenParsed.role
+    console.log(role)
+    
+
+      let whichProfile = "";
+      if (role === "CNA") {
+        whichProfile = "/cnaportal";
+      } else if (role === "RD") {
+        whichProfile = "/rdportal";
+      } else {
+        whichProfile = "/rnportal";
+      }
+      navigate(whichProfile);
+    });   
 };
 
 
@@ -58,7 +73,7 @@ const handleLogin = (e) => {
     <figure className="h-screen flex bg-gray-100">
       <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-1">
         <blockquote className="text-2xl font-medium text-center">
-          <p className="text-lg font-semibold">Welcome to My-App</p>
+          <p className="text-lg font-semibold">Welcome to WeightTracker</p>
         </blockquote>
 
         <div className="text-primary m-6">
@@ -117,7 +132,7 @@ const handleLogin = (e) => {
           </form>
           <div className="flex items-center mt-3 justify-center">
             <button className={"justify-center text-blue-500 hover:underline"}>
-              Need to register? Sign up for free
+              New User Registration
             </button>
           </div>
         </div>
