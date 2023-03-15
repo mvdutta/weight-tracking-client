@@ -17,7 +17,7 @@ const CNAPortal = () => {
   return (
     <div>
       <header>
-        <h1> RD Portal</h1>
+        <h1> CNA Portal</h1>
         <h1>{name ? `Welcome ${name}` : ""}</h1>
       </header>
       <div>
