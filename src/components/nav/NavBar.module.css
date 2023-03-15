@@ -1,0 +1,93 @@
+.top_bar {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+.welcome {
+  color: rgb(200, 236, 200);
+  font-size: 20px;
+  width: 25%;
+  margin-bottom: 9px;
+  margin-left: auto;
+}
+
+.navbar__logo {
+  width: 90px;
+  margin-left: 5%;
+  padding: 8px;
+}
+
+
+
+ul {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+  display: flex;
+  justify-content: left;
+  width: 100%;
+}
+
+li a {
+  display: block;
+  color: rgb(200, 236, 200);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+li a:hover {
+  background-color: #111;
+  color: green;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+
+
+/* On screens that are 768px or less, apply the following styles */
+@media screen and (max-width: 768px) {
+
+
+
+/* Change the flex-direction of the top_bar which holds the logo and ul */
+.top_bar{
+  flex-direction: column;
+  justify-content: right;
+  position:relative;
+}
+
+/*move the logo to the top left corner (using top:0 and left:0) and make sure it fits inside the navbar*/
+.navbar__logo {
+  width: 90px;
+  position:absolute;
+  top:0;
+  left:0;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+/*Change the flex direction of all the li's (which contain the nav links) to column to that they are stacked vertically*/
+/*Also make the ul invisible by setting its display to none*/
+ul{
+  flex-direction: column;
+  justify-content: left;
+}
+
+}
