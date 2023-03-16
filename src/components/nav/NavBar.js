@@ -1,101 +1,78 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"
-import { Login } from "../auth/Login";
-import HamburgerIcon from "../utilities/HamburgerIcon";
-import useMediaQuery from "../utilities/MediaQuery";
-import styles from './NavBar.module.css'
+import React from "react";
+import { useState } from "react";
+import {close, menu} from '../../assets'
 
 
-export const NavBar = () => {
-    const navigate = useNavigate()
-    const isDesktop = useMediaQuery('(min-width: 768px)');
-    //the variable isDesktop will be true if screen width exceeds 768px
-    const [show, setShow] = useState(false);
-    const [name, setName] = useState("");
-    const [loggedIn, setLoggedIn] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-    const [showMenu, setShowMenu] = useState(`${styles.show}`)
+const navLinks = [
+  {
+    id: "home",
+    title: "Home",
+  },
+  {
+    id: "features",
+    title: "Features",
+  },
+  {
+    id: "product",
+    title: "Product",
+  },
+  {
+    id: "clients",
+    title: "Clients",
+  },
+];
 
-      useEffect(() => {
-          const user = localStorage.getItem("wt_token");
-          if (user) {
-            setName(JSON.parse(user).name);
+
+
+const NavBar = () => {
+  const [toggle, setToggle] = useState(false);
+  return (
+    <nav className="w-full flex py-6 justify-between items-center navbar bg-orange-100">
+      <img src="/nav-logo.svg" alt="hoo BANK" className="W-[124px] h-[32px]" />
+      <ul className="list-none sm:flex hidden justify-end items-center flex-1">
+        {navLinks.map((el, index) => (
+          <li
+            key={el.id}
+            className={`font-poppins font-normal cursor-pointer text-[16px] text-orange-700 ${
+              index === navLinks.length - 1 ? "mr-0" : "mr-10"
+            }`}
+          >
+            {" "}
+            <a href={`#${el.id}`}>{el.title}</a>
+          </li>
+        ))}
+      </ul>
+      <div className="sm:hidden flex flex-1 justify-end items-center ">
+        <img
+          src={
+            toggle ? close : menu
           }
-          if (isDesktop) {
-            setShowMenu(`${styles.show}`);
-          } else{
-            setShowMenu(`${styles.hide}`);
-          }
-        }, [loggedIn, isDesktop]);
-
-      const clickHandler = () =>{// if the hamburger is clicked, toggle the showMenu variable to hide/show the nav links
-        if (showMenu === `${styles.hide}`) {
-          setShowMenu(`${styles.show}`);
-        } else {
-          setShowMenu(`${styles.hide}`);
-        }
-      }
-
-    return (
-      <>
-        <div className={styles.top_bar}>
-          {/* Do not  show the hamburger icon if in Desktop mode*/}
-          {isDesktop ? "" : <HamburgerIcon clickHandler={clickHandler} />}
-          <img src="/np_logo2.png" className={styles.navbar__logo} alt="logo" />
-          <div className={showMenu}>
-            <ul>
-              <li className={`${styles.navbar__item} active`}>
-                <Link className={styles.navbar__link} to="/home">
-                  <h5>Home</h5>
-                </Link>
+          alt="menu"
+          className="w-[28px] h-[28px] object-contain cursor-pointer"
+          onClick={() => setToggle((x) => !x)}
+        />
+        <div
+          className={`${
+            toggle ? "flex" : "hidden"
+          } p-6 bg-black-gradient absolute top-20 right-0 mx-4 min-w-[140px] rounded-xl sidebar bg-orange-100`}
+        >
+          <ul className="list-none flex flex-col">
+            {navLinks.map((el, index) => (
+              <li
+                key={el.id}
+                className={`font-poppins font-normal cursor-pointer text-[16px] text-orange-700 ${
+                  index === navLinks.length - 1 ? "mr-0" : "mb-4"
+                }`}
+              >
+                {" "}
+                <a href={`#${el.id}`}>{el.title}</a>
               </li>
-              <li className={`${styles.navbar__item} active`}>
-                <Link className={`${styles.navbar__item} active`} to="/blogs">
-                  <h5>Blogs</h5>
-                </Link>
-              </li>
-              {localStorage.getItem("wt_token") ? (
-                <>
-                  <li
-                    className={`${styles.navbar__item} ${styles.navbar__logout}`}
-                  >
-                    <Link
-                      className={styles.navbar__link}
-                      to=""
-                      onClick={() => {
-                        if (
-                          window.confirm(
-                            `${name}, do you really want to log out?`
-                          )
-                        ) {
-                          setLoggedIn(false);
-                          setName("");
-                          localStorage.removeItem("wt_token");
-                          navigate("/", { replace: true });
-                        }
-                      }}
-                    >
-                      <h5>Logout</h5>
-                    </Link>
-                  </li>
-                </>
-              ) : (
-                <li className={`${styles.navbar__item} active`}>
-                  <Link className={styles.navbar__link} onClick={handleShow}>
-                    <h5>Login</h5>
-                  </Link>
-                </li>
-              )}
-            </ul>
-          </div>
-          {isDesktop ? (
-            <div className={styles.welcome}>{name ? `Welcome ${name}!` : ""}</div>
-          ) : (
-            ""
-          )}
+            ))}
+          </ul>
         </div>
-      </>
-    );
-}
+      </div>
+    </nav>
+  );
+};
 
+export default NavBar

@@ -1,6 +1,9 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import NavBar from '../nav/NavBar';
+
+
 
 const RDPortal = () => {
     const navigate = useNavigate()
@@ -17,6 +20,7 @@ const RDPortal = () => {
 
   return (
     <div>
+      <NavBar/> 
       <header>
         <h1> RD Portal</h1>
         <h1>{name ? `Welcome ${name}` : ""}</h1>
