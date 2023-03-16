@@ -5,6 +5,7 @@ import CNAPortal from "../portals/CNAPortal";
 import RDPortal from "../portals/RDPortal";
 import RNPortal from "../portals/RNPortal";
 import WeeklySheet from "../weightSheets/WeeklySheet";
+import WeightSummary from "../weightSheets/WeightSummary";
 
 
 export const ApplicationViews = () => {
@@ -17,6 +18,7 @@ export const ApplicationViews = () => {
       <Route path="/weeklysheet" element={<WeeklySheet />} />
       <Route path="/inbox" element={<Inbox />} />
       <Route path="/censuslist" element={<CensusList />} />
+      <Route path="/weightsummary" element={<WeightSummary />} />
     </Routes>
   );
 }

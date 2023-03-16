@@ -2,6 +2,7 @@ import { useState } from "react"
 import { createRenderer } from "react-dom/test-utils";
 import { useNavigate } from "react-router-dom"
 import { fetchIt } from "./fetchIt";
+import { close } from "../../assets";
 
 const ROLES = ["NP", "RD", "MD", "RN", "LPN", "CNA"]; 
 
@@ -76,7 +77,7 @@ const RegisterModal = () => {
                     <span>
                       <img
                         className="w-8"
-                        src="close-icon2.png"
+                        src={close}
                         alt="close-icon"
                       />
                     </span>
