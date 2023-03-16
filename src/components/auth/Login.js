@@ -72,7 +72,7 @@ const handleLogin = (e) => {
 
 
   return (
-    <figure className="h-screen flex bg-gray-100">
+    <figure className="h-screen flex">
       <div className="w-full max-w-md m-auto bg-white rounded-lg border border-primaryBorder shadow-default py-10 px-1">
         <blockquote className="text-2xl font-medium text-center">
           <p className="text-2xl text-gray-500 font-body font-semibold mb-5">

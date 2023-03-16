@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CNAPortal = () => {
   const navigate = useNavigate();
@@ -15,27 +15,85 @@ const CNAPortal = () => {
   }, [loggedIn]);
 
   return (
-    <div>
-      <header>
-        <h1> CNA Portal</h1>
-        <h1>{name ? `Welcome ${name}` : ""}</h1>
-      </header>
+    <>
       <div>
-        <button
-          className="btn1 border-2 border-gray-400 bg-orange-200"
-          onClick={() => {
-            if (window.confirm(`${name}, are you sure you want to log out?`)) {
-              setLoggedIn(false);
-              setName("");
-              localStorage.removeItem("wt_token");
-              navigate("/", { replace: true });
-            }
-          }}
-        >
-          Log Out
-        </button>
+        <header>
+          <h1> CNA Portal</h1>
+          <h1>{name ? `Welcome ${name}` : ""}</h1>
+        </header>
+        <div>
+          <button
+            className="btn1 font-body border-2 border-gray-400 bg-orange-200"
+            onClick={() => {
+              if (
+                window.confirm(`${name}, are you sure you want to log out?`)
+              ) {
+                setLoggedIn(false);
+                setName("");
+                localStorage.removeItem("wt_token");
+                navigate("/", { replace: true });
+              }
+            }}
+          >
+            Log Out
+          </button>
+        </div>
       </div>
-    </div>
+
+      <div className="grid md:grid-cols-3 gap-4 justify-items-center md:mt-64">
+        <div className="block rounded-lg bg-orange-100 p-6 shadow-lg dark:bg-neutral-700 w-[300px]">
+          <h5 className="mb-10 text-xl font-body leading-tight text-neutral-800 dark:text-neutral-50 text-center">
+            Weekly Weight Sheet
+          </h5>
+          <div className="flex justify-center">
+            <Link to="/weeklysheet">
+              <button
+                type="button"
+                className="rounded bg-teal-200 px-6 pt-2.5 pb-2 font-body text-sm font-medium uppercase leading-normal text-gray-600 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                data-te-ripple-init
+                data-te-ripple-color="light"
+              >
+                View
+              </button>
+            </Link>
+          </div>
+        </div>
+        <div className="block max-w-sm rounded-lg bg-orange-100 p-6 shadow-lg dark:bg-neutral-700 w-[300px]">
+          <h5 className="mb-10 text-xl font-body leading-tight text-neutral-800 dark:text-neutral-50 text-center">
+            Census List
+          </h5>
+          <div className="flex justify-center">
+             <Link to="/censuslist">
+            <button
+              type="button"
+              className="rounded bg-teal-200 px-6 pt-2.5 pb-2 font-body text-sm font-medium uppercase leading-normal text-gray-600 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+              data-te-ripple-init
+              data-te-ripple-color="light"
+            >
+              View
+            </button>
+            </Link>
+          </div>
+        </div>
+        <div className="block max-w-sm rounded-lg bg-orange-100 p-6 shadow-lg dark:bg-neutral-700 w-[300px]">
+          <h5 className="mb-10 text-xl font-body leading-tight text-neutral-800 dark:text-neutral-50 text-center">
+            My Messages
+          </h5>
+          <div className="flex justify-center">
+            <Link to="/inbox">
+              <button
+                type="button"
+                className="rounded bg-teal-200 px-6 pt-2.5 pb-2 font-body text-sm font-medium uppercase leading-normal text-gray-600 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                data-te-ripple-init
+                data-te-ripple-color="light"
+              >
+                View
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
