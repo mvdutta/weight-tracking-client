@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import NavBar from "../nav/NavBar";
 
 const CNAPortal = () => {
   const navigate = useNavigate();
@@ -17,27 +18,11 @@ const CNAPortal = () => {
   return (
     <>
       <div>
+        <NavBar/>
         <header>
           <h1> CNA Portal</h1>
           <h1>{name ? `Welcome ${name}` : ""}</h1>
         </header>
-        <div>
-          <button
-            className="btn1 font-body border-2 border-gray-400 bg-orange-200"
-            onClick={() => {
-              if (
-                window.confirm(`${name}, are you sure you want to log out?`)
-              ) {
-                setLoggedIn(false);
-                setName("");
-                localStorage.removeItem("wt_token");
-                navigate("/", { replace: true });
-              }
-            }}
-          >
-            Log Out
-          </button>
-        </div>
       </div>
 
       <div className="grid md:grid-cols-3 gap-4 justify-items-center md:mt-64">

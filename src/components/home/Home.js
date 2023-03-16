@@ -10,7 +10,7 @@ export const Home = () => {
         <div className="font-body text-gray-700 text-xl flex justify-start ml-10">
           <p>logo here</p>
           <h1 className="text-xl text-gray-700 font-body ml-10">
-            Gaffney Scranton Center for Rehabilitation and Healing
+            Gaffney Scranton Rehabilitation and Healing
           </h1>
         </div>
         <Login />
