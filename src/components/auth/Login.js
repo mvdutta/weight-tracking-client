@@ -102,7 +102,7 @@ const handleLogin = (e) => {
               autoFocus
               placeholder="Username"
               className={
-                "w-full p-2 text-orange-600 border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
+                "w-full p-2 text-orange-600 border-2 rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
               }
             />
             <label className="text-gray-700 font-body">Password:</label>
@@ -119,7 +119,7 @@ const handleLogin = (e) => {
               placeholder="Password"
               required
               className={
-                "w-full p-2 text-orange-600 border rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
+                "w-full p-2 text-orange-600 border-2 rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
               }
             />
             <div className="flex items-center mt-3 justify-center">

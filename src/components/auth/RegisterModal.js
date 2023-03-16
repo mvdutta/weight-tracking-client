@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { fetchIt } from "./fetchIt";
 
 const ROLES = ["NP", "RD", "MD", "RN", "LPN", "CNA"]; 
+
 const RegisterModal = () => {
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState({
@@ -136,7 +137,7 @@ const RegisterModal = () => {
                       onChange={updateUser}
                     >
                       <option key="selectrole" value="">
-                        Pick a role
+                        Select your role
                       </option>
                       {ROLES.map((role) => (
                         <option key={role} value={role}>
