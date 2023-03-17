@@ -2,102 +2,87 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import {close, menu} from '../../assets'
-
+import { close, menu } from "../../assets";
+import "./NavBar.css";
 
 const sameLinks = [
   {
     id: "censuslist",
     title: "Census List",
-    address: "/home",
+    address: "/censuslist",
   },
   {
     id: "rd_messages",
     title: "Messages",
-    address: "/home",
+    address: "/messages",
   },
-]
-
+];
 
 const navLinks = {
   RD: [
     {
-      id: "rd_portal",
-      title: "RD Portal",
-      address: "/home",
+      id: "rd_dashboard",
+      title: "RD dashboard",
+      address: "/rddashboard",
     },
   ].concat(sameLinks),
 
   CNA: [
     {
-      id: "home",
-      title: "Home",
-      address: "/home",
-    },
-    {
       id: "weightsheet",
       title: "Weight Sheet",
-      address: "/home",
+      address: "/weeklysheet",
     },
   ].concat(sameLinks),
 
   RN: [
     {
-      id: "portal",
-      title: "Portal",
-      address: "/home",
+      id: "dashboard",
+      title: "dashboard",
+      address: "/rndashboard",
     },
     {
       id: "weightsummary",
       title: "Weight Summary",
-      address: "/home",
+      address: "/weightsummary",
     },
   ].concat(sameLinks),
-
 };
-
-
 
 const NavBar = () => {
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
-  const [user, setUser] = useState({id: "", token:"", name: "", role:""})
-  const [links, setLinks] = useState([])
+  const [user, setUser] = useState({ id: "", token: "", name: "", role: "" });
+  const [links, setLinks] = useState([]);
 
-      useEffect(() => {
-        const current_user = localStorage.getItem("wt_token");
-        if (current_user) {
-          const parsedUser = JSON.parse(current_user);
-          setUser(parsedUser)
-          if (parsedUser.role==="RD"){
-            setLinks(navLinks.RD)
-          }
-          else if (parsedUser.role === "CNA"){
-            setLinks(navLinks.CNA);
-          }
-          else {
-            setLinks(navLinks.RN);
-          }
-        }
-      }, []);
-        const handleLogout = () => {
-          if (window.confirm(`${user.name}, are you sure you want to log out?`)) {
-            localStorage.removeItem("wt_token");
-            navigate("/", { replace: true });
-          }
-        };
+  useEffect(() => {
+    const current_user = localStorage.getItem("wt_token");
+    if (current_user) {
+      const parsedUser = JSON.parse(current_user);
+      setUser(parsedUser);
+      if (parsedUser.role === "RD") {
+        setLinks(navLinks.RD);
+      } else if (parsedUser.role === "CNA") {
+        setLinks(navLinks.CNA);
+      } else {
+        setLinks(navLinks.RN);
+      }
+    }
+  }, []);
+  const handleLogout = () => {
+    if (window.confirm(`${user.name}, are you sure you want to log out?`)) {
+      localStorage.removeItem("wt_token");
+      navigate("/", { replace: true });
+    }
+  };
   return (
-    <nav className="w-full flex py-6 justify-between items-center navbar bg-orange-200 ">
-      <img
-        src="/gsrh-logo1.png"
-        alt="hoo BANK"
-        className="w-[124px] h-[32px] ml-10"
-      />
-      <ul className="list-none sm:flex hidden justify-end items-center flex-1">
+    <nav className="w-full flex py-6 justify-between items-center navbar bg-orange-200/50 ">
+      <img src="/gsrh-logo3.png" alt="logo" className="logo-image" />
+      <ul className="list-none lg:flex hidden justify-end items-center flex-1">
         {links.map((el) => (
           <li
             key={el.id}
-            className="font-poppins font-normal cursor-pointer text-[16px] text-orange-700 mr-16"
+            className="font-poppins font-normal cursor-pointer text-[16px] text-sky-800 mr-16"
           >
             {" "}
             <Link to={el.address}>{el.title}</Link>
@@ -105,7 +90,7 @@ const NavBar = () => {
         ))}
         <li
           key={"logout1"}
-          className="font-poppins font-normal cursor-pointer text-[16px] text-orange-700 mr-20"
+          className="font-poppins font-normal cursor-pointer text-[16px] text-sky-800 mr-20"
         >
           {" "}
           <Link to="" onClick={handleLogout}>
@@ -113,7 +98,7 @@ const NavBar = () => {
           </Link>
         </li>
       </ul>
-      <div className="sm:hidden flex flex-1 justify-end items-center ">
+      <div className="lg:hidden flex flex-1 justify-end items-center ">
         <img
           src={toggle ? close : menu}
           alt="menu"
@@ -151,4 +136,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar
+export default NavBar;

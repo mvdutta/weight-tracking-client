@@ -55,7 +55,7 @@ const RegisterModal = () => {
   return (
     <>
       <button
-        className="text-gray-600 text-decoration-line: underline text-md font-bold mt-5"
+        className="text-primary text-decoration-line: underline text-md font-bold mt-5"
         type="button"
         onClick={() => setShowModal(true)}
       >
@@ -63,7 +63,7 @@ const RegisterModal = () => {
       </button>
       {showModal ? (
         <>
-          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-smoke">
+          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-gray-800/40">
             <div className="relative w-full my-6 mx-auto max-w-[400px]">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">

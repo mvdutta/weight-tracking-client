@@ -1,8 +1,9 @@
 import React from 'react'
+import './Censuslist.css'
 
 export const CensusList = () => {
   return (
-    <div>CensusList</div>
+    <div className="">CensusList</div>
   )
 }
 
