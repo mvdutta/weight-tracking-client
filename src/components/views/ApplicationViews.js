@@ -1,16 +1,23 @@
-import { Route, Outlet, Routes } from "react-router-dom"
-import CNAPortal from "../portals/CNAPortal";
-import RDPortal from "../portals/RDPortal";
-import RNPortal from "../portals/RNPortal";
-
+import { Route, Outlet, Routes } from "react-router-dom";
+import { CensusList } from "../census/CensusList";
+import Inbox from "../messages/Inbox";
+import WeeklySheet from "../weightSheets/WeeklySheet";
+import WeightSummary from "../weightSheets/WeightSummary";
+import CNAdashboard from "../dashboard/CNAdashboard";
+import RDdashboard from "../dashboard/RDdashboard";
+import RNdashboard from "../dashboard/RNdashboard";
 
 export const ApplicationViews = () => {
-	return (
+  return (
     <Routes>
       <Route path="/home" element={<Outlet />} />
-      <Route path="/cnaportal" element={<CNAPortal />} />
-      <Route path="/rdportal" element={<RDPortal />} />
-      <Route path="/rnportal" element={<RNPortal />} />
+      <Route path="/cnadashboard" element={<CNAdashboard />} />
+      <Route path="/rddashboard" element={<RDdashboard />} />
+      <Route path="/rndashboard" element={<RNdashboard />} />
+      <Route path="/weeklysheet" element={<WeeklySheet />} />
+      <Route path="/inbox" element={<Inbox />} />
+      <Route path="/censuslist" element={<CensusList />} />
+      <Route path="/weightsummary" element={<WeightSummary />} />
     </Routes>
   );
-}
+};
