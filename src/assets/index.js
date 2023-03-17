@@ -3,6 +3,7 @@ import close from "./close-icon3.png";
 import scale from "./clipboard-1.png";
 import list from "./census-icon1.png";
 import message from "./message-icon1.png";
+import alert from "./alert-icon2.png"
 
 export { 
   menu,
@@ -10,4 +11,5 @@ export {
   scale,
   list,
   message,
+  alert,
 };
