@@ -14,7 +14,7 @@ const sameLinks = [
   {
     id: "rd_messages",
     title: "Messages",
-    address: "/messages",
+    address: "/inbox",
   },
 ];
 
@@ -22,12 +22,17 @@ const navLinks = {
   RD: [
     {
       id: "rd_dashboard",
-      title: "RD dashboard",
+      title: "RD Dashboard",
       address: "/rddashboard",
     },
   ].concat(sameLinks),
 
   CNA: [
+    {
+      id: "dashboard",
+      title: "CNA Dashboard",
+      address: "/cnadashboard",
+    },
     {
       id: "weightsheet",
       title: "Weight Sheet",
@@ -38,7 +43,7 @@ const navLinks = {
   RN: [
     {
       id: "dashboard",
-      title: "dashboard",
+      title: "Dashboard",
       address: "/rndashboard",
     },
     {
@@ -82,7 +87,7 @@ const NavBar = () => {
         {links.map((el) => (
           <li
             key={el.id}
-            className="font-poppins font-normal cursor-pointer text-[16px] text-sky-800 mr-16"
+            className="font-poppins font-normal cursor-pointer text-[16px] text-sky-900 mr-16"
           >
             {" "}
             <Link to={el.address}>{el.title}</Link>
@@ -90,7 +95,7 @@ const NavBar = () => {
         ))}
         <li
           key={"logout1"}
-          className="font-poppins font-normal cursor-pointer text-[16px] text-sky-800 mr-20"
+          className="font-poppins font-normal cursor-pointer text-[16px] text-sky-900 mr-20"
         >
           {" "}
           <Link to="" onClick={handleLogout}>

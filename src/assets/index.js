@@ -1,5 +1,5 @@
-import menu from "./menu-icon.png";
-import close from "./close-icon2.png";
+import menu from "./menu-icon2.png";
+import close from "./close-icon3.png";
 
 export { 
   menu,
