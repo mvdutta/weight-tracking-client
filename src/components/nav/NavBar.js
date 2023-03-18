@@ -72,6 +72,8 @@ const NavBar = () => {
       } else {
         setLinks(navLinks.RN);
       }
+    } else{
+      navigate("/home")
     }
   }, []);
   const handleLogout = () => {

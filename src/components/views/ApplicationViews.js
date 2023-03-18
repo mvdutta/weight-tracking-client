@@ -6,6 +6,8 @@ import WeightSummary from "../weightSheets/WeightSummary";
 import CNAdashboard from "../dashboard/CNAdashboard";
 import RDdashboard from "../dashboard/RDdashboard";
 import RNdashboard from "../dashboard/RNdashboard";
+import { NoAccess } from "../NoAccess";
+
 
 export const ApplicationViews = () => {
   return (
@@ -18,6 +20,7 @@ export const ApplicationViews = () => {
       <Route path="/inbox" element={<Inbox />} />
       <Route path="/censuslist" element={<CensusList />} />
       <Route path="/weightsummary" element={<WeightSummary />} />
+      <Route path="/noaccess" element={<NoAccess />}/>
     </Routes>
   );
 };
