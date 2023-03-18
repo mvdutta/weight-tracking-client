@@ -1,6 +1,19 @@
 .logo-image {
-  width: 300px;
+  width: 350px;
   position: absolute;
-  margin-top: 45px;
+  margin-top: 70px;
+  margin-bottom: 21px;
 
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #FEEAD3;
+}
+
+.padder{
+  margin-top: 80px;
 }
