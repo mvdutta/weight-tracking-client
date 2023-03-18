@@ -1,9 +1,55 @@
-import React from 'react'
-import NavBar from '../nav/NavBar'
-import './Censuslist.css'
+import React from "react";
+import NavBar from "../nav/NavBar";
+import { useState, useEffect } from "react";
+import { fetchIt } from "../auth/fetchIt";
+import "./Censuslist.css";
+
+const formattedDate = (date) => {
+  const myDate = date;
+
+  let year = myDate.toLocaleString("default", { year: "numeric" });
+  let month = myDate.toLocaleString("default", { month: "2-digit" });
+  let day = myDate.toLocaleString("default", { day: "2-digit" });
+  const formattedDate = month + "-" + day + "-" + year;
+  return formattedDate;
+};
 
 export const CensusList = () => {
-  
+  const [patientList, setPatientList] = useState();
+
+  useEffect(() => {
+    const API = "http://localhost:8000/residents";
+    fetchIt(API).then((data) => {
+      setPatientList(data);
+    });
+  }, []);
+
+  const makeTableRows = () => (
+    <>
+      <tbody>
+        {patientList.map((el) => (
+          <>
+            <tr
+              key={`table-row-${el.id}`}
+              className="bg-white border-b dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600"
+            >
+              <td
+                scope="row"
+                className="px-6 py-4 font-medium text-stone-900 whitespace-nowrap dark:text-white"
+              >
+                {el.room_num}
+              </td>
+              <td className="px-6 py-4">
+                {el.last_name}, {el.first_name}
+              </td>
+              <td className="px-6 py-4">{el.admission_date}</td>
+            </tr>
+          </>
+        ))}
+      </tbody>
+    </>
+  );
+
   return (
     <>
       <NavBar />
@@ -22,10 +68,10 @@ export const CensusList = () => {
               Resident Census List
             </p>
             <p className="mt-1 text-sm font-normal text-stone-600 dark:text-stone-400">
-              Accessed: 02/28/2023
+              Accessed: {formattedDate(new Date())}
             </p>
             <p className="mt-1 text-sm font-normal text-stone-600 dark:text-stone-400">
-              Current Residents (10)
+              Current Residents ({patientList.length})
             </p>
           </caption>
           <thead className="text-sm text-stone-700 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
@@ -41,37 +87,9 @@ export const CensusList = () => {
               </th>
             </tr>
           </thead>
-          <tbody>
-            <tr className="bg-white border-b dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600">
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-stone-900 whitespace-nowrap dark:text-white"
-              >
-                100
-              </td>
-              <td className="px-6 py-4">Scott, Michael</td>
-              <td className="px-6 py-4">06/20/2022</td>
-            </tr>
-            <tr className="bg-white border-b dark:bg-stone-800 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-600">
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-stone-900 whitespace-nowrap dark:text-white"
-              >
-                101
-              </td>
-              <td className="px-6 py-4">Schrute, Dwight</td>
-              <td className="px-6 py-4">06/29/2018</td>
-            </tr>
-            <tr className="bg-white dark:bg-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600">
-              <td
-                scope="row"
-                className="px-6 py-4 font-medium text-stone-900 whitespace-nowrap dark:text-white"
-              ></td>
-            </tr>
-          </tbody>
+          {makeTableRows()}
         </table>
       </div>
     </>
   );
-}
-
+};
