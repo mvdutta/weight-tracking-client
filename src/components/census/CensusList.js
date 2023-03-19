@@ -55,7 +55,7 @@ export const CensusList = () => {
     <>
       <NavBar />
       <header className="flex justify-center">
-        <h1 className="font-semibold text-stone-700 text-3xl mt-10 mb-10 md:mb-36">
+        <h1 className="font-semibold text-stone-700 text-3xl mt-10 mb-10 md:mb-32">
           {" "}
           Current Census List
         </h1>
