@@ -15,20 +15,20 @@ const formattedDate = (date) => {
 };
 
 export const CensusList = () => {
-  const [patientList, setPatientList] = useState([]);
+  const [residentList, setResidentList] = useState([]);
 
-  useEffect(() => {
-    const API = "http://localhost:8000/residents";
-    fetchIt(API).then((data) => {
-      console.log(data)
-      setPatientList(data);
+useEffect(() => {
+  fetchIt(`http://localhost:8000/residents`)
+    .then((data) => {
+      setResidentList(data);
     });
-  }, []);
+}, []);
+  
 
   const makeTableRows = () => (
     <>
       <tbody>
-        {patientList.map((el) => (
+        {residentList.map((el) => (
           <>
             <tr
               key={`table-row-${el.id}`}
@@ -72,7 +72,7 @@ export const CensusList = () => {
               Accessed: {formattedDate(new Date())}
             </p>
             <p className="mt-1 text-sm font-normal text-stone-600 dark:text-stone-400">
-              Current Residents ({patientList.length})
+              Current Residents ({residentList.length})
             </p>
           </caption>
           <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">

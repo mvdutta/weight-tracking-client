@@ -11,6 +11,8 @@ const RDdashboard = () => {
   const [name, setName] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [resident, setResident] = useState({});
+  const [search, setSearch] = useState("")
+  const [searchResults, setSearchResults] = useState([])
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
@@ -18,6 +20,17 @@ const RDdashboard = () => {
       setName(JSON.parse(user).name);
     }
   }, [loggedIn]);
+
+
+  const residentSearch = (e) => {
+    setSearch(e.target.value)
+    if(search.length > 0 ){
+    fetchIt(`http://localhost:8000/residents?keyword=${search}`)
+    .then((data) => {
+      console.log(data)
+    })
+  }
+  };
 
 
  return (
@@ -86,9 +99,10 @@ const RDdashboard = () => {
              <input
                type="text"
                placeholder="Search"
-              //  onChange={(e) => {
-              //    (e.target.value);
-              //  }}
+               onChange={(e) => {
+                  residentSearch(e)
+               }}
+               value={search}
                className=" w-full py-1 pl-12 pr-4 text-stone-700 border-2 border-stone-300 rounded-md  bg-gray-50 focus:bg-white focus:border-sky-600"
              />
            </div>

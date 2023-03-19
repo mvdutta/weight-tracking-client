@@ -21,7 +21,6 @@ export const ApplicationViews = () => {
       <Route path="/censuslist" element={<CensusList />} />
       <Route path="/weightsummary" element={<WeightSummary />} />
       <Route path="/noaccess" element={<NoAccess />} />
-      <Route path="residents/:resident_id" element={<RDdashboard />} />
     </Routes>
   );
 };
