@@ -15,11 +15,12 @@ const formattedDate = (date) => {
 };
 
 export const CensusList = () => {
-  const [patientList, setPatientList] = useState();
+  const [patientList, setPatientList] = useState([]);
 
   useEffect(() => {
     const API = "http://localhost:8000/residents";
     fetchIt(API).then((data) => {
+      console.log(data)
       setPatientList(data);
     });
   }, []);
@@ -54,17 +55,17 @@ export const CensusList = () => {
     <>
       <NavBar />
       <header className="flex justify-center">
-        <h1 className="font-semibold text-stone-700 text-3xl mt-10 mb-44">
+        <h1 className="font-semibold text-stone-700 text-3xl mt-10 mb-10 md:mb-36">
           {" "}
           Current Census List
         </h1>
       </header>
 
-      <div className=" container flex flex-col m-auto before:relative overflow-x-auto shadow-md sm:rounded-lg w-2/3 font-body border-solid border-2 border-sky-600/20">
+      <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg md:w-1/2 font-body border-solid  border-2 border-sky-600/20 py-6 px-4">
         <table className="text-md text-center text-stone-700 dark:text-stone-500">
-          <caption className="p-5 text-lg font-semibold text-left text-gray-900 bg-white dark:text-white dark:bg-gray-800 text-center">
+          <caption className="p-5 text-xl font-semibold text-sky-900 bg-white dark:text-white dark:bg-gray-800 text-center">
             Gaffney Scranton Rehabilitation & Healing
-            <p className="mt-1 text-md font-normal text-stone-600 dark:text-stone-400">
+            <p className="mt-1 text-md font-normal text-stone-700 dark:text-stone-400">
               Resident Census List
             </p>
             <p className="mt-1 text-sm font-normal text-stone-600 dark:text-stone-400">
@@ -74,7 +75,7 @@ export const CensusList = () => {
               Current Residents ({patientList.length})
             </p>
           </caption>
-          <thead className="text-sm text-stone-700 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
+          <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Room Number
