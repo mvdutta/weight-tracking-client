@@ -10,9 +10,9 @@ const RDdashboard = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const [resident, setResident] = useState({});
-  const [search, setSearch] = useState("")
   const [searchResults, setSearchResults] = useState([])
+  const [selectedResident, setSelectedResident] = useState({})
+  const [showSearchResults, setShowSearchResults] =useState(false)
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
@@ -23,12 +23,15 @@ const RDdashboard = () => {
 
 
   const residentSearch = (e) => {
-    setSearch(e.target.value)
-    if(search.length > 0 ){
-    fetchIt(`http://localhost:8000/residents?keyword=${search}`)
+    const searchTerm = e.target.value
+    if(searchTerm.length > 0 ){
+      setShowSearchResults(true)
+    fetchIt(`http://localhost:8000/residents?keyword=${searchTerm}`)
     .then((data) => {
-      console.log(data)
+      setSearchResults(data)
     })
+  } else{
+    setShowSearchResults(false)
   }
   };
 
@@ -100,14 +103,42 @@ const RDdashboard = () => {
                type="text"
                placeholder="Search"
                onChange={(e) => {
-                  residentSearch(e)
+                 residentSearch(e);
                }}
-               value={search}
-               className=" w-full py-1 pl-12 pr-4 text-stone-700 border-2 border-stone-300 rounded-md  bg-gray-50 focus:bg-white focus:border-sky-600"
+               className=" w-full py-1 pl-12 pr-4 text-stone-700 border-2 border-stone-300 rounded-md  bg-stone-100 focus:bg-white focus:border-sky-600"
              />
            </div>
          </form>
        </div>
+     </div>
+     {showSearchResults ? (
+       <div className="inline-block border-2 border-stone-200/60 rounded-md p-2 mt-5 ml-40">
+         {searchResults.map((result) => {
+           return (
+             <div key={`result--${result.id}`} className="">
+               <button
+                 className="text-sky-800 hover:text-sky-500"
+                 onClick={() => {
+                   setSelectedResident(result);
+                   setShowSearchResults(false);
+                 }}
+               >
+                 {result.first_name} {result.last_name}
+               </button>
+             </div>
+           );
+         })}
+       </div>
+     ) : (
+       <div className="inline-block ml-40 mb-10"></div>
+     )}
+     <div>
+       <h1 className="text-xl ml-10 mt-10 text-stone-800">
+         Weight Summary for:{" "}
+         <span className="italic text-stone-700 ">
+           {selectedResident.first_name} {selectedResident.last_name}
+         </span>
+       </h1>
      </div>
    </>
  );
