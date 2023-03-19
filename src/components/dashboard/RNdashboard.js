@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { scale, list, message, alert } from "../../assets";
-
 import NavBar from "../nav/NavBar";
 
 const RNdashboard = () => {

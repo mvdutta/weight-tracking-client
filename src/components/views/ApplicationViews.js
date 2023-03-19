@@ -20,7 +20,7 @@ export const ApplicationViews = () => {
       <Route path="/inbox" element={<Inbox />} />
       <Route path="/censuslist" element={<CensusList />} />
       <Route path="/weightsummary" element={<WeightSummary />} />
-      <Route path="/noaccess" element={<NoAccess />}/>
+      <Route path="/noaccess" element={<NoAccess />} />
     </Routes>
   );
 };
