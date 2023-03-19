@@ -5,8 +5,8 @@ import "./Login.css";
 import RegisterModal from "./RegisterModal";
 
 export const Login = () => {
-  const [username, setUsername] = useState("mjackson");
-  const [password, setPassword] = useState("giraffes22");
+  const [username, setUsername] = useState("sreese");
+  const [password, setPassword] = useState("tigers123");
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -99,7 +99,7 @@ export const Login = () => {
               autoFocus
               placeholder="Username"
               className={
-                "w-full p-2 text-burnt border-2 rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
+                "w-full text-base p-2 text-burnt border-2 rounded-md outline-none  transition duration-150 ease-in-out mb-4"
               }
             />
             <label className="text-dark font-body">Password:</label>

@@ -67,7 +67,7 @@ const RegisterModal = () => {
             <div className="relative w-full my-6 mx-auto max-w-[400px]">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl font=semibold text-orange-600 font-body">
+                  <h3 className="text-3xl font=semibold text-burnt font-body">
                     Registration Form
                   </h3>
                   <button
@@ -75,11 +75,7 @@ const RegisterModal = () => {
                     onClick={() => setShowModal(false)}
                   >
                     <span>
-                      <img
-                        className="w-8"
-                        src={close}
-                        alt="close-icon"
-                      />
+                      <img className="w-8" src={close} alt="close-icon" />
                     </span>
                   </button>
                 </div>
@@ -88,7 +84,7 @@ const RegisterModal = () => {
                     className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full"
                     onSubmit={handleRegister}
                   >
-                    <label className="block text-gray-700 text-md text-left font-bold mb-2">
+                    <label className="block text-dark text-md text-left font-bold mb-2">
                       First Name
                     </label>
                     <input
@@ -99,7 +95,7 @@ const RegisterModal = () => {
                       required
                       autoFocus
                     />
-                    <label className="block text-gray-700 text-md text-left font-bold my-2">
+                    <label className="block text-dark text-md text-left font-bold my-2">
                       Last Name
                     </label>
                     <input
@@ -109,8 +105,8 @@ const RegisterModal = () => {
                       id="last_name"
                       required
                     />
-                    <label className="block text-gray-700 text-md text-left font-bold my-2">
-                      Your GS username
+                    <label className="block text-dark text-md text-left font-bold my-2">
+                      Your GSRH username
                     </label>
                     <input
                       className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
@@ -119,7 +115,7 @@ const RegisterModal = () => {
                       id="username"
                       required
                     />
-                    <label className="block text-gray-700 text-md text-left font-bold my-2">
+                    <label className="block text-dark text-md text-left font-bold my-2">
                       Password
                     </label>
                     <input
@@ -129,11 +125,11 @@ const RegisterModal = () => {
                       id="password"
                       required
                     />
-                    <label className="block text-gray-700 text-md text-left font-bold my-2">
+                    <label className="block text-dark text-md text-left font-bold my-2">
                       Role
                     </label>
                     <select
-                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      className="shadow appearance-none border text-dark rounded w-full py-2 px-1"
                       id="role"
                       onChange={updateUser}
                     >
@@ -141,7 +137,10 @@ const RegisterModal = () => {
                         Select your role
                       </option>
                       {ROLES.map((role) => (
-                        <option key={role} value={role}>
+                        <option
+                          key={role}
+                          value={role}
+                        >
                           {role}
                         </option>
                       ))}
@@ -150,14 +149,14 @@ const RegisterModal = () => {
                 </div>
                 <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
                   <button
-                    className="text-orange-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 font-body"
+                    className="text-burnt background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 font-body"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
                     Close
                   </button>
                   <button
-                    className="text-white bg-teal-500 active:bg-teal-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 font-body"
+                    className="text-white bg-sky-600 active:bg-teal-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 font-body"
                     type="submit"
                     onClick={(e) => {
                       handleRegister(e);

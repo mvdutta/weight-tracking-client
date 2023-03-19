@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../nav/NavBar";
 import "./Dashboard.css"
+import { scale, list, message, alert } from "../../assets";
 
 const CNAdashboard = () => {
   const navigate = useNavigate();
@@ -20,64 +21,59 @@ const CNAdashboard = () => {
     <>
       <div>
         <NavBar />
-        <header>
-          <h1> CNA Dashboard</h1>
-          <h1>{name ? `Welcome ${name}` : ""}</h1>
+        <header className="flex justify-center">
+          <h1 className="font-semibold text-stone-700 text-3xl my-10">
+            {" "}
+            CNA Dashboard
+          </h1>
         </header>
       </div>
-
-      <div className="grid md:grid-cols-3 gap-4 justify-items-center md:mt-64">
-        <div className="block rounded-lg bg-orange-100 p-6 shadow-lg dark:bg-neutral-700 w-[300px]">
-          <h5 className="mb-10 text-xl font-body leading-tight text-neutral-800 dark:text-neutral-50 text-center">
-            Weekly Weight Sheet
-          </h5>
-          <div className="flex justify-center">
-            <Link to="/weeklysheet">
-              <button
-                type="button"
-                className="rounded bg-primary px-6 pt-2.5 pb-2 font-body text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                data-te-ripple-init
-                data-te-ripple-color="light"
-              >
-                View
-              </button>
-            </Link>
+      <div className="text-center med:mt-5 med:mb-5 mb-10">
+        <h1 className="text-2xl font-semibold text-stone-600">
+          {name ? `Welcome ${name}` : ""}
+        </h1>
+      </div>
+      <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end  md:mr-60 mt-5 mb-12 md:mb-[125px] text-stone-700">
+        <img src={alert} alt="logo" className="block  w-8 md:w-14" />
+        <h3>
+          You have <span className="font-bold">3</span>{" "}
+          <Link to="/inbox">
+            {" "}
+            <span className="text-sky-700 underline">new messages</span>
+          </Link>
+        </h3>
+      </div>
+      <div className="grid md:grid-cols-3 gap-10 md:gap-0 justify-items-center">
+        <Link to="/weeklysheet">
+          <div className=" rounded-lg p-6 shadow-xl bg-amber-100/40 w-[300px]">
+            <h5 className="mb-5 text-xl font-body leading-tight  text-sky-800 font-semibold text-center">
+              Weekly Weight Sheet
+            </h5>
+            <div className="flex justify-center mb-5">
+              <img src={scale} alt="logo" className="block w-16" />
+            </div>
           </div>
-        </div>
-        <div className="block max-w-sm rounded-lg bg-orange-100 p-6 shadow-lg dark:bg-neutral-700 w-[300px]">
-          <h5 className="mb-10 text-xl font-body leading-tight text-neutral-800 dark:text-neutral-50 text-center">
-            Census List
-          </h5>
-          <div className="flex justify-center">
-            <Link to="/censuslist">
-              <button
-                type="button"
-                className="rounded bg-primary px-6 pt-2.5 pb-2 font-body text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                data-te-ripple-init
-                data-te-ripple-color="light"
-              >
-                View
-              </button>
-            </Link>
+        </Link>
+        <Link to="/censuslist">
+          <div className="rounded-lg p-6 bg-amber-100/40 shadow-xl w-[300px]">
+            <h5 className="mb-5 text-xl font-body leading-tight text-sky-800 font-semibold text-center">
+              Census List
+            </h5>
+            <div className="flex justify-center mb-5">
+              <img src={list} alt="logo" className="block w-16" />
+            </div>
           </div>
-        </div>
-        <div className="block max-w-sm rounded-lg bg-orange-100 p-6 shadow-lg dark:bg-neutral-700 w-[300px]">
-          <h5 className="mb-10 text-xl font-body leading-tight text-neutral-800 dark:text-neutral-50 text-center">
-            My Messages
-          </h5>
-          <div className="flex justify-center">
-            <Link to="/inbox">
-              <button
-                type="button"
-                className="rounded bg-primary px-6 pt-2.5 pb-2 font-body text-sm font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-                data-te-ripple-init
-                data-te-ripple-color="light"
-              >
-                View
-              </button>
-            </Link>
+        </Link>
+        <Link to="/inbox">
+          <div className="rounded-lg  bg-neutral-00/90 p-6 shadow-xl bg-amber-100/40 w-[300px] mb-16">
+            <h5 className="mb-5 text-xl font-body leading-tight text-sky-800 font-semibold text-center">
+              My Messages
+            </h5>
+            <div className="flex justify-center mb-5">
+              <img src={message} alt="logo" className="block w-16" />
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
     </>
   );
