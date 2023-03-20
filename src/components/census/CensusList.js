@@ -60,7 +60,6 @@ useEffect(() => {
           Current Census List
         </h1>
       </header>
-
       <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg md:w-1/2 font-body border-solid  border-2 border-sky-600/20 py-6 px-4">
         <table className="text-md text-center text-stone-700 dark:text-stone-500">
           <caption className="p-5 text-xl font-semibold text-sky-900 bg-white dark:text-white dark:bg-gray-800 text-center">
