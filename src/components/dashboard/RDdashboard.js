@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useNavigate, Link, useParams } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
 import { alert } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
 import NavBar from "../nav/NavBar";

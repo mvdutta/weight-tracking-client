@@ -50,10 +50,7 @@ export const Login = () => {
       .then(() => {
         const wtToken = localStorage.getItem("wt_token");
         const wtTokenParsed = JSON.parse(wtToken);
-        console.log(wtToken);
         const role = wtTokenParsed.role;
-        console.log(role);
-
         let whichProfile = "";
         if (role === "CNA") {
           whichProfile = "/cnadashboard";
