@@ -81,12 +81,12 @@ useEffect(() => {
     <>
       <NavBar />
       <header className="flex justify-center">
-        <h1 className="font-semibold text-stone-700 text-2xl my-10">
+        <h1 className="font-semibold text-stone-700 text-2xl  mt-10 md:my-10">
           {" "}
           Compose New Message
         </h1>
       </header>
-      <div className="m-auto md:border-2 rounded-md border-sky-800/30  w-full md:w-1/2 mt-10">
+      <div className="m-auto md:border-2 rounded-md border-sky-800/30  md:pb-8 w-full md:w-1/2 mt-10">
         <div className="m-10">
           <h6 className="font-semibold text-stone-800">Select Recipient(s)</h6>
         </div>
@@ -112,7 +112,9 @@ useEffect(() => {
             </div>
           </div>
           <div>
-            <img src={add} alt="logo" className="block  w-8 md:w-10" />
+            <button>
+              <img src={add} alt="logo" className="block  w-8 md:w-10 my-6" />
+            </button>
           </div>
           <div>
             <div className=" container flex flex-col md:m-auto before:relative overflow-scroll shadow-md sm:rounded-lg md:w-full h-40 md:h-60 font-body border-solid  border-2 border-sky-600/20 py-3 px-2">
@@ -143,11 +145,11 @@ useEffect(() => {
           </div>
           <div>
             <textarea
-              id="w3review"
-              name="w3review"
+              id=""
+              name=""
               rows="1"
               cols="49"
-              className="border-gray-300 border-2 rounded-md text-stone-800 mt-2"
+              className="border-gray-300 border-2 rounded-md text-stone-800 mt-2 w-80 md:w-full"
             ></textarea>
           </div>
         </div>
@@ -159,20 +161,20 @@ useEffect(() => {
           </div>
           <div>
             <textarea
-              id="w3review"
-              name="w3review"
+              id=""
+              name=""
               rows="4"
               cols="49"
-              className="border-gray-300 border-2 rounded-md text-stone-800 mt-2"
+              className="border-gray-300 border-2 rounded-md text-stone-800 mt-2 w-80 md:w-full"
             ></textarea>
           </div>
         </div>
       </div>
-      <div className='flex justify-center m-10  gap-16 md:gap-60 '>
+      <div className="flex justify-center m-10  gap-16 mb-20">
         <div>
           <button
             className={
-              "bg-sky-600/90 hover:bg-sky-600 py-2 px-4 text-md text-white rounded border border-blue focus:outline-none focus:border-black"
+              "bg-sky-600/90 hover:bg-sky-600 py-2 px-3 md:py-3 md:px-5 text-sm md:text-md text-white rounded border border-blue focus:outline-none focus:border-black"
             }
             value=""
           >
@@ -182,7 +184,7 @@ useEffect(() => {
         <div>
           <button
             className={
-              "bg-amber-500/90 hover:bg-amber-400 py-2 px-4 text-md text-white rounded border focus:outline-none focus:border-black"
+              "bg-amber-500/90 hover:bg-amber-400 py-2 px-3 md:py-3 md:px-4 text-sm md:text-md text-white rounded border focus:outline-none focus:border-black"
             }
             value=""
           >

@@ -44,7 +44,7 @@ const RNdashboard = () => {
        </div>
        <div className="grid lg:grid-cols-3 gap-10 lg:gap-0 justify-items-center lg:m-auto lg:w-2/3">
          <Link to="/weightsummary">
-           <div className=" rounded-lg p-6 shadow-lg border-2 bg-amber-100/60 w-[300px]">
+           <div className=" rounded-lg p-6 shadow-lg border-2 bg-amber-200/40 w-[300px]">
              <h5 className="mb-5 text-xl font-body leading-tight  text-sky-800 font-semibold text-center">
                Weekly Weight Sheet
              </h5>
@@ -54,7 +54,7 @@ const RNdashboard = () => {
            </div>
          </Link>
          <Link to="/censuslist">
-           <div className="rounded-lg p-6 bg-amber-100/60 shadow-lg border-2 w-[300px]">
+           <div className="rounded-lg p-6 bg-amber-200/40 shadow-lg border-2 w-[300px]">
              <h5 className="mb-5 text-xl font-body leading-tight text-sky-800 font-semibold text-center">
                Census List
              </h5>
@@ -64,7 +64,7 @@ const RNdashboard = () => {
            </div>
          </Link>
          <Link to="/inbox">
-           <div className="rounded-lg p-6 shadow-lg border-2 bg-amber-100/60 w-[300px] mb-16">
+           <div className="rounded-lg p-6 shadow-lg border-2 bg-amber-200/40 w-[300px] mb-16">
              <h5 className="mb-5 text-xl font-body leading-tight text-sky-800 font-semibold text-center">
                My Messages
              </h5>
