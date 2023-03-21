@@ -11,8 +11,11 @@ const [selectedEmployees, setSelectedEmployees] = useState([])
 
 useEffect(() => {
   fetchIt(`http://localhost:8000/employees`).then((data) => {
-    setEmployees(data);
-    setSelectedEmployees(data)
+    const employeeData = data.map(el=>{
+        return {...el, checked: true}
+    })
+    setEmployees(employeeData);
+    setSelectedEmployees([])
   });
 }, []);
   
@@ -24,6 +27,7 @@ useEffect(() => {
          <>
            <tr
              key={`table-row-${el.id}`}
+             checked = {el.checked}
              className="bg-white border-b dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600"
            >
             <td className="w-4 p-4">

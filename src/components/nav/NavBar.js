@@ -85,7 +85,7 @@ const NavBar = () => {
   return (
     <>
       <div className="header">
-        <nav className="w-full flex py-6 justify-between items-center navbar bg-orange-200/50 ">
+        <nav className="w-full flex py-6 justify-between items-center navbar bg-amber-200/70 ">
           <img src="/gsrh-logo3.png" alt="logo" className="logo-image" />
           <ul className="list-none lg:flex hidden justify-end items-center flex-1">
             {links.map((el) => (
