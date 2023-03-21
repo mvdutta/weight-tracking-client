@@ -38,25 +38,23 @@ const RDdashboard = () => {
 
  return (
    <>
-     <div>
-       <NavBar />
-       <header className="flex justify-center">
-         <h1 className="font-semibold text-stone-700 text-3xl my-10">
-           {" "}
-           RD Dashboard
-         </h1>
-       </header>
-     </div>
-     <div className="text-center med:mt-5 med:mb-5 mb-10">
-       <h1 className="text-2xl text-stone-600">
+     <NavBar />
+     <header className="flex justify-center">
+       <h1 className="font-semibold text-stone-700 text-2xl my-8">
+         {" "}
+         RD Dashboard
+       </h1>
+     </header>
+     <div className="text-center md:mt-5 mb-10 md:mb-20">
+       <h1 className="text-xl text-stone-600">
          {name ? `Welcome ${name}` : ""}
        </h1>
      </div>
-     <div className="grid grid-cols-2 justify-items-center md:justify-items-stretch">
+     <div className="grid grid-cols-2 justify-items-center md:justify-items-between">
        <div className="md:ml-64">
          <h1 className="text-lg font-semibold text-stone-600">Resources</h1>
        </div>
-       <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end text-stone-700 md:mr-64">
+       <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end text-stone-700  mr-5 md:mr-64">
          <img src={alert} alt="logo" className="block  w-8 md:w-14" />
          <h3 className="text-md">
            You have <span className="font-bold">3</span>{" "}
@@ -70,13 +68,13 @@ const RDdashboard = () => {
      <hr className="rd-hr"></hr>
 
      <header className="flex justify-center">
-       <h1 className="text-stone-700 text-2xl my-10">
+       <h1 className="text-stone-700 text-xl font-semibold my-10">
          {" "}
          Resident Weight Summary
        </h1>
      </header>
 
-     <div className="flex items-center ml-40">
+     <div className="flex items-center ml-10 sm:ml-20  md:ml-60">
        <div>
          <h1 className="text-stone-700 font-semibold text-lg">
            Search by Resident:
@@ -112,7 +110,7 @@ const RDdashboard = () => {
        </div>
      </div>
      {showSearchResults ? (
-       <div className="inline-block border-2 border-stone-200/60 rounded-md p-2 mt-5 ml-40">
+       <div className="inline-block border-2 border-stone-200/60 rounded-md p-2 mt-5 ml-10 sm:ml-20  md:ml-60">
          {searchResults.map((result) => {
            return (
              <div key={`result--${result.id}`} className="">
@@ -133,7 +131,7 @@ const RDdashboard = () => {
        <div className="inline-block ml-40 mb-10"></div>
      )}
      <div>
-       <h1 className="text-xl ml-10 mt-10 text-stone-800">
+       <h1 className="text-xl ml-10 sm:ml-20 md:ml-40 mt-10 text-stone-800">
          Weight Summary for:{" "}
          <span className="italic text-stone-700 ">
            {selectedResident.first_name} {selectedResident.last_name}

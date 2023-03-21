@@ -22,14 +22,14 @@ const CNAdashboard = () => {
       <div>
         <NavBar />
         <header className="flex justify-center">
-          <h1 className="font-semibold text-stone-700 text-3xl my-10">
+          <h1 className="font-semibold text-stone-700 text-2xl my-8">
             {" "}
             CNA Dashboard
           </h1>
         </header>
       </div>
-      <div className="text-center med:mt-5 med:mb-5 mb-10">
-        <h1 className="text-2xl font-semibold text-stone-600">
+      <div className="text-center md:mt-5 md:mb-5 mb-10">
+        <h1 className="text-xl font-semibold text-stone-600">
           {name ? `Welcome ${name}` : ""}
         </h1>
       </div>
@@ -46,7 +46,7 @@ const CNAdashboard = () => {
       <div className="grid lg:grid-cols-3 gap-10 lg:gap-0 justify-items-center lg:m-auto lg:w-2/3">
         <Link to="/weeklysheet">
           <div className=" rounded-lg p-6 shadow-lg border-2 bg-amber-200/40 w-[300px]">
-            <h5 className="mb-5 text-xl font-body leading-tight  text-sky-800 font-semibold text-center">
+            <h5 className="mb-5 text-lg font-body leading-tight  text-sky-800 font-semibold text-center">
               Weekly Weight Sheet
             </h5>
             <div className="flex justify-center mb-5">
@@ -56,7 +56,7 @@ const CNAdashboard = () => {
         </Link>
         <Link to="/censuslist">
           <div className="rounded-lg p-6 bg-amber-200/40 shadow-lg border-2 w-[300px]">
-            <h5 className="mb-5 text-xl font-body leading-tight text-sky-800 font-semibold text-center">
+            <h5 className="mb-5 text-lg font-body leading-tight text-sky-800 font-semibold text-center">
               Census List
             </h5>
             <div className="flex justify-center mb-5">
@@ -66,7 +66,7 @@ const CNAdashboard = () => {
         </Link>
         <Link to="/inbox">
           <div className="rounded-lg p-6 shadow-lg border-2 bg-amber-200/40 w-[300px] mb-16">
-            <h5 className="mb-5 text-xl font-body leading-tight text-sky-800 font-semibold text-center">
+            <h5 className="mb-5 text-lg font-body leading-tight text-sky-800 font-semibold text-center">
               My Messages
             </h5>
             <div className="flex justify-center mb-5">
