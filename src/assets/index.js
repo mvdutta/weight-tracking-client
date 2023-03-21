@@ -6,6 +6,7 @@ import message from "./message-icon1.png";
 import alert from "./alert-icon2.png";
 import discard from "./delete-icon3.png";
 import compose from "./compose-icon1.png"
+import add from "./arrow-icon1.png";
 
 
 export { 
@@ -17,4 +18,5 @@ export {
   alert,
   discard,
   compose,
+  add,
 };

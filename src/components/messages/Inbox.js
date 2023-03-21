@@ -112,17 +112,17 @@ const Inbox = () => {
           </h1>
         </div>
       </div>
-        <div className="flex items-center gap-2 md:gap-2 justify-center md:justify-start md:ml-40 mt-5 mb-5 md:mb-18 text-stone-700">
+      <div className="flex items-center gap-2 md:gap-2 justify-center md:justify-start md:ml-40 mt-5 mb-5 md:mb-18 text-stone-700">
+        <img src={compose} alt="logo" className="block  w-8 md:w-14" />
+        <h3>
+          {" "}
           <Link to="/compose">
-          <img src={compose} alt="logo" className="block  w-8 md:w-14" />
-          <h3>
-            {" "}
             <span className="text-stone-700 underline">
               Compose New Message
             </span>
-          </h3>
-        </Link>
-        </div>
+          </Link>
+        </h3>
+      </div>
       <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg md:w-1/2 font-body border-solid  border-2 border-sky-600/20 py-6 px-4">
         <table className="text-md text-center text-stone-700 dark:text-stone-500">
           <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
