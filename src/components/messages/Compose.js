@@ -44,7 +44,7 @@ const handleSubmit = () =>{
   const address = "http://localhost:8000/messages";
   fetchIt(address, {method: "POST", body: JSON.stringify(postBody)})
   .then((data)=>{
-    window.alert(data)
+    window.alert("Message sent")
   })
 }
   
