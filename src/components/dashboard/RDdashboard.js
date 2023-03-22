@@ -188,7 +188,7 @@ const makeTableRow = () => (
      {searchResults.length === 0 ? (
        ""
      ) : (
-       <div className=" container flex flex-col md:m-auto before:relative shadow-md sm:rounded-lg md:w-1/2 font-body border-solid border-2 border-sky-600/20 pb-5 px-4">
+       <div className=" container flex flex-col m-auto before:relative shadow-md sm:rounded-lg md:w-1/2 font-body border-solid border-2 border-sky-600/20 pb-5 px-4">
          <table className="text-md  text-stone-700 dark:text-stone-500">
            <caption className="p-5 text-lg font-semibold text-stone-800 bg-white dark:text-white dark:bg-gray-800">
              <p className="text-left">
