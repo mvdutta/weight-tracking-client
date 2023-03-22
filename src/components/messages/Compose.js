@@ -81,7 +81,7 @@ useEffect(() => {
     <>
       <NavBar />
       <header className="flex justify-center">
-        <h1 className="font-semibold text-stone-700 text-2xl  mt-10 md:my-10">
+        <h1 className="font-semibold text-stone-700 text-2xl mt-10 md:my-10">
           {" "}
           Compose New Message
         </h1>

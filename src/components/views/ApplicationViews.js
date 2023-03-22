@@ -8,6 +8,7 @@ import RDdashboard from "../dashboard/RDdashboard";
 import RNdashboard from "../dashboard/RNdashboard";
 import { NoAccess } from "../NoAccess";
 import Compose from "../messages/Compose";
+import WeightSheetSummary from "../weightSheets/WeightSheetSummary";
 
 
 export const ApplicationViews = () => {
@@ -23,6 +24,7 @@ export const ApplicationViews = () => {
       <Route path="/weightsummary" element={<WeightSummary />} />
       <Route path="/noaccess" element={<NoAccess />} />
       <Route path="/compose" element={<Compose />} />
+      <Route path="/weightsheetsummary" element={<WeightSheetSummary />} />
     </Routes>
   );
 };

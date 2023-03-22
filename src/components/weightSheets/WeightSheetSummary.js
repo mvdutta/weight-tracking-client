@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { fetchIt } from "../auth/fetchIt"
 import { useNavigate } from "react-router-dom"
 
+
 const formattedDate = (date) => {
     const myDate = date
 
@@ -15,7 +16,7 @@ const formattedDate = (date) => {
 }
 
 
-const WeeklySheet = () => {
+const WeightSheetSummary = () => {
     const [patientListWithWeights, setPatientListWithWeights] = useState([])
     const [employee, setEmployee] = useState({})
     const [alerts, showAlerts] = useState(false)
@@ -24,14 +25,12 @@ const WeeklySheet = () => {
     useEffect(() => {
         const current_user = localStorage.getItem("wt_token")
         const parsedUser = JSON.parse(current_user)
-        if (parsedUser.role !== "CNA") {
+        if (parsedUser.role !== "RD") {
             //Check that they have the right role
             navigate("/noaccess")
         }
         setEmployee(parsedUser)
     }, [])
-
-
 
     useEffect(()=>{
         const todaysDate = formattedDate(new Date())
@@ -59,15 +58,15 @@ const WeeklySheet = () => {
         getData()
 
     },[])
-
     const checkboxstyle =
         "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
 
     const handleSubmit = () => {
         //prepare post requests
+        if (!window.confirm("Saved values cannot be changed!")) return
         const API = "http://localhost:8000"
         const promiseArray = []
-        if (patientListWithWeights.length>0){
+         if (patientListWithWeights.length>0){
         for (let el of patientListWithWeights) {
             const address = `${API}/weightsheets/${el.weight_sheet_id}`
             const requestBody = {
@@ -78,7 +77,7 @@ const WeeklySheet = () => {
                 daily_wts: el.daily_wts,
                 show_alert: el.show_alert,
                 scale_type: el.scale_type,
-                final: el.final,
+                final: true,
                 weight: el.weight,
             }
             promiseArray.push(
@@ -106,7 +105,7 @@ const WeeklySheet = () => {
     
         if (promiseArray.length>0) {
             Promise.all(promiseArray).then((data) => {
-                window.alert("Data saved")
+                navigate(0)
                 for (let datum of data) {
                     console.log(datum)
                 }
@@ -119,6 +118,7 @@ const WeeklySheet = () => {
     const handleChange = (e) => {
         const [type, index, field] = e.target.id.split("--")
         const copy = [...patientListWithWeights]
+ 
         if (field === "weight") {
             copy[index][field] = parseFloat(e.target.value)
         }
@@ -146,7 +146,7 @@ const WeeklySheet = () => {
         const filledWeightRows =
             patientListWithWeights.length > 0
                 ? patientListWithWeights.map((el, index) => (
-                      <tr key={`table-row-${el.resident_id}`} >
+                      <tr key={`table-row-${el.resident_id}`} className={el.weight===0 || el.weight==="" || Math.abs(el.weight-el.prev_wt)>5 || el.not_in_room || el.refused ? "bg-red-400" : ""}>
                           <td className="border px-8 py-4">{el.room_num}</td>
                           <td className="border px-8 py-4">
                               {el.first_name} {el.last_name}
@@ -211,7 +211,7 @@ const WeeklySheet = () => {
                           </td>
                           <td className="border px-8 py-4">
                               <select
-                                    disabled={el.final}
+                              disabled={el.final}
                                   id={`put--${index}--scale_type`}
                                   className="flex bg-gray-50 border border-separate border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   value={el.scale_type}
@@ -238,8 +238,7 @@ const WeeklySheet = () => {
                       </tr>
                   ))
                 : []
- 
-
+        
         return (
             <tbody>
                 {filledWeightRows}
@@ -298,4 +297,4 @@ const WeeklySheet = () => {
     )
 }
 
-export default WeeklySheet
+export default WeightSheetSummary

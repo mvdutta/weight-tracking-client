@@ -25,6 +25,11 @@ const navLinks = {
       title: "RD Dashboard",
       address: "/rddashboard",
     },
+    {
+      id: "wt_summary",
+      title: "Weight Sheet Summary",
+      address: "/weightsheetsummary",
+    },
   ].concat(sameLinks),
 
   CNA: [

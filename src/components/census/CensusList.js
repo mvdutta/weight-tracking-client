@@ -6,7 +6,6 @@ import "./Censuslist.css";
 
 const formattedDate = (date) => {
   const myDate = date;
-
   let year = myDate.toLocaleString("default", { year: "numeric" });
   let month = myDate.toLocaleString("default", { month: "2-digit" });
   let day = myDate.toLocaleString("default", { day: "2-digit" });
@@ -55,14 +54,14 @@ useEffect(() => {
     <>
       <NavBar />
       <header className="flex justify-center">
-        <h1 className="font-semibold text-stone-700 text-3xl mt-10 mb-10 md:mb-32">
+        <h1 className="font-semibold text-stone-700 text-2xl my-8 md:mb-32">
           {" "}
           Current Census List
         </h1>
       </header>
       <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg md:w-1/2 font-body border-solid  border-2 border-sky-600/20 py-6 px-4">
         <table className="text-md text-center text-stone-700 dark:text-stone-500">
-          <caption className="p-5 text-xl font-semibold text-sky-900 bg-white dark:text-white dark:bg-gray-800 text-center">
+          <caption className="p-5 text-lg font-semibold text-sky-900 bg-white dark:text-white dark:bg-gray-800 text-center">
             Gaffney Scranton Rehabilitation & Healing
             <p className="mt-1 text-md font-normal text-stone-700 dark:text-stone-400">
               Resident Census List

@@ -98,49 +98,46 @@ const Inbox = () => {
 
   return (
     <>
-      <div>
-        <NavBar />
+      <NavBar />
+      <div className=" container justify-center m-auto w-2/3">
         <header className="flex justify-center">
-          <h1 className="font-semibold text-stone-700 text-3xl my-10">
-            {" "}
-            Inbox
-          </h1>
+          <h1 className="font-semibold text-stone-700 text-2xl my-8"> Inbox</h1>
         </header>
-        <div className="text-center med:mt-5 med:mb-2 mb-10">
-          <h1 className="text-2xl font-semibold text-stone-600">
+        <div className="text-center md:mt-5 mb-10">
+          <h1 className="text-xl font-semibold text-stone-600">
             {name ? `Welcome ${name}` : ""}
           </h1>
         </div>
-      </div>
-      <div className="flex items-center gap-2 md:gap-2 justify-center md:justify-start md:ml-40 mt-5 mb-5 md:mb-18 text-stone-700">
-        <img src={compose} alt="logo" className="block  w-8 md:w-14" />
-        <h3>
-          {" "}
-          <Link to="/compose">
-            <span className="text-stone-700 underline">
-              Compose New Message
-            </span>
-          </Link>
-        </h3>
-      </div>
-      <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg md:w-1/2 font-body border-solid  border-2 border-sky-600/20 py-6 px-4">
-        <table className="text-md text-center text-stone-700 dark:text-stone-500">
-          <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Sender
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Subject
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Date
-              </th>
-              <th scope="col" className="px-6 py-3"></th>
-            </tr>
-          </thead>
-          {makeTableRows()}
-        </table>
+        <div className="flex items-center gap-2 md:gap-2 justify-center md:justify-start md:ml-40 mt-5 mb-10 md:mb-18 text-stone-700">
+          <img src={compose} alt="logo" className="block  w-8 md:w-14" />
+          <h3>
+            {" "}
+            <Link to="/compose">
+              <span className="text-stone-700 underline">
+                Compose New Message
+              </span>
+            </Link>
+          </h3>
+        </div>
+        <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg md:w-2/3 font-body border-solid  border-2 border-sky-600/20 py-6 px-4">
+          <table className="text-md text-center text-stone-700 dark:text-stone-500">
+            <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
+              <tr>
+                <th scope="col" className="px-6 py-3">
+                  Sender
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Subject
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Date
+                </th>
+                <th scope="col" className="px-6 py-3"></th>
+              </tr>
+            </thead>
+            {makeTableRows()}
+          </table>
+        </div>
       </div>
     </>
   );
