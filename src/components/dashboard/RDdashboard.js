@@ -6,6 +6,10 @@ import { fetchIt } from "../auth/fetchIt";
 import NavBar from "../nav/NavBar";
 import "./Dashboard.css";
 
+const formatDecimal = (x) => Number.parseFloat(x).toFixed(2);
+
+
+
 const RDdashboard = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -13,7 +17,7 @@ const RDdashboard = () => {
   const [searchResults, setSearchResults] = useState([])
   const [selectedResident, setSelectedResident] = useState({})
   const [showSearchResults, setShowSearchResults] = useState(false)
-  const [weightData, setWeightData] = useState([])
+  const [weightData, setWeightData] = useState({})
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
@@ -56,27 +60,42 @@ const RDdashboard = () => {
   };
 
 
-const makeTableRow = () => (
-  <>
-    <tbody>
-      <tr
-        key={`table-row-${0}`}
-        className="bg-white border-b text-base  text-stone-700  dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600"
-      >
-        <td scope="row" className="px-6 py-4 whitespace-nowrap dark:text-white">
-          {weightData.ABW}
-        </td>
-        <td className="px-6 py-4">{weightData.PBW}</td>
-        <td className="px-6 py-4">{weightData.CBW}</td>
-        <td className="px-6 py-4">{weightData.PBW}</td>
-        <td className="px-6 py-4">{weightData.BMI}</td>
-        <td className="px-6 py-4">{weightData.perc_change_1month}</td>
-        <td className="px-6 py-4">{weightData.perc_change_3month}</td>
-        <td className="px-6 py-4">{weightData.perc_change_6month}</td>
-      </tr>
-    </tbody>
-  </>
-);
+const makeTableRow = () => {
+  const {
+    BMI,
+    PBW,
+    CBW,
+    ABW,
+    perc_change_1week, 
+    perc_change_1month,
+    perc_change_3month,
+    perc_change_6month,
+  } = weightData;
+  
+  return (
+    <>
+      <tbody>
+        <tr
+          key={`table-row-${0}`}
+          className="bg-white border-b text-base  text-stone-700  dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600"
+        >
+          <td
+            scope="row"
+            className="px-6 py-4 whitespace-nowrap dark:text-white"
+          >
+            {formatDecimal(weightData.ABW)}
+          </td>
+          <td className="px-6 py-4">{formatDecimal(PBW)}</td>
+          <td className="px-6 py-4">{formatDecimal(CBW)}</td>
+          <td className="px-6 py-4">{formatDecimal(BMI)}</td>
+          <td className="px-6 py-4">{formatDecimal(perc_change_1week)}</td>
+          <td className="px-6 py-4">{formatDecimal(perc_change_1month)}</td>
+          <td className="px-6 py-4">{formatDecimal(perc_change_3month)}</td>
+          <td className="px-6 py-4">{formatDecimal(perc_change_6month)}</td>
+        </tr>
+      </tbody>
+    </>
+  );};
 
 
  return (
