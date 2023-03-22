@@ -4,15 +4,16 @@ import { useState, useEffect } from "react"
 import { fetchIt } from "../auth/fetchIt"
 import { useNavigate } from "react-router-dom"
 
-const formattedDate = (date) => {
-    const myDate = date
 
-    let year = myDate.toLocaleString("default", { year: "numeric" })
-    let month = myDate.toLocaleString("default", { month: "2-digit" })
-    let day = myDate.toLocaleString("default", { day: "2-digit" })
-    const formattedDate = year + "-" + month + "-" + day
-    return formattedDate
-}
+
+const formattedDate = (date) => {
+  const myDate = date;
+  let year = myDate.toLocaleString("default", { year: "numeric" });
+  let month = myDate.toLocaleString("default", { month: "2-digit" });
+  let day = myDate.toLocaleString("default", { day: "2-digit" });
+  const formattedDate = year + "-" + month + "-" + day;
+  return formattedDate;
+};
 
 
 const WeeklySheet = () => {
@@ -30,7 +31,6 @@ const WeeklySheet = () => {
         }
         setEmployee(parsedUser)
     }, [])
-
 
 
     useEffect(()=>{
@@ -248,54 +248,70 @@ const WeeklySheet = () => {
     }
 
     return (
-        <div>
-            <NavBar />
+      <div>
+        <NavBar />
 
-            <div className="container mx-auto flex flex-col">
-                <div className="flex md:justify-around justify-between mx-10 content-center ">
-                    <span>{employee.name}</span>
-                    <span>{formattedDate(new Date())}</span>
-                    <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={handleSubmit}
-                    >
-                        Save
-                    </button>
-                </div>
-                <table className="shadow-lg bg-white border-separate overflow-scroll">
-                    <thead>
-                        <tr>
-                            <th className="bg-blue-100 border text-left px-8 py-4">
-                                Room
-                            </th>
-                            <th className="bg-blue-100 border text-left px-8 py-4">
-                                Resident Name
-                            </th>
-                            <th className="bg-blue-100 border text-left px-8 py-4">
-                                Current Weight
-                            </th>
-                            <th className="bg-blue-100 border text-left px-8 py-4">
-                                Previous Weight
-                            </th>
-                            <th className="bg-blue-100 border text-left px-8 py-4">
-                                ReWeighed?
-                            </th>
-                            <th className="bg-blue-100 border text-left px-8 py-4">
-                                Absent or Refused
-                            </th>
-                            <th className="bg-blue-100 border text-left px-8 py-4">
-                                Scale Type
-                            </th>
-                            <th className="bg-blue-100 border text-left px-8 py-4">
-                                Daily Weights
-                            </th>
-                        </tr>
-                    </thead>
-                    {makeTableRows()}
-                </table>
-            </div>
+        <header className="flex justify-center">
+          <h1 className="font-semibold text-stone-700 text-2xl mt-8 mb-20">
+            {" "}
+            Weekly Weight Sheet
+          </h1>
+        </header>
+        <div className="flex flex-col rounded-md items-center m-auto border-2 border-sky-100 w-1/3 py-3 text-smoke-600">
+          <ol>
+            <li className="font-semibold">Goals:</li>
+            <li>
+              1. Weigh every resident and fill in the form every Tuesday by 5:00
+              pm
+            </li>
+            <li>2. Make and save changes as needed</li>
+            <li>3. Message dietitian or RN with questions/concerns</li>
+          </ol>
         </div>
-    )
+
+        <div className="container mx-auto flex flex-col mt-20">
+          <div className="flex md:justify-around justify-between mx-10 content-center ">
+            <span>Weight Team Member: {employee.name}</span>
+            <span>Date: {formattedDate(new Date())}</span>
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={handleSubmit}
+            >
+              Save
+            </button>
+          </div>
+          <table className="shadow-lg bg-white border-separate overflow-scroll">
+            <thead>
+              <tr>
+                <th className="bg-blue-100 border text-left px-8 py-4">Room</th>
+                <th className="bg-blue-100 border text-left px-8 py-4">
+                  Resident Name
+                </th>
+                <th className="bg-blue-100 border text-left px-8 py-4">
+                  Current Weight
+                </th>
+                <th className="bg-blue-100 border text-left px-8 py-4">
+                  Previous Weight
+                </th>
+                <th className="bg-blue-100 border text-left px-8 py-4">
+                  ReWeighed?
+                </th>
+                <th className="bg-blue-100 border text-left px-8 py-4">
+                  Absent or Refused
+                </th>
+                <th className="bg-blue-100 border text-left px-8 py-4">
+                  Scale Type
+                </th>
+                <th className="bg-blue-100 border text-left px-8 py-4">
+                  Daily Weights
+                </th>
+              </tr>
+            </thead>
+            {makeTableRows()}
+          </table>
+        </div>
+      </div>
+    );
 }
 
 export default WeeklySheet
