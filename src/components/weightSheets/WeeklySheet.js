@@ -42,12 +42,13 @@ const WeeklySheet = () => {
         const getData =  async () =>{
             if (patientListWithWeights.length===0){
             await   fetchIt(API1, {
-                         method: "POST",
+                        method: "POST",
                         body: JSON.stringify({date: todaysDate}),
                     })
                 }
             const weightsheets = await fetchIt(API2)
             const previousWeights = await fetchIt(API3)
+            //join the wt sheet table with the table of previous wts by resident id
             for (let entry of weightsheets) {
                     const previousWeights_entry = previousWeights.find(
                         (el) => el.resident_id === entry.resident_id
@@ -107,9 +108,6 @@ const WeeklySheet = () => {
         if (promiseArray.length>0) {
             Promise.all(promiseArray).then((data) => {
                 window.alert("Data saved")
-                for (let datum of data) {
-                    console.log(datum)
-                }
 
             })
         }
@@ -153,6 +151,7 @@ const WeeklySheet = () => {
                           </td>
                           <td className="border px-8 py-4">
                               <input
+                              //if the final property is true, then disabled will = true and the button can't be clicked
                                   disabled={el.final}
                                   type="Number"
                                   className="w-{1/3} bg-gray-50 border border-gray-300"

@@ -146,7 +146,7 @@ const WeightSheetSummary = () => {
         const filledWeightRows =
             patientListWithWeights.length > 0
                 ? patientListWithWeights.map((el, index) => (
-                      <tr key={`table-row-${el.resident_id}`} className={el.weight===0 || el.weight==="" || Math.abs(el.weight-el.prev_wt)>5 || el.not_in_room || el.refused ? "bg-red-400" : ""}>
+                      <tr key={`table-row-${el.resident_id}`} className={el.weight===0 || el.weight==="" || Math.abs(el.weight-el.prev_wt)>5 || el.not_in_room || el.refused ? "bg-orange-200" : ""}>
                           <td className="border px-8 py-4">{el.room_num}</td>
                           <td className="border px-8 py-4">
                               {el.first_name} {el.last_name}

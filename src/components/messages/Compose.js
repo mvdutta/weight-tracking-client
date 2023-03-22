@@ -19,15 +19,16 @@ const formattedDate = (date) => {
 const Compose = () => {
 const [employees, setEmployees] = useState([])
 const [message, setMessage] = useState({subject:"", message_body:""})
-// const [selectedEmployees, setSelectedEmployees] = useState([])
 
+
+
+//get all employees and add an extra boolean property called checked to control whether they are selected or not
 useEffect(() => {
   fetchIt(`http://localhost:8000/employees`).then((data) => {
     const employeeData = data.map(el=>{
         return {...el, checked: false}
     })
     setEmployees(employeeData);
-    // setSelectedEmployees([])
   });
 }, []);
 
@@ -39,7 +40,7 @@ const handleSubmit = () =>{
     date_created: formattedDate(new Date()),
     read: false,
     deleted:false,
-    recipients: employees.filter(el => el.checked).map(el=>el.id)
+    recipients: employees.filter(el => el.checked).map(el=>el.id) //filtering the list of employees to find the ones that are checked and then getting the id of selected recipients
   }
   const address = "http://localhost:8000/messages";
   fetchIt(address, {method: "POST", body: JSON.stringify(postBody)})
