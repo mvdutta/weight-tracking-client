@@ -12,7 +12,8 @@ const RDdashboard = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [searchResults, setSearchResults] = useState([])
   const [selectedResident, setSelectedResident] = useState({})
-  const [showSearchResults, setShowSearchResults] =useState(false)
+  const [showSearchResults, setShowSearchResults] = useState(false)
+  const [weightData, setWeightData] = useState([])
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
@@ -21,6 +22,16 @@ const RDdashboard = () => {
     }
   }, [loggedIn]);
 
+
+  useEffect(()=>{
+    fetchIt(`http://localhost:8000/weights/rd_summary?resident=${selectedResident.id}`)
+    .then((data)=>{
+      console.log(data)
+        setWeightData(data)
+    })
+
+  },[selectedResident])
+  
 
   const residentSearch = (e) => {
     const searchTerm = e.target.value
@@ -34,6 +45,38 @@ const RDdashboard = () => {
     setShowSearchResults(false)
   }
   };
+
+  const formattedDate = (date) => {
+    const myDate = date;
+    let year = myDate.toLocaleString("default", { year: "numeric" });
+    let month = myDate.toLocaleString("default", { month: "2-digit" });
+    let day = myDate.toLocaleString("default", { day: "2-digit" });
+    const formattedDate = month + "-" + day + "-" + year;
+    return formattedDate;
+  };
+
+
+const makeTableRow = () => (
+  <>
+    <tbody>
+      <tr
+        key={`table-row-${0}`}
+        className="bg-white border-b text-base  text-stone-700  dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600"
+      >
+        <td scope="row" className="px-6 py-4 whitespace-nowrap dark:text-white">
+          {weightData.ABW}
+        </td>
+        <td className="px-6 py-4">{weightData.PBW}</td>
+        <td className="px-6 py-4">{weightData.CBW}</td>
+        <td className="px-6 py-4">{weightData.PBW}</td>
+        <td className="px-6 py-4">{weightData.BMI}</td>
+        <td className="px-6 py-4">{weightData.perc_change_1month}</td>
+        <td className="px-6 py-4">{weightData.perc_change_3month}</td>
+        <td className="px-6 py-4">{weightData.perc_change_6month}</td>
+      </tr>
+    </tbody>
+  </>
+);
 
 
  return (
@@ -130,17 +173,81 @@ const RDdashboard = () => {
      ) : (
        <div className="inline-block ml-40 mb-10"></div>
      )}
-     <div>
-       <h1 className="text-xl ml-10 sm:ml-20 md:ml-40 mt-10 text-stone-800">
-         Weight Summary for:{" "}
-         <span className="italic text-stone-700 ">
-           {selectedResident.first_name} {selectedResident.last_name}
-         </span>
-       </h1>
-     </div>
+     {searchResults.length === 0 ? (
+       ""
+     ) : (
+       <div>
+         <h1 className="text-xl ml-10 sm:ml-20 md:ml-60 mt-5 mb-10 text-stone-800">
+           Weight Summary for:{" "}
+           <span className="italic text-stone-700 ">
+             {selectedResident.first_name} {selectedResident.last_name}
+           </span>
+         </h1>
+       </div>
+     )}
+     {searchResults.length === 0 ? (
+       ""
+     ) : (
+       <div className=" container flex flex-col md:m-auto before:relative shadow-md sm:rounded-lg md:w-1/2 font-body border-solid border-2 border-sky-600/20 pb-5 px-4">
+         <table className="text-md  text-stone-700 dark:text-stone-500">
+           <caption className="p-5 text-lg font-semibold text-stone-800 bg-white dark:text-white dark:bg-gray-800">
+             <p className="text-left">
+               {selectedResident.first_name} {selectedResident.last_name}
+             </p>
+             <div className="flex justify-between ">
+               <p className="mt-1 text-base text-stone-700 dark:text-stone-300">
+                 Admission Date: {selectedResident.admission_date}
+               </p>
+               <p className="mt-1 text-base text-stone-700 dark:text-stone-300">
+                 Current Date: {formattedDate(new Date())}
+               </p>
+             </div>
+           </caption>
+           <thead className="text-sm text-sky-900  font-semibold bg-stone-200 dark:bg-stone-700 dark:text-stone-400">
+             <tr>
+               <th scope="col" className="px-6 py-3">
+                 ABW (lbs)
+               </th>
+               <th scope="col" className="px-6 py-3">
+                 PBW (lbs)
+               </th>
+               <th scope="col" className="px-6 py-3">
+                 CBW (lbs)
+               </th>
+               <th scope="col" className="px-6 py-3">
+                 BMI (kg/m^2)
+               </th>
+               <th scope="col" className="px-6 py-3">
+                 % Change x 1 wk
+               </th>
+               <th scope="col" className="px-6 py-3">
+                 % Change x 1 month
+               </th>
+               <th scope="col" className="px-6 py-3">
+                 % Change x 3 mos.
+               </th>
+               <th scope="col" className="px-6 py-3">
+                 % Change x 6 mos.
+               </th>
+             </tr>
+           </thead>
+           {makeTableRow()}
+         </table>
+         <div className="text-stone-600 text-xs mt-3">
+           <p>ABW: Admission Body Weight</p>
+           <p>PBW: Previous Body Weight (previous week or measurement)</p>
+           <p>CBW: Current Body Weight</p>
+           <p>BMI: Body Mass Index </p>
+           <p>
+             Clinically Significant Weight Loss: >/= 5% in 1 month or less, >/=
+             7.5% in 7 mos., >/= 10% in 6 mos.
+           </p>
+         </div>
+       </div>
+     )}
+     <hr className="rd-hr mt-14"></hr>
    </>
  );
-
 
 };
 
