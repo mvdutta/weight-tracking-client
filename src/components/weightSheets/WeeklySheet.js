@@ -15,6 +15,16 @@ const formattedDate = (date) => {
   return formattedDate;
 };
 
+const formattedDateUI = (date) => {
+  const myDate = date;
+
+  let year = myDate.toLocaleString("default", { year: "numeric" });
+  let month = myDate.toLocaleString("default", { month: "2-digit" });
+  let day = myDate.toLocaleString("default", { day: "2-digit" });
+  const formattedDateUI = month + "-" + day + "-" + year;
+  return formattedDateUI;
+};
+
 //patientListWithWeights is a giant array which holds 10 objects (1 for each row of the table) 
 const WeeklySheet = () => {
     const [patientListWithWeights, setPatientListWithWeights] = useState([])
@@ -63,7 +73,7 @@ const WeeklySheet = () => {
     },[])
 
     const checkboxstyle =
-        "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+        "w-4 h-4 text-blue-600 bg-stone-100 border-stone-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-stone-700 dark:focus:ring-offset-stone-700 focus:ring-2 dark:bg-stone-600 dark:border-stone-500"
 
     const handleSubmit = () => {
         //prepare post requests
@@ -155,7 +165,7 @@ const WeeklySheet = () => {
                               //if the final property is true, then disabled will = true and the button can't be clicked
                                   disabled={el.final}
                                   type="Number"
-                                  className=" bg-gray-50 border w-1/2 border-gray-300"
+                                  className=" bg-stone-50 border w-1/2 border-stone-300"
                                   value={el.weight || ""}
                                   id={`put--${index}--weight`}
                                   onChange={(e) => handleChange(e)}
@@ -187,7 +197,7 @@ const WeeklySheet = () => {
                                   />
                                   <label
                                       htmlFor="default-radio-1"
-                                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                      className="ml-2 text-sm font-medium text-stone-900 dark:text-stone-300"
                                   >
                                       Absent
                                   </label>
@@ -204,7 +214,7 @@ const WeeklySheet = () => {
                                   />
                                   <label
                                       htmlFor="default-radio-2"
-                                      className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                      className="ml-2 text-sm font-medium text-stone-900 dark:text-stone-300"
                                   >
                                       Refused
                                   </label>
@@ -215,7 +225,7 @@ const WeeklySheet = () => {
                               <select
                                   disabled={el.final}
                                   id={`put--${index}--scale_type`}
-                                  className="flex bg-gray-50 border border-separate border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  className="flex bg-stone-50 border border-separate border-stone-300 text-stone-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full  dark:bg-stone-700 dark:border-stone-600 dark:placeholder-stone-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   value={el.scale_type}
                                   onChange={(e) => handleChange(e)}
                               >
@@ -259,7 +269,7 @@ const WeeklySheet = () => {
             Weekly Weight Sheet
           </h1>
         </header>
-        <div className="flex flex-col rounded-md items-center m-auto border-2 border-sky-100 md:w-1/3 py-3 px-10 text-smoke-600">
+        <div className="flex flex-col rounded-md items-center m-auto border-2 border-sky-100  lg:w-1/3 py-3 px-10 text-smoke-600">
           <ol>
             <li className="font-semibold">Goals:</li>
             <li>
@@ -272,9 +282,9 @@ const WeeklySheet = () => {
         </div>
 
         <div className="container mx-auto flex flex-col mt-20">
-          <div className="flex md:justify-around justify-between sm-mx-10 content-center items-center text-md sm:text-lg">
+          <div className="flex md:justify-around justify-between sm:mx-10 mb-8 content-center items-center text-md sm:text-lg">
             <span>Weight Team Member: {employee.name}</span>
-            <span>Date: {formattedDate(new Date())}</span>
+            <span>Date: {formattedDateUI(new Date())}</span>
             <button
               className={
                 "bg-sky-600 hover:bg-primary py-2 px-4 mb-2 sm:text-xl text-white rounded border border-blue focus:outline-none focus:border-black"
@@ -285,7 +295,7 @@ const WeeklySheet = () => {
               Save
             </button>
           </div>
-          <table className="shadow-lg bg-white border-separate overflow-x-scroll">
+          <table className="shadow-lg bg-white border-separate overflow-scroll">
             <thead>
               <tr className="font-body text-stone-800">
                 <th className="bg-blue-100 border text-left px-8 py-4">Room</th>
@@ -304,7 +314,7 @@ const WeeklySheet = () => {
                 <th className="bg-blue-100 border text-left px-8 py-4">
                   Absent or Refused
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-blue-100 border text-left px-12 lg:px-8 py-4">
                   Scale Type
                 </th>
                 <th className="bg-blue-100 border text-left px-8 py-4">
