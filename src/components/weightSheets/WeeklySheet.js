@@ -150,19 +150,19 @@ const WeeklySheet = () => {
                           <td className="border px-8 py-4">
                               {el.first_name} {el.last_name}
                           </td>
-                          <td className="border px-8 py-4">
+                          <td className="border text-center py-4">
                               <input
                               //if the final property is true, then disabled will = true and the button can't be clicked
                                   disabled={el.final}
                                   type="Number"
-                                  className="w-{1/3} bg-gray-50 border border-gray-300"
+                                  className=" bg-gray-50 border w-1/2 border-gray-300"
                                   value={el.weight || ""}
                                   id={`put--${index}--weight`}
                                   onChange={(e) => handleChange(e)}
                               />
                           </td>
-                          <td className="border px-8 py-4">{el.prev_wt}</td>
-                          <td className="border px-8 py-4">
+                          <td className="border py-4 text-center">{el.prev_wt}</td>
+                          <td className="border py-4 text-center ">
                               <input
                                   disabled={el.final}
                                   type="checkbox"
@@ -173,8 +173,9 @@ const WeeklySheet = () => {
                                   onChange={(e) => handleChange(e)}
                               />
                           </td>
-                          <td className="border px-8 py-4">
-                              <div className="flex items-center mb-4">
+                          <td className="border text-center flex justify-center py-4">
+                            <div className="flex flex-col items-start">
+                              <div className="flex items-center justify-center mb-4">
                                   <input
                                       disabled={el.final}
                                       type="checkbox"
@@ -191,7 +192,7 @@ const WeeklySheet = () => {
                                       Absent
                                   </label>
                               </div>
-                              <div className="flex items-center">
+                              <div className="flex items-center justify-center">
                                   <input
                                       disabled={el.final}
                                       type="checkbox"
@@ -208,10 +209,11 @@ const WeeklySheet = () => {
                                       Refused
                                   </label>
                               </div>
+                              </div>
                           </td>
                           <td className="border px-8 py-4">
                               <select
-                                    disabled={el.final}
+                                  disabled={el.final}
                                   id={`put--${index}--scale_type`}
                                   className="flex bg-gray-50 border border-separate border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                   value={el.scale_type}
@@ -224,7 +226,7 @@ const WeeklySheet = () => {
                                   <option value="bed">Bed</option>
                               </select>
                           </td>
-                          <td className="border px-8 py-4">
+                          <td className="border text-center py-4">
                               <input
                                   disabled={el.final}
                                   type="checkbox"
@@ -257,7 +259,7 @@ const WeeklySheet = () => {
             Weekly Weight Sheet
           </h1>
         </header>
-        <div className="flex flex-col rounded-md items-center m-auto border-2 border-sky-100 w-1/3 py-3 text-smoke-600">
+        <div className="flex flex-col rounded-md items-center m-auto border-2 border-sky-100 md:w-1/3 py-3 px-10 text-smoke-600">
           <ol>
             <li className="font-semibold">Goals:</li>
             <li>
@@ -270,19 +272,22 @@ const WeeklySheet = () => {
         </div>
 
         <div className="container mx-auto flex flex-col mt-20">
-          <div className="flex md:justify-around justify-between mx-10 content-center ">
+          <div className="flex md:justify-around justify-between sm-mx-10 content-center items-center text-md sm:text-lg">
             <span>Weight Team Member: {employee.name}</span>
             <span>Date: {formattedDate(new Date())}</span>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              className={
+                "bg-sky-600 hover:bg-primary py-2 px-4 mb-2 sm:text-xl text-white rounded border border-blue focus:outline-none focus:border-black"
+              }
+              value="Save"
               onClick={handleSubmit}
             >
               Save
             </button>
           </div>
-          <table className="shadow-lg bg-white border-separate overflow-scroll">
+          <table className="shadow-lg bg-white border-separate overflow-x-scroll">
             <thead>
-              <tr>
+              <tr className="font-body text-stone-800">
                 <th className="bg-blue-100 border text-left px-8 py-4">Room</th>
                 <th className="bg-blue-100 border text-left px-8 py-4">
                   Resident Name
