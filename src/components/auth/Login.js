@@ -5,8 +5,8 @@ import "./Login.css";
 import RegisterModal from "./RegisterModal";
 
 export const Login = () => {
-  const [username, setUsername] = useState("sreese");
-  const [password, setPassword] = useState("tigers123");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
