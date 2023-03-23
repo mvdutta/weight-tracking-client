@@ -15,7 +15,7 @@ const formattedDate = (date) => {
   return formattedDate;
 };
 
-
+//patientListWithWeights is a giant array which holds 10 objects (1 for each row of the table) 
 const WeeklySheet = () => {
     const [patientListWithWeights, setPatientListWithWeights] = useState([])
     const [employee, setEmployee] = useState({})
@@ -39,6 +39,7 @@ const WeeklySheet = () => {
         const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${todaysDate}`
         const API3 ="http://localhost:8000/weights/closestdate_all?lookback=1week"
 
+        //this function makes 3 api calls sequentially 
         const getData =  async () =>{
             if (patientListWithWeights.length===0){
             await   fetchIt(API1, {
@@ -121,7 +122,7 @@ const WeeklySheet = () => {
             copy[index][field] = parseFloat(e.target.value)
         }
         if (field === "reweighed" || field === "daily_wts") {
-            copy[index][field] = !copy[index][field]
+            copy[index][field] = !copy[index][field]//toggles the value from true to false and vice versa
         }
         if (field === "not_in_room") {
             copy[index][field] = !copy[index][field]

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { fetchIt } from "../auth/fetchIt";
 import NavBar from '../nav/NavBar'
 import { discard, compose } from "../../assets";
@@ -69,7 +69,14 @@ const Inbox = () => {
                  el.sender.user.last_name
                }`}
              </td>
-             <td className="px-6 py-4">{el.message.subject}</td>
+             <td className="px-6 py-4">
+               <Link
+                 to={`/messagedetail/${el.message.id}`}
+                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"       
+               >
+                 {el.message.subject}
+               </Link>{" "}
+             </td>
              <td className="px-6 py-4">
                {formattedDate(new Date(el.message.date_created))}
              </td>
@@ -78,11 +85,11 @@ const Inbox = () => {
                  <img
                    src={discard}
                    alt="logo"
-                   id= {`delete--${el.id}`}
+                   id={`delete--${el.id}`}
                    className="block w-28 md:w-6 cursor-pointer"
                    onClick={(evt) => {
-                    const[_, id] = evt.target.id.split("--")
-                    console.log("ID:", id)
+                     const [_, id] = evt.target.id.split("--");
+                     console.log("ID:", id);
                      deleteEmail(id);
                    }}
                  />
