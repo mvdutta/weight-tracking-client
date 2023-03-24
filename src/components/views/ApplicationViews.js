@@ -9,6 +9,7 @@ import RNdashboard from "../dashboard/RNdashboard";
 import { NoAccess } from "../NoAccess";
 import Compose from "../messages/Compose";
 import WeightSheetSummary from "../weightSheets/WeightSheetSummary";
+import MessageDetailModal from "../messages/MessageDetail/MessageDetailModal";
 
 
 export const ApplicationViews = () => {
@@ -24,6 +25,7 @@ export const ApplicationViews = () => {
       <Route path="/weightsummary" element={<WeightSummary />} />
       <Route path="/noaccess" element={<NoAccess />} />
       <Route path="/compose" element={<Compose />} />
+      <Route path="/messagedetail/:id" element={<MessageDetailModal />} />
       <Route path="/weightsheetsummary" element={<WeightSheetSummary />} />
     </Routes>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useNavigate, Link} from "react-router-dom";
-import { alert } from "../../assets";
+import { alert, calculator } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
 import NavBar from "../nav/NavBar";
 import "./Dashboard.css";
@@ -18,14 +18,22 @@ const RDdashboard = () => {
   const [selectedResident, setSelectedResident] = useState({})
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [weightData, setWeightData] = useState({})
+  const [emails, setEmails] = useState(0);
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
     if (user) {
-      setName(JSON.parse(user).name);
+      console.log(user);
+      const parsedUser = JSON.parse(user);
+      setName(parsedUser.name);
+      fetchIt(
+        `http://localhost:8000/employeemessages?recipient=${parsedUser.id}`
+      ).then((data) => {
+        console.log(data);
+        setEmails(data.length);
+      });
     }
   }, [loggedIn]);
-
 
   useEffect(()=>{
     fetchIt(`http://localhost:8000/weights/rd_summary?resident=${selectedResident.id}`)
@@ -112,14 +120,16 @@ const makeTableRow = () => {
          {name ? `Welcome ${name}` : ""}
        </h1>
      </div>
-     <div className="grid grid-cols-2 justify-items-center md:justify-items-between">
-       <div className="md:ml-64">
-         <h1 className="text-lg font-semibold text-stone-600">Resources</h1>
+     <div className="grid grid-cols-2  justify-items-center md:justify-items-between">
+       <div>
+         <a href="https://mvdutta.github.io/metabolic-calculator/" target="_blank">
+           <img src={calculator} alt="logo" className="block  w-8 md:w-14" />
+         </a>
        </div>
-       <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end text-stone-700  mr-5 md:mr-64">
+       <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end text-stone-700  ">
          <img src={alert} alt="logo" className="block  w-8 md:w-14" />
          <h3 className="text-md">
-           You have <span className="font-bold">3</span>{" "}
+           You have <span className="font-bold">{emails}</span>{" "}
            <Link to="/inbox">
              {" "}
              <span className="text-sky-700 underline">new messages</span>

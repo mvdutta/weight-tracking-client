@@ -1,9 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { fetchIt } from "../auth/fetchIt";
 import NavBar from '../nav/NavBar'
 import { discard, compose } from "../../assets";
+import MessageDetailModal from './MessageDetail/MessageDetailModal';
 
 
 const formattedDate = (date) => {
@@ -21,8 +22,9 @@ const Inbox = () => {
    const navigate = useNavigate();
    const [name, setName] = useState("");
    const [user, setUser] = useState({});
-   const [loggedIn, setLoggedIn] = useState(false);
+   const [showModal, setShowModal] = useState(false);
    const [emails, setEmails] = useState([])
+  const [selectedMessage, setSelectedMessage] = useState("")
 
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const Inbox = () => {
           setEmails(data);
         });
     }
-  }, [loggedIn]);
+  }, []);
 
   const deleteEmail = (id) => {
     const confirmed = window.confirm(
@@ -69,7 +71,19 @@ const Inbox = () => {
                  el.sender.user.last_name
                }`}
              </td>
-             <td className="px-6 py-4">{el.message.subject}</td>
+             <td className="px-6 py-4">
+               <Link
+                //  to={`/messagedetail/${el.message.id}`}
+                to=""
+                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"  
+                 onClick={()=>{
+                  setShowModal(true)
+                  setSelectedMessage(el);
+                 } }   
+               >
+                 {el.message.subject}
+               </Link>{" "}
+             </td>
              <td className="px-6 py-4">
                {formattedDate(new Date(el.message.date_created))}
              </td>
@@ -78,11 +92,11 @@ const Inbox = () => {
                  <img
                    src={discard}
                    alt="logo"
-                   id= {`delete--${el.id}`}
+                   id={`delete--${el.id}`}
                    className="block w-28 md:w-6 cursor-pointer"
                    onClick={(evt) => {
-                    const[_, id] = evt.target.id.split("--")
-                    console.log("ID:", id)
+                     const [_, id] = evt.target.id.split("--");
+                     console.log("ID:", id);
                      deleteEmail(id);
                    }}
                  />
@@ -139,6 +153,7 @@ const Inbox = () => {
           </table>
         </div>
       </div>
+      <MessageDetailModal showModal={showModal} setShowModal = {setShowModal} email={selectedMessage}/>
     </>
   );
 }
