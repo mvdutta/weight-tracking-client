@@ -7,6 +7,7 @@ import alert from "./alert-icon2.png";
 import discard from "./delete-icon3.png";
 import compose from "./compose-icon1.png"
 import add from "./arrow-icon1.png";
+import calculator from "./calculator-icon1.png";
 
 
 export { 
@@ -19,4 +20,5 @@ export {
   discard,
   compose,
   add,
+  calculator,
 };
