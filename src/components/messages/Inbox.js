@@ -36,6 +36,7 @@ const Inbox = () => {
       console.log(parsedUser)
     fetchIt(`http://localhost:8000/employeemessages?recipient=${parsedUser.id}`)
         .then((data) => {
+          data.sort((a, b) => new Date(b.message.date_created) - new Date(a.message.date_created));
           setEmails(data);
         });
     }
