@@ -134,7 +134,7 @@ const makeTableRow = () => {
            You have <span className="font-bold">{numUnreadMsgs}</span>{" "}
            <Link to="/inbox">
              {" "}
-             <span className="text-sky-700 underline">new messages</span>
+             <span className="text-sky-700 underline">unread messages</span>
            </Link>
          </h3>
        </div>

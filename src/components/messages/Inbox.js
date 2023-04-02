@@ -24,7 +24,7 @@ const Inbox = () => {
    const [user, setUser] = useState({});
    const [showModal, setShowModal] = useState(false);
    const [emails, setEmails] = useState([])
-  const [selectedMessage, setSelectedMessage] = useState("")
+   const [selectedMessage, setSelectedMessage] = useState("")
 
 
   useEffect(() => {
@@ -33,7 +33,6 @@ const Inbox = () => {
       const parsedUser = JSON.parse(user);
       setName(parsedUser.name);
       setUser(parsedUser)
-      console.log(parsedUser)
     fetchIt(`http://localhost:8000/employeemessages?recipient=${parsedUser.id}`)
         .then((data) => {
           data.sort((a, b) => new Date(b.message.date_created) - new Date(a.message.date_created));
@@ -41,6 +40,17 @@ const Inbox = () => {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (selectedMessage.id) {
+    fetchIt(`http://localhost:8000/messages/${selectedMessage.message.id}/togglereadstatus`, {
+      method:"PUT"
+    })
+    .then((data) => {
+      console.log(data)
+    })
+  }
+  }, [selectedMessage])
 
   const deleteEmail = (id) => {
     const confirmed = window.confirm(
@@ -74,13 +84,16 @@ const Inbox = () => {
              </td>
              <td className="px-6 py-4">
                <Link
-                //  to={`/messagedetail/${el.message.id}`}
-                to=""
-                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"  
-                 onClick={()=>{
-                  setShowModal(true)
-                  setSelectedMessage(el);
-                 } }   
+                 to=""
+                 className={
+                   el.message.read
+                     ? "font-medium text-stone-600 hover:underline"
+                     : "font-medium text-blue-600 hover:underline"
+                 }
+                 onClick={() => {
+                   setShowModal(true);
+                   setSelectedMessage(el);
+                 }}
                >
                  {el.message.subject}
                </Link>{" "}
