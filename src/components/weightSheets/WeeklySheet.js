@@ -277,7 +277,8 @@ const WeeklySheet = () => {
               pm
             </li>
             <li>2. Make and save changes as needed</li>
-            <li>3. Message dietitian or RN with questions/concerns</li>
+            <li>3. If CBW is +/- 5lbs. from PBW, reweigh the resident to confirm</li>
+            <li>4. Message dietitian or RN with questions/concerns</li>
           </ol>
         </div>
 
