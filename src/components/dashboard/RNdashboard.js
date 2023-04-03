@@ -14,7 +14,6 @@ const RNdashboard = () => {
    useEffect(() => {
      const user = localStorage.getItem("wt_token");
      if (user) {
-       console.log(user);
        const parsedUser = JSON.parse(user);
        setName(parsedUser.name);
        fetchIt(

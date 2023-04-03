@@ -35,7 +35,6 @@ const WeightSummary = () => {
   useEffect(() => {
     const current_user = localStorage.getItem("wt_token");
     const parsedUser = JSON.parse(current_user);
-    console.log(parsedUser)
     if (!ROLES.includes(parsedUser.role)) {
       //Check that they have the right role
       navigate("/noaccess");

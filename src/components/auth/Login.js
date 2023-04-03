@@ -65,13 +65,12 @@ export const Login = () => {
 
   return (
     <figure className="h-screen flex">
-      <div className="w-full max-w-md m-auto bg-white rounded-lg border-2 shadow-default py-10 px-1">
+      <div className="w-full max-w-md m-auto bg-white rounded-lg border-4 shadow-md py-10 px-1">
         <blockquote className="text-2xl font-medium text-center">
           <p className="text-2xl text-primary font-body font-semibold mb-5">
             Welcome to WeightTracker
           </p>
         </blockquote>
-
         <div className=" text-gray-700 m-6">
           <div className="flex items-center mt-3 justify-center">
             <h1 className="text-2xl font-medium font-body text-burnt mb-2">
@@ -119,7 +118,7 @@ export const Login = () => {
             <div className="flex items-center mt-3 justify-center">
               <button
                 className={
-                  "bg-sky-600 hover:bg-primary py-2 px-4 text-md text-white rounded border border-blue focus:outline-none focus:border-black"
+                  "bg-sky-600 hover:bg-sky-400 py-2 px-6 text-md text-white rounded-full border shadow border-blue focus:outline-none focus:border-stone-200"
                 }
                 value="Login"
                 onClick={handleLogin}

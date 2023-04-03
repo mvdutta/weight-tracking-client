@@ -1,14 +1,13 @@
-import React from 'react'
-import { close } from "../../../assets";
+import React from "react";
+import { close } from "../../assets";
 
-const MessageDetailModal = ({showModal, setShowModal, email}) => {
-
+const MessageDetailModal = ({ showModal, setShowModal, email }) => {
   return (
     <>
       {showModal ? (
         <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+          <div className="justify-center items-center flex overflow-scroll fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative  w-2/3 md:w-1/3 my-6 mx-auto">
               {/*content*/}
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 {/*header*/}
@@ -34,7 +33,7 @@ const MessageDetailModal = ({showModal, setShowModal, email}) => {
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-stone-200 rounded-b">
                   <button
-                    className="bg-amber-500/90 hover:bg-amber-400 py-2 px-3 md:py-3 md:px-4 text-sm md:text-md text-white rounded border focus:outline-none focus:border-black"
+                    className="bg-amber-500/90 hover:bg-amber-400 py-2 px-3 md:py-3 md:px-4 text-sm md:text-md text-white rounded-full font-bold border focus:outline-none focus:border-amber-600"
                     type="button"
                     onClick={() => setShowModal(false)}
                   >
@@ -49,6 +48,6 @@ const MessageDetailModal = ({showModal, setShowModal, email}) => {
       ) : null}
     </>
   );
-}
+};
 
-export default MessageDetailModal
+export default MessageDetailModal;

@@ -9,8 +9,7 @@ import RNdashboard from "../dashboard/RNdashboard";
 import { NoAccess } from "../NoAccess";
 import Compose from "../messages/Compose";
 import WeightSheetSummary from "../weightSheets/WeightSheetSummary";
-import MessageDetailModal from "../messages/MessageDetail/MessageDetailModal";
-
+import MessageDetailModal from "../messages/MessageDetailModal";
 
 export const ApplicationViews = () => {
   return (

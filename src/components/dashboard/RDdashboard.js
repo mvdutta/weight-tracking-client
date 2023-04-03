@@ -23,7 +23,6 @@ const RDdashboard = () => {
    useEffect(() => {
      const user = localStorage.getItem("wt_token");
      if (user) {
-       console.log(user);
        const parsedUser = JSON.parse(user);
        setName(parsedUser.name);
        fetchIt(
@@ -40,7 +39,6 @@ const RDdashboard = () => {
   useEffect(()=>{
     fetchIt(`http://localhost:8000/weights/rd_summary?resident=${selectedResident.id}`)
     .then((data)=>{
-      console.log(data)
         setWeightData(data)
     })
 

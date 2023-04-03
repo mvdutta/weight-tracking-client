@@ -116,10 +116,6 @@ const WeightSheetSummary = () => {
         if (promiseArray.length>0) {
             Promise.all(promiseArray).then((data) => {
                 navigate(0)
-                for (let datum of data) {
-                    console.log(datum)
-                }
-
             })
         }
         
@@ -283,7 +279,7 @@ const WeightSheetSummary = () => {
             <span>Date: {formattedDateUI(new Date())}</span>
             <button
               className={
-                "bg-sky-600 hover:bg-primary py-2 px-4 mb-2 sm:text-xl text-white rounded border border-blue focus:outline-none focus:border-black"
+                "bg-sky-600 hover:bg-sky-400 py-2 px-6 mb-2 sm:text-xl text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"
               }
               value="Finalize"
               onClick={handleSubmit}
