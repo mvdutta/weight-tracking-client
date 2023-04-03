@@ -1,11 +1,10 @@
-import React from 'react'
+import React from "react";
 import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { fetchIt } from "../auth/fetchIt";
-import NavBar from '../nav/NavBar'
-import { discard, compose } from "../../assets";
-import MessageDetailModal from './MessageDetail/MessageDetailModal';
-
+import NavBar from "../nav/NavBar";
+import { discard, compose, read, unread } from "../../assets";
+import MessageDetailModal from "./MessageDetailModal";
 
 const formattedDate = (date) => {
   const myDate = date;
@@ -17,37 +16,49 @@ const formattedDate = (date) => {
   return formattedDate;
 };
 
-
 const Inbox = () => {
-   const navigate = useNavigate();
-   const [name, setName] = useState("");
-   const [user, setUser] = useState({});
-   const [showModal, setShowModal] = useState(false);
-   const [emails, setEmails] = useState([])
-  const [selectedMessage, setSelectedMessage] = useState("")
-
+  const navigate = useNavigate();
+  const [name, setName] = useState("");
+  const [user, setUser] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [emails, setEmails] = useState([]);
+  const [selectedMessage, setSelectedMessage] = useState("");
+  const [msgClicked, setMsgClicked] = useState(false);
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
     if (user) {
       const parsedUser = JSON.parse(user);
       setName(parsedUser.name);
-      setUser(parsedUser)
-      console.log(parsedUser)
-    fetchIt(`http://localhost:8000/employeemessages?recipient=${parsedUser.id}`)
-        .then((data) => {
-          data.sort((a, b) => new Date(b.message.date_created) - new Date(a.message.date_created));
-          setEmails(data);
-        });
+      setUser(parsedUser);
+      fetchIt(
+        `http://localhost:8000/employeemessages?recipient=${parsedUser.id}`
+      ).then((data) => {
+        data.sort(
+          (a, b) =>
+            new Date(b.message.date_created) - new Date(a.message.date_created)
+        );
+        setEmails(data);
+      });
     }
-  }, []);
+  }, [msgClicked]);
+
+  useEffect(() => {
+    if (selectedMessage.id && !selectedMessage.message.read) {
+      fetchIt(
+        `http://localhost:8000/messages/${selectedMessage.message.id}/changeunreadtoread`,
+        {
+          method: "PUT",
+        }
+      ).then((data) => {});
+    }
+  }, [selectedMessage]);
 
   const deleteEmail = (id) => {
     const confirmed = window.confirm(
       "Are you sure you want to delete this email?"
     );
     if (!confirmed) return;
-    console.log(id)
     fetchIt(`http://localhost:8000/employeemessages/${id}`, {
       method: "DELETE",
     }).then(() => {
@@ -55,61 +66,74 @@ const Inbox = () => {
     });
   };
 
- const makeTableRows = () => (
-   <>
-     <tbody>
-       {emails.map((el) => (
-         <>
-           <tr
-             key={`table-row-${el.id}`}
-             className="bg-white border-b dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600"
-           >
-             <td
-               scope="row"
-               className="px-6 py-4 font-medium text-stone-900 whitespace-nowrap dark:text-white"
-             >
-               {`${el.sender.user.first_name.slice(0, 1)}. ${
-                 el.sender.user.last_name
-               }`}
-             </td>
-             <td className="px-6 py-4">
-               <Link
-                //  to={`/messagedetail/${el.message.id}`}
-                to=""
-                 className="font-medium text-blue-600 dark:text-blue-500 hover:underline"  
-                 onClick={()=>{
-                  setShowModal(true)
-                  setSelectedMessage(el);
-                 } }   
-               >
-                 {el.message.subject}
-               </Link>{" "}
-             </td>
-             <td className="px-6 py-4">
-               {formattedDate(new Date(el.message.date_created))}
-             </td>
-             <td className="px-6 py-4">
-               {
-                 <img
-                   src={discard}
-                   alt="logo"
-                   id={`delete--${el.id}`}
-                   className="block w-28 md:w-6 cursor-pointer"
-                   onClick={(evt) => {
-                     const [_, id] = evt.target.id.split("--");
-                     console.log("ID:", id);
-                     deleteEmail(id);
-                   }}
-                 />
-               }
-             </td>
-           </tr>
-         </>
-       ))}
-     </tbody>
-   </>
- );
-
+  const makeTableRows = () => (
+    <>
+      <tbody>
+        {emails.map((el) => (
+          <>
+            <tr
+              key={`table-row-${el.id}`}
+              className="bg-white border-b dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600"
+            >
+              <td
+                scope="row"
+                className="pl-6 py-4
+             "
+              >
+                {el.message.read ? (
+                  <img src={read} alt="read" className="block w-8 md:w-8" />
+                ) : (
+                  <img src={unread} alt="unread" className="block w-8 md:w-8" />
+                )}
+              </td>
+              <td
+                scope="row"
+                className="pl-6 py-4 font-medium text-stone-900 whitespace-nowrap"
+              >
+                {`${el.sender.user.first_name.slice(0, 1)}. ${
+                  el.sender.user.last_name
+                }`}
+              </td>
+              <td className="pl-6 py-4">
+                <Link
+                  to=""
+                  className={
+                    el.message.read
+                      ? "font-medium text-stone-600 hover:underline"
+                      : "font-medium text-blue-600 hover:underline"
+                  }
+                  onClick={() => {
+                    setShowModal(true);
+                    setSelectedMessage(el);
+                    setMsgClicked((x) => !x);
+                  }}
+                >
+                  {el.message.subject}
+                </Link>{" "}
+              </td>
+              <td className="pl-6 py-4 text-stone-900">
+                {formattedDate(new Date(el.message.date_created))}
+              </td>
+              <td className="pl-6 py-4">
+                {
+                  <img
+                    src={discard}
+                    alt="logo"
+                    id={`delete--${el.id}`}
+                    className="block w-28 md:w-6 cursor-pointer"
+                    onClick={(evt) => {
+                      const [_, id] = evt.target.id.split("--");
+                      deleteEmail(id);
+                    }}
+                  />
+                }
+              </td>
+            </tr>
+          </>
+        ))}
+      </tbody>
+    </>
+  );
 
   return (
     <>
@@ -135,9 +159,10 @@ const Inbox = () => {
           </h3>
         </div>
         <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg md:w-2/3 font-body border-solid  border-2 border-sky-600/20 py-6 px-4">
-          <table className="text-md text-center text-stone-700 dark:text-stone-500">
+          <table className="text-md text-left text-stone-700 dark:text-stone-500">
             <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
               <tr>
+                <th scope="col" className=""></th>
                 <th scope="col" className="px-6 py-3">
                   Sender
                 </th>
@@ -154,9 +179,13 @@ const Inbox = () => {
           </table>
         </div>
       </div>
-      <MessageDetailModal showModal={showModal} setShowModal = {setShowModal} email={selectedMessage}/>
+      <MessageDetailModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        email={selectedMessage}
+      />
     </>
   );
-}
+};
 
-export default Inbox
+export default Inbox;

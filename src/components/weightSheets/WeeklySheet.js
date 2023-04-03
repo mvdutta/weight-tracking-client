@@ -269,7 +269,7 @@ const WeeklySheet = () => {
             Weekly Weight Sheet
           </h1>
         </header>
-        <div className="flex flex-col rounded-md items-center m-auto border-2 border-sky-100  lg:w-1/3 py-3 px-10 text-smoke-600">
+        <div className="flex flex-col rounded-md items-center m-auto border-2 shadow-md border-sky-100 lg:w-1/3 py-3 px-10 text-smoke-600">
           <ol>
             <li className="font-semibold">Goals:</li>
             <li>
@@ -288,7 +288,7 @@ const WeeklySheet = () => {
             <span>Date: {formattedDateUI(new Date())}</span>
             <button
               className={
-                "bg-sky-600 hover:bg-primary py-2 px-4 mb-2 sm:text-xl text-white rounded border border-blue focus:outline-none focus:border-black"
+                "bg-sky-600 hover:bg-sky-500 uppercase py-2 px-4 mb-2 sm:text-lg text-white font-bold rounded-full border border-blue focus:outline-none focus:border-stone-500 shadow-md "
               }
               value="Save"
               onClick={handleSubmit}

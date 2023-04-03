@@ -67,9 +67,7 @@ const handleSubmit = () =>{
                    checked={el.checked}
                    onChange={(e) => {
                      const [_, checkedId] = e.target.id.split("--");
-                     console.log(checkedId);
                      const employeesCopy = [...employees];
-                     console.log("copy", employeesCopy);
                      const rec = employeesCopy.find(
                        (emp) => emp.id === +checkedId
                      );
@@ -109,7 +107,7 @@ const handleSubmit = () =>{
         </h1>
       </header>
       <div className="flex justify-center">
-      <div className=" md:border-2 rounded-md border-sky-800/30 md:pb-8 px-10 mt-10 inline-block content-center">
+      <div className=" md:border-2 rounded-md shadow-md border-sky-800/30 md:pb-8 px-10 mt-10 inline-block content-center">
         <div className="mt-5">
           <h6 className="font-semibold text-stone-800">Select Recipient(s):</h6>
         </div>
@@ -185,7 +183,7 @@ const handleSubmit = () =>{
         <div>
           <button
             className={
-              "bg-sky-600/90 hover:bg-sky-600 py-2 px-3 md:py-3 md:px-5 text-sm md:text-md text-white rounded border border-blue focus:outline-none focus:border-black"
+              "bg-sky-600/90 hover:bg-sky-600 py-2 px-5 md:py-3 md:px-6 text-sm md:text-md text-white rounded-full font-bold border border-blue focus:outline-none focus:border-black"
             }
             onClick = {handleSubmit}
           >
@@ -196,7 +194,7 @@ const handleSubmit = () =>{
           <Link to="/inbox">
           <button
             className={
-              "bg-amber-500/90 hover:bg-amber-400 py-2 px-3 md:py-3 md:px-4 text-sm md:text-md text-white rounded border focus:outline-none focus:border-black"
+              "bg-amber-500/90 hover:bg-amber-400 py-2 px-3 md:py-3 md:px-4 text-sm md:text-md text-white font-bold rounded-full border focus:outline-none focus:border-black"
             }
             value=""
           >

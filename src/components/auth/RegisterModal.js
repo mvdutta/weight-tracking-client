@@ -29,7 +29,6 @@ const RegisterModal = () => {
     })
       .then((res) => res.json())
       .then((createdUser) => {
-        console.log(createdUser)
         if (createdUser.hasOwnProperty("id")) {
           localStorage.setItem(
             "wt_token",
@@ -137,10 +136,7 @@ const RegisterModal = () => {
                         Select your role
                       </option>
                       {ROLES.map((role) => (
-                        <option
-                          key={role}
-                          value={role}
-                        >
+                        <option key={role} value={role}>
                           {role}
                         </option>
                       ))}
@@ -156,7 +152,7 @@ const RegisterModal = () => {
                     Close
                   </button>
                   <button
-                    className="text-white bg-sky-600 active:bg-teal-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 font-body"
+                    className="text-white bg-sky-600  hover:bg-sky-400 font-bold text-md px-6 py-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 font-body"
                     type="submit"
                     onClick={(e) => {
                       handleRegister(e);

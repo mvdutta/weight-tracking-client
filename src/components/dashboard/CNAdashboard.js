@@ -10,19 +10,17 @@ const CNAdashboard = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
-  const [emails, setEmails] = useState(0);
+  const [numUnreadMsgs, setNumUnreadMsgs] = useState(0)
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
     if (user) {
-      console.log(user);
       const parsedUser = JSON.parse(user);
       setName(parsedUser.name);
       fetchIt(
-        `http://localhost:8000/employeemessages?recipient=${parsedUser.id}`
+        `http://localhost:8000/employeemessages/unreadmessages?recipient=${parsedUser.id}`
       ).then((data) => {
-        console.log(data);
-        setEmails(data.length);
+       setNumUnreadMsgs(data.num_msgs)
       });
     }
   }, [loggedIn]);
@@ -46,10 +44,10 @@ const CNAdashboard = () => {
       <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end  md:mr-60 mt-5 mb-12 md:mb-[125px] text-stone-700">
         <img src={alert} alt="logo" className="block  w-8 md:w-14" />
         <h3>
-          You have <span className="font-bold">{emails}</span>{" "}
+          You have <span className="font-bold">{numUnreadMsgs}</span>{" "}
           <Link to="/inbox">
             {" "}
-            <span className="text-sky-700 underline">new messages</span>
+            <span className="text-sky-700 underline">unread messages</span>
           </Link>
         </h3>
       </div>

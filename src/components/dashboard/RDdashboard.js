@@ -18,27 +18,27 @@ const RDdashboard = () => {
   const [selectedResident, setSelectedResident] = useState({})
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [weightData, setWeightData] = useState({})
-  const [emails, setEmails] = useState(0);
+  const [numUnreadMsgs, setNumUnreadMsgs] = useState(0);
 
-  useEffect(() => {
-    const user = localStorage.getItem("wt_token");
-    if (user) {
-      console.log(user);
-      const parsedUser = JSON.parse(user);
-      setName(parsedUser.name);
-      fetchIt(
-        `http://localhost:8000/employeemessages?recipient=${parsedUser.id}`
-      ).then((data) => {
-        console.log(data);
-        setEmails(data.length);
-      });
-    }
-  }, [loggedIn]);
+   useEffect(() => {
+     const user = localStorage.getItem("wt_token");
+     if (user) {
+       const parsedUser = JSON.parse(user);
+       setName(parsedUser.name);
+       fetchIt(
+         `http://localhost:8000/employeemessages/unreadmessages?recipient=${parsedUser.id}`
+       ).then((data) => {
+         setNumUnreadMsgs(data.num_msgs);
+       });
+     }
+   }, [loggedIn]);
+
+
+
 
   useEffect(()=>{
     fetchIt(`http://localhost:8000/weights/rd_summary?resident=${selectedResident.id}`)
     .then((data)=>{
-      console.log(data)
         setWeightData(data)
     })
 
@@ -129,10 +129,10 @@ const makeTableRow = () => {
        <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end text-stone-700  ">
          <img src={alert} alt="logo" className="block  w-8 md:w-14" />
          <h3 className="text-md">
-           You have <span className="font-bold">{emails}</span>{" "}
+           You have <span className="font-bold">{numUnreadMsgs}</span>{" "}
            <Link to="/inbox">
              {" "}
-             <span className="text-sky-700 underline">new messages</span>
+             <span className="text-sky-700 underline">unread messages</span>
            </Link>
          </h3>
        </div>
