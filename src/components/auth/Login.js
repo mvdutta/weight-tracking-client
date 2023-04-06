@@ -4,21 +4,26 @@ import { fetchIt } from "./fetchIt";
 import "./Login.css";
 import RegisterModal from "./RegisterModal";
 import { logo } from "../../assets";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (username === "") {
-      window.alert("Please enter your username");
+     MySwal.fire("Please enter your username");
       return;
     }
     if (password === "") {
-      window.alert("Please enter your password");
+     MySwal.fire("Please enter your password");
       return;
     }
     fetch(`http://localhost:8000/login`, {
@@ -45,7 +50,7 @@ export const Login = () => {
           );
           setLoggedIn(true);
         } else {
-          window.alert("Invalid login");
+          MySwal.fire("Invalid login");
         }
       })
       .then(() => {

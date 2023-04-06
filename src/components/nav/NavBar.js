@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { close, menu } from "../../assets";
 import "./NavBar.css";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const sameLinks = [
   {
@@ -64,6 +66,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({ id: "", token: "", name: "", role: "" });
   const [links, setLinks] = useState([]);
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     const current_user = localStorage.getItem("wt_token");
@@ -82,10 +85,22 @@ const NavBar = () => {
     }
   }, []);
   const handleLogout = () => {
-    if (window.confirm(`${user.name}, are you sure you want to sign out?`)) {
-      localStorage.removeItem("wt_token");
-      navigate("/", { replace: true });
-    }
+    Swal.fire({
+      title: `${user.name}, are you sure you want to sign out?`,
+      // text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Logout",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("wt_token");
+        navigate("/", { replace: true });
+        // Swal.fire("Logged Out", "Successfuly Logged Out.", "success");
+      }
+    });
+
   };
   return (
     <>

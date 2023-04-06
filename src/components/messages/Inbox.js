@@ -5,6 +5,8 @@ import { fetchIt } from "../auth/fetchIt";
 import NavBar from "../nav/NavBar";
 import { discard, compose, read, unread } from "../../assets";
 import MessageDetailModal from "./MessageDetailModal";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const formattedDate = (date) => {
   const myDate = date;
@@ -24,6 +26,7 @@ const Inbox = () => {
   const [emails, setEmails] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState("");
   const [msgClicked, setMsgClicked] = useState(false);
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
@@ -55,14 +58,22 @@ const Inbox = () => {
   }, [selectedMessage]);
 
   const deleteEmail = (id) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this email?"
-    );
-    if (!confirmed) return;
-    fetchIt(`http://localhost:8000/employeemessages/${id}`, {
-      method: "DELETE",
-    }).then(() => {
-      navigate(0); //refreshes the page
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "This email will be permanently deleted!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+            fetchIt(`http://localhost:8000/employeemessages/${id}`, {
+              method: "DELETE",
+            }).then(() => {
+               setMsgClicked((x) => !x); //sends signal to refresh the inbox
+            });
+      }
     });
   };
 

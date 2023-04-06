@@ -3,6 +3,8 @@ import NavBar from "../nav/NavBar"
 import { useState, useEffect } from "react"
 import { fetchIt } from "../auth/fetchIt"
 import { useNavigate } from "react-router-dom"
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 
 
@@ -31,6 +33,7 @@ const WeeklySheet = () => {
     const [employee, setEmployee] = useState({})
     const [alerts, showAlerts] = useState(false)
     const navigate = useNavigate()
+    const MySwal = withReactContent(Swal);
 
     useEffect(() => {
         const current_user = localStorage.getItem("wt_token")
@@ -118,7 +121,7 @@ const WeeklySheet = () => {
     
         if (promiseArray.length>0) {
             Promise.all(promiseArray).then((data) => {
-                window.alert("Data saved")
+                MySwal.fire("Data saved")
 
             })
         }

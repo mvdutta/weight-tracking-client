@@ -3,6 +3,8 @@ import NavBar from "../nav/NavBar"
 import { useState, useEffect } from "react"
 import { fetchIt } from "../auth/fetchIt"
 import { useNavigate } from "react-router-dom"
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 
 const formattedDate = (date) => {
@@ -31,6 +33,7 @@ const WeightSheetSummary = () => {
     const [employee, setEmployee] = useState({})
     const [alerts, showAlerts] = useState(false)
     const navigate = useNavigate()
+    const MySwal = withReactContent(Swal);
 
     useEffect(() => {
         const current_user = localStorage.getItem("wt_token")
@@ -72,52 +75,63 @@ const WeightSheetSummary = () => {
         "w-4 h-4 text-blue-600 bg-stone-100 border-stone-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-stone-700 dark:focus:ring-offset-stone-700 focus:ring-2 dark:bg-stone-600 dark:border-stone-500"
 
     const handleSubmit = () => {
-        //prepare post requests
-        if (!window.confirm("Saved values cannot be changed!")) return
-        const API = "http://localhost:8000"
-        const promiseArray = []
-         if (patientListWithWeights.length>0){
-        for (let el of patientListWithWeights) {
-            const address = `${API}/weightsheets/${el.weight_sheet_id}`
-            const requestBody = {
-                resident: el.resident_id,
-                reweighed: el.reweighed,
-                refused: el.refused,
-                not_in_room: el.not_in_room,
-                daily_wts: el.daily_wts,
-                show_alert: el.show_alert,
-                scale_type: el.scale_type,
-                final: true,
-                weight: el.weight,
-            }
-            promiseArray.push(
-                fetchIt(address, {
+        MySwal.fire({
+          title: "Are you sure?",
+          text: "Saved values cannot be changed!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, save data",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            //prepare post requests
+            const API = "http://localhost:8000";
+            const promiseArray = [];
+            if (patientListWithWeights.length > 0) {
+              for (let el of patientListWithWeights) {
+                const address = `${API}/weightsheets/${el.weight_sheet_id}`;
+                const requestBody = {
+                  resident: el.resident_id,
+                  reweighed: el.reweighed,
+                  refused: el.refused,
+                  not_in_room: el.not_in_room,
+                  daily_wts: el.daily_wts,
+                  show_alert: el.show_alert,
+                  scale_type: el.scale_type,
+                  final: true,
+                  weight: el.weight,
+                };
+                promiseArray.push(
+                  fetchIt(address, {
                     method: "PUT",
                     body: JSON.stringify(requestBody),
-                })
-            )
-        }
-        for (let el of patientListWithWeights) {
-            const address = `${API}/weights/${el.weight_id}`
-            const requestBody = {
-                resident: el.resident_id,
-                date: formattedDate(new Date()),
-                weight: el.weight,
-            }
-            promiseArray.push(
-                fetchIt(address, {
+                  })
+                );
+              }
+              for (let el of patientListWithWeights) {
+                const address = `${API}/weights/${el.weight_id}`;
+                const requestBody = {
+                  resident: el.resident_id,
+                  date: formattedDate(new Date()),
+                  weight: el.weight,
+                };
+                promiseArray.push(
+                  fetchIt(address, {
                     method: "PUT",
                     body: JSON.stringify(requestBody),
-                })
-            )
-        }
-    }
-    
-        if (promiseArray.length>0) {
-            Promise.all(promiseArray).then((data) => {
-                navigate(0)
-            })
-        }
+                  })
+                );
+              }
+            }
+
+            if (promiseArray.length > 0) {
+              Promise.all(promiseArray).then((data) => {
+                navigate(0);
+              });
+            }
+          }
+        });
         
     }
 
@@ -192,7 +206,7 @@ const WeightSheetSummary = () => {
 
         if (promiseArray.length > 0) {
           Promise.all(promiseArray).then((data) => {
-            window.alert("Data saved");
+            MySwal.fire("Data saved");
           });
         }
       };

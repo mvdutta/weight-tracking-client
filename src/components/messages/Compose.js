@@ -4,7 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { fetchIt } from "../auth/fetchIt";
 import { add } from "../../assets";
 import NavBar from '../nav/NavBar'
-import { toBeChecked } from '@testing-library/jest-dom/dist/matchers';
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const formattedDate = (date) => {
     const myDate = date
@@ -19,6 +20,7 @@ const formattedDate = (date) => {
 const Compose = () => {
 const [employees, setEmployees] = useState([])
 const [message, setMessage] = useState({subject:"", message_body:""})
+const MySwal = withReactContent(Swal);
 
 
 
@@ -45,7 +47,7 @@ const handleSubmit = () =>{
   const address = "http://localhost:8000/messages";
   fetchIt(address, {method: "POST", body: JSON.stringify(postBody)})
   .then((data)=>{
-    window.alert("Message sent")
+    MySwal.fire("Message sent")
   })
 }
   
