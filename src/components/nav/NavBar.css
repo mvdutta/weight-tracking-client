@@ -12,8 +12,11 @@
   top: 0;
   left: 0;
   background-color: #FEEAD3;
+  z-index: 10;
 }
 
 .padder{
   margin-top: 80px;
+  background-color: #FEEAD3;
+  z-index: 10;
 }

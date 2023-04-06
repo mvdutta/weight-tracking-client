@@ -269,7 +269,7 @@ const WeeklySheet = () => {
             Weekly Weight Sheet
           </h1>
         </header>
-        <div className="flex flex-col rounded-md items-center m-auto border-2 shadow-md border-sky-100 lg:w-1/3 py-3 px-10 text-smoke-600">
+        <div className="flex flex-col rounded-md items-center m-auto border-2 shadow-md border-sky-200/60 lg:w-1/3 py-3 px-10 text-smoke-600 shadow-sky-800/30">
           <ol>
             <li className="font-semibold">Goals:</li>
             <li>
@@ -277,7 +277,9 @@ const WeeklySheet = () => {
               pm
             </li>
             <li>2. Make and save changes as needed</li>
-            <li>3. If CBW is +/- 5lbs. from PBW, reweigh the resident to confirm</li>
+            <li>
+              3. If CBW is +/- 5lbs. from PBW, reweigh the resident to confirm
+            </li>
             <li>4. Message dietitian or RN with questions/concerns</li>
           </ol>
         </div>
@@ -288,43 +290,56 @@ const WeeklySheet = () => {
             <span>Date: {formattedDateUI(new Date())}</span>
             <button
               className={
-                "bg-sky-600 hover:bg-sky-500 uppercase py-2 px-4 mb-2 sm:text-lg text-white font-bold rounded-full border border-blue focus:outline-none focus:border-stone-500 shadow-md "
+                "bg-sky-600 hover:bg-sky-500 uppercase text-sm py-2 px-6 mb-2 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-stone-500 shadow-md "
               }
-              value="Save"
+              value=""
               onClick={handleSubmit}
             >
               Save
             </button>
           </div>
-          <table className="shadow-lg bg-white border-separate overflow-scroll">
+          <table className="shadow-md shadow-stone-300 bg-sky-50/40 border-separate overflow-scroll">
             <thead>
               <tr className="font-body text-stone-800">
-                <th className="bg-blue-100 border text-left px-8 py-4">Room</th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
+                  Room
+                </th>
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Resident Name
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Current Weight
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Previous Weight
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   ReWeighed?
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Absent or Refused
                 </th>
-                <th className="bg-blue-100 border text-left px-12 lg:px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-12 lg:px-8 py-4">
                   Scale Type
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Daily Weights
                 </th>
               </tr>
             </thead>
             {makeTableRows()}
           </table>
+        </div>
+        <div className="my-10 flex justify-center">
+          <button
+            className={
+              "bg-sky-600 hover:bg-sky-500 uppercase text-md py-2 px-6 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-stone-500 shadow-md"
+            }
+            value=""
+            onClick={handleSubmit}
+          >
+            Save
+          </button>
         </div>
       </div>
     );

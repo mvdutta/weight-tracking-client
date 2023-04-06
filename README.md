@@ -1,5 +1,5 @@
 # WeightTracker 
-## ***An app to help prevent unintentional weight loss in health care facilities***  <br><br>
+## ***An app to prevent unintentional weight loss in health care facilities***  <br><br>
 
 # Application Overview  
 
@@ -11,6 +11,8 @@
 
 # Features
 There are three primary types of users that can register and log in to their account: (CNA, RD, and RN/NP/MD).<br>
+Responsive design allows for use on most screen sizes.<br>
+
 Each user has different responsibilities:  
 1. From their dashboard, CNAs can:
     - check and send messages to multiple users
@@ -28,6 +30,12 @@ Each user has different responsibilities:
     - view current census list
     - view finalized weekly weight sheet 
 
+# User Experience
+## Register a new user and login
+
+![](src/assets/gifs/register.gif)
+
+
 
 # Technologies
 
@@ -41,13 +49,9 @@ Each user has different responsibilities:
  ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
 
 
-![alt text](https://raw.githubusercontent.com/mvdutta/weight-tracking-client/main/public/gsrh-logo3.png)
 
-## Live Site 
 
-Play Tortoise Scrabble [here](https://sourish33.github.io/ScrabbleReact) 
 
-While all screen sizes are supported, Desktops and Tablets are recommended for the best experience. Touch Screen is supported.
 
 
 ## Installation

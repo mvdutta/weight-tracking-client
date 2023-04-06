@@ -82,7 +82,7 @@ const NavBar = () => {
     }
   }, []);
   const handleLogout = () => {
-    if (window.confirm(`${user.name}, are you sure you want to log out?`)) {
+    if (window.confirm(`${user.name}, are you sure you want to sign out?`)) {
       localStorage.removeItem("wt_token");
       navigate("/", { replace: true });
     }
@@ -108,7 +108,7 @@ const NavBar = () => {
             >
               {" "}
               <Link to="" onClick={handleLogout}>
-                Logout
+                Sign Out
               </Link>
             </li>
           </ul>
@@ -140,7 +140,7 @@ const NavBar = () => {
                 >
                   {" "}
                   <Link to="" onClick={handleLogout}>
-                    Logout
+                    Sign Out
                   </Link>
                 </li>
               </ul>

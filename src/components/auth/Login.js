@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { fetchIt } from "./fetchIt";
 import "./Login.css";
 import RegisterModal from "./RegisterModal";
+import { logo } from "../../assets";
 
 export const Login = () => {
   const [username, setUsername] = useState("");
@@ -65,18 +66,22 @@ export const Login = () => {
 
   return (
     <figure className="h-screen flex">
-      <div className="w-full max-w-md m-auto bg-white rounded-lg border-4 shadow-md py-10 px-1">
-        <blockquote className="text-2xl font-medium text-center">
-          <p className="text-2xl text-primary font-body font-semibold mb-5">
-            Welcome to WeightTracker
+      <div className="w-full max-w-md m-auto bg-white rounded-lg border-2 shadow-lg shadow-sky-800/30 pb-6 px-1">
+        <div className="text-2xl font-medium text-center">
+          <p className="-mt-12">
+            <img
+              className="w-[290px] opacity-80 m-auto"
+              src={logo}
+              alt="weightTrackingLogo"
+            />
           </p>
-        </blockquote>
-        <div className=" text-gray-700 m-6">
-          <div className="flex items-center mt-3 justify-center">
-            <h1 className="text-2xl font-medium font-body text-burnt mb-2">
-              Login to your account
-            </h1>
-          </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <h1 className="text-[21px] font-medium font-body text-burnt -mt-40">
+            Sign in to your account
+          </h1>
+        </div>
+        <div className=" text-gray-700 ml-6 mr-6 -mt-10">
           <form>
             <label className="text-left text-dark font-bold font-body">
               Username:
@@ -118,12 +123,12 @@ export const Login = () => {
             <div className="flex items-center mt-3 justify-center">
               <button
                 className={
-                  "bg-sky-600 hover:bg-sky-400 py-2 px-6 text-md text-white rounded-full border shadow border-blue focus:outline-none focus:border-stone-200"
+                  "bg-sky-600 hover:bg-sky-400 py-2 px-5 uppercase text-xs font-bold text-white rounded-full border shadow border-blue focus:outline-none focus:border-stone-200"
                 }
                 value="Login"
                 onClick={handleLogin}
               >
-                Login
+                Sign In
               </button>
             </div>
           </form>

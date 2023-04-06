@@ -27,14 +27,13 @@ const RNdashboard = () => {
 
    return (
      <>
-     
-         <NavBar />
-         <header className="flex justify-center">
-           <h1 className="font-semibold text-stone-700 text-2xl my-8">
-             {" "}
-             Dashboard
-           </h1>
-         </header>
+       <NavBar />
+       <header className="flex justify-center">
+         <h1 className="font-semibold text-stone-700 text-2xl my-8">
+           {" "}
+           Dashboard
+         </h1>
+       </header>
        <div className="text-center md:mt-5 md:mb-5 mb-10">
          <h1 className="text-xl font-semibold text-stone-600">
            {name ? `Welcome ${name}` : ""}
@@ -52,7 +51,7 @@ const RNdashboard = () => {
        </div>
        <div className="grid lg:grid-cols-3 gap-10 lg:gap-0 justify-items-center lg:m-auto lg:w-2/3">
          <Link to="/weightsummary">
-           <div className=" rounded-lg p-6 shadow-lg border-2 bg-amber-200/40 w-[300px]">
+           <div className=" rounded-lg p-6 shadow-lg shadow-sky-800/50 border-2 bg-amber-200/40 w-[300px]">
              <h5 className="mb-5 text-lg font-body leading-tight  text-sky-800 font-semibold text-center">
                Weekly Weight Sheet
              </h5>
@@ -62,7 +61,7 @@ const RNdashboard = () => {
            </div>
          </Link>
          <Link to="/censuslist">
-           <div className="rounded-lg p-6 bg-amber-200/40 shadow-lg border-2 w-[300px]">
+           <div className="rounded-lg p-6 bg-amber-200/40 shadow-sky-800/50 shadow-lg border-2 w-[300px]">
              <h5 className="mb-5 text-lg font-body leading-tight text-sky-800 font-semibold text-center">
                Census List
              </h5>
@@ -72,7 +71,7 @@ const RNdashboard = () => {
            </div>
          </Link>
          <Link to="/inbox">
-           <div className="rounded-lg p-6 shadow-lg border-2 bg-amber-200/40 w-[300px] mb-16">
+           <div className="rounded-lg p-6 shadow-lg shadow-sky-800/50 border-2 bg-amber-200/40 w-[300px] mb-16">
              <h5 className="mb-5 text-lg font-body leading-tight text-sky-800 font-semibold text-center">
                My Messages
              </h5>

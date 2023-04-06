@@ -54,7 +54,7 @@ const RegisterModal = () => {
   return (
     <>
       <button
-        className="text-primary text-decoration-line: underline text-md font-bold mt-5"
+        className="text-dark opacity-90 text-decoration-line: underline text-md font-bold mt-3 mb-3"
         type="button"
         onClick={() => setShowModal(true)}
       >
@@ -152,7 +152,7 @@ const RegisterModal = () => {
                     Close
                   </button>
                   <button
-                    className="text-white bg-sky-600  hover:bg-sky-400 font-bold text-md px-6 py-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 font-body"
+                    className="text-white bg-sky-600  hover:bg-sky-400 font-bold text-xs px-4 uppercase py-2 rounded-full shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 font-body"
                     type="submit"
                     onClick={(e) => {
                       handleRegister(e);

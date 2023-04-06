@@ -148,6 +148,54 @@ const WeightSheetSummary = () => {
         }
         setPatientListWithWeights(copy)
     }
+
+      const handleSave = () => {
+        //prepare post requests
+        const API = "http://localhost:8000";
+        const promiseArray = [];
+        if (patientListWithWeights.length > 0) {
+          for (let el of patientListWithWeights) {
+            const address = `${API}/weightsheets/${el.weight_sheet_id}`;
+            const requestBody = {
+              resident: el.resident_id,
+              reweighed: el.reweighed,
+              refused: el.refused,
+              not_in_room: el.not_in_room,
+              daily_wts: el.daily_wts,
+              show_alert: el.show_alert,
+              scale_type: el.scale_type,
+              final: el.final,
+              weight: el.weight,
+            };
+            promiseArray.push(
+              fetchIt(address, {
+                method: "PUT",
+                body: JSON.stringify(requestBody),
+              })
+            );
+          }
+          for (let el of patientListWithWeights) {
+            const address = `${API}/weights/${el.weight_id}`;
+            const requestBody = {
+              resident: el.resident_id,
+              date: formattedDate(new Date()),
+              weight: el.weight,
+            };
+            promiseArray.push(
+              fetchIt(address, {
+                method: "PUT",
+                body: JSON.stringify(requestBody),
+              })
+            );
+          }
+        }
+
+        if (promiseArray.length > 0) {
+          Promise.all(promiseArray).then((data) => {
+            window.alert("Data saved");
+          });
+        }
+      };
     const makeTableRows = () => {
         const filledWeightRows =
           patientListWithWeights.length > 0
@@ -160,7 +208,7 @@ const WeightSheetSummary = () => {
                     Math.abs(el.weight - el.prev_wt) > 5 ||
                     el.not_in_room ||
                     el.refused
-                      ? "bg-orange-200"
+                      ? "bg-amber-400/40"
                       : ""
                   }
                 >
@@ -275,53 +323,72 @@ const WeightSheetSummary = () => {
           </h1>
         </header>
         <div className="container mx-auto flex flex-col">
-          <div className="flex md:justify-around justify-between sm:mx-10 my-10 content-center items-center text-md sm:text-lg">
+          <div className="flex justify-between content-center items-center text-md sm:text-lg mx-10">
             <span>Date: {formattedDateUI(new Date())}</span>
-            <button
-              className={
-                "bg-sky-600 hover:bg-sky-400 py-2 px-6 mb-2 sm:text-xl text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"
-              }
-              value="Finalize"
-              onClick={handleSubmit}
-            >
-              Finalize
-            </button>
-            {/* <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={handleSubmit}
-                    >
-                        Save
-                    </button> */}
+            <div className="flex justify-center sm:gap-20 gap-10 my-10">
+              <button
+                className="bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-black"
+                value="Finalize"
+                onClick={handleSubmit}
+              >
+                Finalize
+              </button>
+              <button
+                className="bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"
+                value="Save"
+                onClick={handleSave}
+              >
+                Save
+              </button>
+            </div>
           </div>
-          <table className="shadow-lg bg-white border-separate overflow-scroll">
+          <table className="shadow-md shadow-stone-300  bg-sky-50/40 border-separate overflow-scroll">
             <thead>
               <tr className=" font-body text-stone-800">
-                <th className="bg-blue-100 border text-left px-8 py-4">Room</th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
+                  Room
+                </th>
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Resident Name
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Current Weight
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Previous Weight
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   ReWeighed?
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Absent or Refused
                 </th>
-                <th className="bg-blue-100 border text-left px-12 lg:px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-12 lg:px-8 py-4">
                   Scale Type
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Daily Weights
                 </th>
               </tr>
             </thead>
             {makeTableRows()}
           </table>
+        </div>
+        <div className="flex justify-center gap-20 my-10">
+          <button
+            className="bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border border-amber focus:outline-none focus:border-black"
+            value="Finalize"
+            onClick={handleSubmit}
+          >
+            Finalize
+          </button>
+          <button
+            className="bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"
+            value="Save"
+            onClick={handleSave}
+          >
+            Save
+          </button>
         </div>
       </div>
     );
