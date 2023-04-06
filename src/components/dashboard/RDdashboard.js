@@ -123,11 +123,11 @@ const makeTableRow = () => {
      <div className="grid grid-cols-2  justify-items-center md:justify-items-between">
        <div>
          <a href="https://mvdutta.github.io/metabolic-calculator/" target="_blank">
-           <img src={calculator} alt="logo" className="block  w-8 md:w-14" />
+           <img src={calculator} alt="logo" className="block opacity-80 w-8 md:w-14" />
          </a>
        </div>
        <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end text-stone-700  ">
-         <img src={alert} alt="logo" className="block  w-8 md:w-14" />
+         <img src={alert} alt="logo" className="block opacity-80 w-8 md:w-14" />
          <h3 className="text-md">
            You have <span className="font-bold">{numUnreadMsgs}</span>{" "}
            <Link to="/inbox">

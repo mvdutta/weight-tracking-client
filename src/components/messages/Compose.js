@@ -107,77 +107,79 @@ const handleSubmit = () =>{
         </h1>
       </header>
       <div className="flex justify-center">
-      <div className=" md:border-2 rounded-md shadow-md border-sky-800/30 md:pb-8 px-10 mt-10 inline-block content-center">
-        <div className="mt-5">
-          <h6 className="font-semibold text-stone-800">Select Recipient(s):</h6>
-        </div>
-        <div className="flex flex-col md:flex-row justify-center mt-5 ml-[74px]">
-          <div>
-            <div className=" container flex before:relative overflow-scroll shadow-md sm:rounded-lg h-40 md:h-60 w-[320px] font-body border-solid  border-2 border-sky-600/20 py-3 px-2">
-              <table className="text-md text-left m-auto w-full text-stone-700 dark:text-stone-500">
-                <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
-                  <tr>
-                    <th scope="col" class="p-4">
-                      <div></div>
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Role
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      Name
-                    </th>
-                  </tr>
-                </thead>
-                {employeeTableRows()}
-              </table>
+        <div className=" md:border-2 rounded-md shadow-md shadow-sky-800/40 border-sky-800/30 md:pb-8 px-10 mt-10 inline-block content-center">
+          <div className="mt-5">
+            <h6 className="font-semibold text-stone-800">
+              Select Recipient(s):
+            </h6>
+          </div>
+          <div className="flex flex-col md:flex-row justify-center mt-5 ml-[74px]">
+            <div>
+              <div className=" container flex before:relative overflow-scroll shadow-md sm:rounded-lg h-40 md:h-60 w-[320px] font-body border-solid  border-2 border-sky-600/20 py-3 px-2">
+                <table className="text-md text-left m-auto w-full text-stone-700 dark:text-stone-500">
+                  <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
+                    <tr>
+                      <th scope="col" class="p-4">
+                        <div></div>
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Role
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Name
+                      </th>
+                    </tr>
+                  </thead>
+                  {employeeTableRows()}
+                </table>
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-4 mt-5">
+            <div className="">
+              <label className="font-semibold text-stone-800" for="subject">
+                Subject:
+              </label>
+            </div>
+            <div>
+              <textarea
+                id=""
+                name=""
+                rows="1"
+                cols="49"
+                className="border-gray-300 border-2 rounded-md text-stone-800 mt-2 w-80"
+                value={message.subject}
+                onChange={(e) => {
+                  const messageCopy = { ...message };
+                  messageCopy.subject = e.target.value;
+                  setMessage(messageCopy);
+                }}
+              ></textarea>
+            </div>
+          </div>
+          <div className="flex  gap-2 mt-4">
+            <div className="">
+              <label className="font-semibold text-stone-800" for="subject">
+                Message:
+              </label>
+            </div>
+            <div>
+              <textarea
+                id=""
+                name=""
+                rows="4"
+                cols=""
+                className="border-gray-300 border-2 rounded-md text-stone-800 mt-2 w-80"
+                value={message.message_body}
+                onChange={(e) => {
+                  const messageCopy = { ...message };
+                  messageCopy.message_body = e.target.value;
+                  setMessage(messageCopy);
+                }}
+              ></textarea>
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-4 mt-5">
-          <div className="">
-            <label className="font-semibold text-stone-800" for="subject">
-              Subject:
-            </label>
-          </div>
-          <div>
-            <textarea
-              id=""
-              name=""
-              rows="1"
-              cols="49"
-              className="border-gray-300 border-2 rounded-md text-stone-800 mt-2 w-80"
-              value={message.subject}
-              onChange={(e) => {
-                const messageCopy = { ...message };
-                messageCopy.subject = e.target.value;
-                setMessage(messageCopy);
-              }}
-            ></textarea>
-          </div>
-        </div>
-        <div className="flex  gap-2 mt-4">
-          <div className="">
-            <label className="font-semibold text-stone-800" for="subject">
-              Message:
-            </label>
-          </div>
-          <div>
-            <textarea
-              id=""
-              name=""
-              rows="4"
-              cols=""
-              className="border-gray-300 border-2 rounded-md text-stone-800 mt-2 w-80"
-              value={message.message_body}
-              onChange={(e) => {
-                const messageCopy = { ...message };
-                messageCopy.message_body = e.target.value;
-                setMessage(messageCopy);
-              }}
-            ></textarea>
-          </div>
-        </div>
-      </div>
       </div>
       <div className="flex justify-center mt-10 gap-16 mb-20">
         <div>
@@ -185,21 +187,21 @@ const handleSubmit = () =>{
             className={
               "bg-sky-600/90 hover:bg-sky-600 py-2 px-5 md:py-3 md:px-6 text-sm md:text-md text-white rounded-full font-bold border border-blue focus:outline-none focus:border-black"
             }
-            onClick = {handleSubmit}
+            onClick={handleSubmit}
           >
             SEND
           </button>
         </div>
         <div>
           <Link to="/inbox">
-          <button
-            className={
-              "bg-amber-500/90 hover:bg-amber-400 py-2 px-3 md:py-3 md:px-4 text-sm md:text-md text-white font-bold rounded-full border focus:outline-none focus:border-black"
-            }
-            value=""
-          >
-            CANCEL
-          </button>
+            <button
+              className={
+                "bg-amber-500/90 hover:bg-amber-400 py-2 px-3 md:py-3 md:px-4 text-sm md:text-md text-white font-bold rounded-full border focus:outline-none focus:border-black"
+              }
+              value=""
+            >
+              CANCEL
+            </button>
           </Link>
         </div>
       </div>
