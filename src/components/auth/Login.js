@@ -19,7 +19,15 @@ export const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     if (username === "") {
-     MySwal.fire("Please enter your username");
+     MySwal.fire({
+       title: "Please enter your username",
+       showClass: {
+         popup: "animate__animated animate__fadeInDown",
+       },
+       hideClass: {
+         popup: "animate__animated animate__fadeOutUp",
+       },
+     });
       return;
     }
     if (password === "") {
