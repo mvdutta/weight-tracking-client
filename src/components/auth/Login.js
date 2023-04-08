@@ -21,6 +21,8 @@ export const Login = () => {
     if (username === "") {
      MySwal.fire({
        title: "Please enter your username",
+       confirmButtonColor: "#DAA520",
+       customClass: "sweet-warning",
        showClass: {
          popup: "animate__animated animate__fadeInDown",
        },
@@ -31,7 +33,17 @@ export const Login = () => {
       return;
     }
     if (password === "") {
-     MySwal.fire("Please enter your password");
+      MySwal.fire({
+        title: "Please enter your password",
+        confirmButtonColor: "#DAA520",
+        customClass: "sweet-warning",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
       return;
     }
     fetch(`http://localhost:8000/login`, {
@@ -146,9 +158,9 @@ export const Login = () => {
             </div>
           </form>
           <div className="flex items-center mt-3 justify-center">
-            <button className={"justify-center text-primary hover:underline"}>
+            <div className={"justify-center text-primary hover:underline"}>
               <RegisterModal />
-            </button>
+            </div>
           </div>
         </div>
       </div>

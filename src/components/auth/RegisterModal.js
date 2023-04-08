@@ -3,11 +3,16 @@ import { createRenderer } from "react-dom/test-utils";
 import { useNavigate } from "react-router-dom"
 import { fetchIt } from "./fetchIt";
 import { close } from "../../assets";
+import "./Login.css";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
 
 const ROLES = ["NP", "RD", "MD", "RN", "LPN", "CNA"]; 
 
 const RegisterModal = () => {
   const [showModal, setShowModal] = useState(false);
+  const MySwal = withReactContent(Swal);
   const [user, setUser] = useState({
     first_name: "",
     last_name: "",
@@ -19,7 +24,21 @@ const RegisterModal = () => {
 
   const handleRegister = (e) => {
     e.preventDefault()
-    //If no email has been provided give them a default email address
+    if (user.first_name === "" || user.last_name === "" || user.username === "" || user.password === "" || user.role === "") {
+        MySwal.fire({
+          title: "Please complete all fields",
+          confirmButtonColor: "#DAA520",
+          customClass: "sweet-warning",
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+        return
+    }
+
     return fetch("http://localhost:8000/register", {
       method: "POST",
       headers: {
@@ -29,19 +48,30 @@ const RegisterModal = () => {
     })
       .then((res) => res.json())
       .then((createdUser) => {
-        if (createdUser.hasOwnProperty("id")) {
-          localStorage.setItem(
-            "wt_token",
-            JSON.stringify({
-              id: createdUser.id,
-              name: createdUser.first_name,
-              token: createdUser.token,
-              role: createdUser.role,
-            })
-          );
-          navigate("/");
-          window.location.reload(false);
-        }
+        if (createdUser && createdUser.hasOwnProperty("token")) {
+            setShowModal(false);
+            MySwal.fire({
+            title: "Registration Successful!",
+            confirmButtonColor: "#DAA520",
+            customClass: "sweet-warning",
+            showClass: {
+              popup: "animate__animated animate__fadeInDown",
+            },
+            hideClass: {
+              popup: "animate__animated animate__fadeOutUp",
+            },
+          });
+          setUser({
+            first_name: "",
+            last_name: "",
+            username: "",
+            password: "",
+            role: "",
+          });
+            navigate("/");
+
+
+            }
       });
   };
 
@@ -53,13 +83,12 @@ const RegisterModal = () => {
 
   return (
     <>
-      <button
-        className="text-dark opacity-90 text-decoration-line: underline text-md font-bold mt-3 mb-3"
-        type="button"
+      <a
+        className="text-dark opacity-90 text-decoration-line: underline text-md font-bold mt-3 mb-3 cursor-pointer"
         onClick={() => setShowModal(true)}
       >
         New User Registration
-      </button>
+      </a>
       {showModal ? (
         <>
           <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-gray-800/40">
@@ -156,7 +185,6 @@ const RegisterModal = () => {
                     type="submit"
                     onClick={(e) => {
                       handleRegister(e);
-                      setShowModal(false);
                     }}
                   >
                     Submit

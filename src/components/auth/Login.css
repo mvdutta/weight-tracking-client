@@ -14,4 +14,14 @@ label {
 .mt-2 {
   margin: 0;
 }
+.sweet-warning {
+  background-color: rgb(229, 226, 202);
+  font-size: small;
+  border: 1px solid gray;
+}
 
+
+.swal2-styled.swal2-confirm {
+  box-shadow: none !important; 
+  border-radius: 10px;
+}
