@@ -5,6 +5,7 @@ import { alert, calculator } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
 import NavBar from "../nav/NavBar";
 import "./Dashboard.css";
+import WeightSheetMenuModal from "./WeightSheetMenuModal";
 
 const formatDecimal = (x) => Number.parseFloat(x).toFixed(2);
 
@@ -19,6 +20,7 @@ const RDdashboard = () => {
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [weightData, setWeightData] = useState({})
   const [numUnreadMsgs, setNumUnreadMsgs] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
    useEffect(() => {
      const user = localStorage.getItem("wt_token");
@@ -120,11 +122,25 @@ const makeTableRow = () => {
          {name ? `Welcome ${name}` : ""}
        </h1>
      </div>
-     <div className="grid grid-cols-2  justify-items-center md:justify-items-between">
+     <div className="grid grid-cols-3  justify-items-center md:justify-items-between">
        <div>
-         <a href="https://mvdutta.github.io/metabolic-calculator/" target="_blank">
-           <img src={calculator} alt="logo" className="block opacity-80 w-8 md:w-14" />
+         <a
+           href="https://mvdutta.github.io/metabolic-calculator/"
+           target="_blank"
+         >
+           <img
+             src={calculator}
+             alt="logo"
+             className="block opacity-80 w-8 md:w-14"
+           />
          </a>
+       </div>
+       <div
+         onClick={() => {
+           setShowModal(true);
+         }}
+       >
+         RD Weight Sheets
        </div>
        <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end text-stone-700  ">
          <img src={alert} alt="logo" className="block opacity-80 w-8 md:w-14" />
@@ -275,6 +291,7 @@ const makeTableRow = () => {
        </div>
      )}
      <hr className="rd-hr mt-14"></hr>
+     <WeightSheetMenuModal showModal={showModal} setShowModal={setShowModal} />
    </>
  );
 

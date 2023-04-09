@@ -9,6 +9,9 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
 
     const [dates, setDates] = useState([])
     const [newDate, setNewDate] = useState(formattedDate(new Date()))
+    const [role, setRole] = useState("")
+    
+    const navigate = useNavigate();
     useEffect(()=>{
         fetchIt("http://localhost:8000/weightsheets/dates")
         .then((data)=>{
@@ -17,6 +20,30 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
         })
 
     },[])
+      useEffect(() => {
+        const current_user = localStorage.getItem("wt_token");
+        if (current_user) {
+          const parsedUser = JSON.parse(current_user);
+            setRole(parsedUser.role)
+        } else {
+          navigate("/home");
+        }
+      }, []);
+
+    // const whichSheet = () =>{
+    //     if (role==="CNA"){
+    //         return "/weeklysheet"
+    //     }
+    //     if (role === "RD") {
+    //         return "/weightsummary";
+    //     }
+    // }
+
+    const whichSheet = {
+      CNA: "/weeklysheet",
+      RD: "/weightsheetsummary",
+      MD:"/weightsummary"
+    };
 
     const makeDateList = () =>{
         return (
@@ -25,7 +52,7 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
               <li>
                 <Link
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  to="/weeklysheet"
+                  to={whichSheet[role]}
                   state={{ date: el }}
                 >
                   {el}

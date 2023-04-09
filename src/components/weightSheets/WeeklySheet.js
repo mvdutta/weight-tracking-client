@@ -23,7 +23,6 @@ const formattedDateUI = (date) => {
 const WeeklySheet = () => {
     const [patientListWithWeights, setPatientListWithWeights] = useState([])
     const [employee, setEmployee] = useState({})
-    const [alerts, showAlerts] = useState(false)
     const [finalized, setFinalized] = useState(false)
     const navigate = useNavigate()
     const location = useLocation();

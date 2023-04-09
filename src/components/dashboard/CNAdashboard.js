@@ -64,7 +64,7 @@ const CNAdashboard = () => {
             }}
           >
             <h5 className="mb-5 text-lg font-body leading-tight  text-sky-800 font-semibold text-center">
-              Weekly Weight Sheet
+              Weekly Weight Sheets
             </h5>
             <div className="flex justify-center mb-5">
               <img src={scale} alt="logo" className="block w-16" />

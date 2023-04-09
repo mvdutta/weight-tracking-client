@@ -2,21 +2,11 @@ import React from "react"
 import NavBar from "../nav/NavBar"
 import { useState, useEffect } from "react"
 import { fetchIt } from "../auth/fetchIt"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom";
 import "./WeightSheets.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
-
-const formattedDate = (date) => {
-    const myDate = date
-
-    let year = myDate.toLocaleString("default", { year: "numeric" })
-    let month = myDate.toLocaleString("default", { month: "2-digit" })
-    let day = myDate.toLocaleString("default", { day: "2-digit" })
-    const formattedDate = year + "-" + month + "-" + day
-    return formattedDate
-}
 
 const formattedDateUI = (date) => {
   const myDate = date;
@@ -35,6 +25,8 @@ const WeightSheetSummary = () => {
     const [employee, setEmployee] = useState({})
     const [alerts, showAlerts] = useState(false)
     const navigate = useNavigate()
+    const location = useLocation();
+    const { date } = location.state
     const MySwal = withReactContent(Swal);
     const [finalized, setFinalized] = useState(false)
 
@@ -50,16 +42,15 @@ const WeightSheetSummary = () => {
     }, [])
 
     useEffect(()=>{
-        const todaysDate = formattedDate(new Date())
         const API1 = "http://localhost:8000/weightsheets/create_all_weightsheets"
-        const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${todaysDate}`
+        const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`
         const API3 ="http://localhost:8000/weights/closestdate_all?lookback=1week"
 
         const getData =  async () =>{
             if (patientListWithWeights.length===0){
             await   fetchIt(API1, {
                          method: "POST",
-                        body: JSON.stringify({date: todaysDate}),
+                        body: JSON.stringify({date: date}),
                     })
                 }
             const weightsheets = await fetchIt(API2)
@@ -127,7 +118,7 @@ const WeightSheetSummary = () => {
                  const address = `${API}/weights/${el.weight_id}`;
                  const requestBody = {
                    resident: el.resident_id,
-                   date: formattedDate(new Date()),
+                   date: date,
                    weight: el.weight,
                  };
                  promiseArray.push(
@@ -208,7 +199,7 @@ const WeightSheetSummary = () => {
             const address = `${API}/weights/${el.weight_id}`;
             const requestBody = {
               resident: el.resident_id,
-              date: formattedDate(new Date()),
+              date: date,
               weight: el.weight,
             };
             console.log(el.weight_id);
