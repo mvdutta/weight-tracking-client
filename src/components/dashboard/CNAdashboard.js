@@ -5,6 +5,7 @@ import NavBar from "../nav/NavBar";
 import "./Dashboard.css"
 import { scale, list, message, alert } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
+import Footer from "../footer/Footer";
 
 const CNAdashboard = () => {
   const navigate = useNavigate();

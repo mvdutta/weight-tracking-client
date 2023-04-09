@@ -3,6 +3,7 @@ import NavBar from "../nav/NavBar"
 import { useState, useEffect } from "react"
 import { fetchIt } from "../auth/fetchIt"
 import { useNavigate } from "react-router-dom"
+import "./WeightSheets.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
@@ -75,63 +76,71 @@ const WeightSheetSummary = () => {
         "w-4 h-4 text-blue-600 bg-stone-100 border-stone-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-stone-700 dark:focus:ring-offset-stone-700 focus:ring-2 dark:bg-stone-600 dark:border-stone-500"
 
     const handleSubmit = () => {
-        MySwal.fire({
-          title: "Are you sure?",
-          text: "Saved values cannot be changed!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Yes, save data",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            //prepare post requests
-            const API = "http://localhost:8000";
-            const promiseArray = [];
-            if (patientListWithWeights.length > 0) {
-              for (let el of patientListWithWeights) {
-                const address = `${API}/weightsheets/${el.weight_sheet_id}`;
-                const requestBody = {
-                  resident: el.resident_id,
-                  reweighed: el.reweighed,
-                  refused: el.refused,
-                  not_in_room: el.not_in_room,
-                  daily_wts: el.daily_wts,
-                  show_alert: el.show_alert,
-                  scale_type: el.scale_type,
-                  final: true,
-                  weight: el.weight,
-                };
-                promiseArray.push(
-                  fetchIt(address, {
-                    method: "PUT",
-                    body: JSON.stringify(requestBody),
-                  })
-                );
-              }
-              for (let el of patientListWithWeights) {
-                const address = `${API}/weights/${el.weight_id}`;
-                const requestBody = {
-                  resident: el.resident_id,
-                  date: formattedDate(new Date()),
-                  weight: el.weight,
-                };
-                promiseArray.push(
-                  fetchIt(address, {
-                    method: "PUT",
-                    body: JSON.stringify(requestBody),
-                  })
-                );
-              }
-            }
+         Swal.fire({
+           title: `Are you sure?`,
+           text: 'Finalized values cannot be changed!',
+           icon: "warning",
+           iconColor: "#925631",
+           showCancelButton: true,
+           confirmButtonColor: "#DAA520",
+           cancelButtonColor: "#0284c7",
+           confirmButtonText: "Finalize",
+           customClass: "final-warning",
+           showClass: {
+             popup: "animate__animated animate__fadeInDown",
+           },
+           hideClass: {
+             popup: "animate__animated animate__fadeOutUp",
+           },
+         }).then((result) => {
+           if (result.isConfirmed) {
+             //prepare post requests
+             const API = "http://localhost:8000";
+             const promiseArray = [];
+             if (patientListWithWeights.length > 0) {
+               for (let el of patientListWithWeights) {
+                 const address = `${API}/weightsheets/${el.weight_sheet_id}`;
+                 const requestBody = {
+                   resident: el.resident_id,
+                   reweighed: el.reweighed,
+                   refused: el.refused,
+                   not_in_room: el.not_in_room,
+                   daily_wts: el.daily_wts,
+                   show_alert: el.show_alert,
+                   scale_type: el.scale_type,
+                   final: true,
+                   weight: el.weight,
+                 };
+                 promiseArray.push(
+                   fetchIt(address, {
+                     method: "PUT",
+                     body: JSON.stringify(requestBody),
+                   })
+                 );
+               }
+               for (let el of patientListWithWeights) {
+                 const address = `${API}/weights/${el.weight_id}`;
+                 const requestBody = {
+                   resident: el.resident_id,
+                   date: formattedDate(new Date()),
+                   weight: el.weight,
+                 };
+                 promiseArray.push(
+                   fetchIt(address, {
+                     method: "PUT",
+                     body: JSON.stringify(requestBody),
+                   })
+                 );
+               }
+             }
 
-            if (promiseArray.length > 0) {
-              Promise.all(promiseArray).then((data) => {
-                navigate(0);
-              });
-            }
-          }
-        });
+             if (promiseArray.length > 0) {
+               Promise.all(promiseArray).then((data) => {
+                 navigate(0);
+               });
+             }
+           }
+         });
         
     }
 
@@ -206,7 +215,17 @@ const WeightSheetSummary = () => {
 
         if (promiseArray.length > 0) {
           Promise.all(promiseArray).then((data) => {
-            MySwal.fire("Data saved");
+             MySwal.fire({
+               title: "Data Saved",
+               confirmButtonColor: "#DAA520",
+               customClass: "sweet-warning",
+               showClass: {
+                 popup: "animate__animated animate__fadeInDown",
+               },
+               hideClass: {
+                 popup: "animate__animated animate__fadeOutUp",
+               },
+             });
           });
         }
       };
@@ -341,14 +360,14 @@ const WeightSheetSummary = () => {
             <span>Date: {formattedDateUI(new Date())}</span>
             <div className="flex justify-center sm:gap-20 gap-10 my-10">
               <button
-                className="bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-black"
+                className="bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-amber-600"
                 value="Finalize"
                 onClick={handleSubmit}
               >
                 Finalize
               </button>
               <button
-                className="bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"
+                className="bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-sky-500"
                 value="Save"
                 onClick={handleSave}
               >

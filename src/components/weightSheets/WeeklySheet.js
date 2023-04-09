@@ -121,9 +121,18 @@ const WeeklySheet = () => {
     
         if (promiseArray.length>0) {
             Promise.all(promiseArray).then((data) => {
-                MySwal.fire("Data saved")
-
-            })
+               MySwal.fire({
+               title: "Data Saved",
+               confirmButtonColor: "#DAA520",
+               customClass: "sweet-warning",
+               showClass: {
+                 popup: "animate__animated animate__fadeInDown",
+               },
+               hideClass: {
+                 popup: "animate__animated animate__fadeOutUp",
+               },
+             });
+          });
         }
         
     }
@@ -293,7 +302,7 @@ const WeeklySheet = () => {
             <span>Date: {formattedDateUI(new Date())}</span>
             <button
               className={
-                "bg-sky-600 hover:bg-sky-500 uppercase text-sm py-2 px-6 mb-2 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-stone-500 shadow-md "
+                "bg-sky-600 hover:bg-sky-500 uppercase text-sm py-2 px-6 mb-2 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-sky-700 shadow-md "
               }
               value=""
               onClick={handleSubmit}
@@ -336,7 +345,7 @@ const WeeklySheet = () => {
         <div className="my-10 flex justify-center">
           <button
             className={
-              "bg-sky-600 hover:bg-sky-500 uppercase text-md py-2 px-6 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-stone-500 shadow-md"
+              "bg-sky-600 hover:bg-sky-500 uppercase text-md py-2 px-6 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-sky-700 shadow-md"
             }
             value=""
             onClick={handleSubmit}

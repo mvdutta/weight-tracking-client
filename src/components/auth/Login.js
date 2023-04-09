@@ -70,7 +70,17 @@ export const Login = () => {
           );
           setLoggedIn(true);
         } else {
-          MySwal.fire("Invalid login");
+           MySwal.fire({
+             title: "Invalid Credentials",
+             confirmButtonColor: "#DAA520",
+             customClass: "sweet-warning",
+             showClass: {
+               popup: "animate__animated animate__fadeInDown",
+             },
+             hideClass: {
+               popup: "animate__animated animate__fadeOutUp",
+             },
+           });
         }
       })
       .then(() => {
@@ -145,7 +155,7 @@ export const Login = () => {
                 "w-full p-2 text-burnt border-2 rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
               }
             />
-            <div className="flex items-center mt-3 justify-center">
+            <div className="flex items-center mt-6 mb-6 justify-center">
               <button
                 className={
                   "bg-sky-600 hover:bg-sky-400 py-2 px-5 uppercase text-xs font-bold text-white rounded-full border shadow border-blue focus:outline-none focus:border-stone-200"

@@ -92,12 +92,12 @@ const Inbox = () => {
              "
               >
                 {el.message.read ? (
-                  <img src={read} alt="read" className="block w-20 sm:w-8" />
+                  <img src={read} alt="read" className="block w-10 sm:w-8" />
                 ) : (
                   <img
                     src={unread}
                     alt="unread"
-                    className="block w-20 sm:w-8"
+                    className="block w-10 sm:w-8"
                   />
                 )}
               </td>
@@ -153,7 +153,7 @@ const Inbox = () => {
   return (
     <>
       <NavBar />
-      <div className=" container justify-center m-auto sm:w-2/3">
+      <div className=" flex-col justify-cente ml-auto mr-auto mb-[310px] sm:w-2/3">
         <header className="flex justify-center">
           <h1 className="font-semibold text-stone-700 text-2xl my-8"> Inbox</h1>
         </header>

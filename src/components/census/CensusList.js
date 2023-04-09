@@ -73,7 +73,7 @@ useEffect(() => {
               Current Residents ({residentList.length})
             </p>
           </caption>
-          <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
+          <thead className="text-sm text-sky-900 uppercase font-semibold dark:bg-stone-700 dark:text-stone-400 bg-stone-200/80">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Room Number

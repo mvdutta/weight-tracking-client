@@ -16,12 +16,17 @@ label {
 }
 .sweet-warning {
   background-color: rgb(229, 226, 202);
-  font-size: small;
+  font-size: 10px;
   border: 1px solid gray;
 }
 
-
 .swal2-styled.swal2-confirm {
   box-shadow: none !important; 
-  border-radius: 10px;
+  border-radius: 14px;
+  font-size: 13px;
+}
+.swal2-styled.swal2-cancel {
+  box-shadow: none !important; 
+  border-radius: 14px;
+  font-size: 13px;
 }

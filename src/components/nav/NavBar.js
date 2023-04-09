@@ -87,17 +87,23 @@ const NavBar = () => {
   const handleLogout = () => {
     Swal.fire({
       title: `${user.name}, are you sure you want to sign out?`,
-      // text: "You won't be able to revert this!",
       icon: "warning",
+      iconColor: "#925631",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Logout",
+      confirmButtonColor: "#0284c7",
+      cancelButtonColor: "#DAA520",
+      confirmButtonText: "Sign Out",
+      customClass: "sweet-warning",
+      showClass: {
+        popup: "animate__animated animate__fadeInDown",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutUp",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem("wt_token");
         navigate("/", { replace: true });
-        // Swal.fire("Logged Out", "Successfuly Logged Out.", "success");
       }
     });
 

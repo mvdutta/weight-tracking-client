@@ -47,7 +47,17 @@ const handleSubmit = () =>{
   const address = "http://localhost:8000/messages";
   fetchIt(address, {method: "POST", body: JSON.stringify(postBody)})
   .then((data)=>{
-    MySwal.fire("Message sent")
+     MySwal.fire({
+       title: "Message Sent",
+       confirmButtonColor: "#DAA520",
+       customClass: "sweet-warning",
+       showClass: {
+         popup: "animate__animated animate__fadeInDown",
+       },
+       hideClass: {
+         popup: "animate__animated animate__fadeOutUp",
+       },
+     });
   })
 }
   
@@ -187,7 +197,7 @@ const handleSubmit = () =>{
         <div>
           <button
             className={
-              "bg-sky-600/90 hover:bg-sky-600 py-2 px-5 md:py-3 md:px-6 text-sm md:text-md text-white rounded-full font-bold border border-blue focus:outline-none focus:border-black"
+              "bg-sky-600/90 hover:bg-sky-600 py-2 px-5 md:py-3 md:px-6 text-sm md:text-md text-white rounded-full font-bold border border-blue focus:outline-none focus:border-sky-700"
             }
             onClick={handleSubmit}
           >
@@ -198,7 +208,7 @@ const handleSubmit = () =>{
           <Link to="/inbox">
             <button
               className={
-                "bg-amber-500/90 hover:bg-amber-400 py-2 px-3 md:py-3 md:px-4 text-sm md:text-md text-white font-bold rounded-full border focus:outline-none focus:border-black"
+                "bg-amber-500/90 hover:bg-amber-400 py-2 px-3 md:py-3 md:px-4 text-sm md:text-md text-white font-bold rounded-full border focus:outline-none focus:border-amber-500"
               }
               value=""
             >

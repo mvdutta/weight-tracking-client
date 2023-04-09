@@ -46,7 +46,24 @@ const RegisterModal = () => {
       },
       body: JSON.stringify(user),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res.status)
+        if (res.status!== 200){
+              MySwal.fire({
+                title: "Registration Failed",
+                confirmButtonColor: "#DAA520",
+                customClass: "sweet-warning",
+                showClass: {
+                  popup: "animate__animated animate__fadeInDown",
+                },
+                hideClass: {
+                  popup: "animate__animated animate__fadeOutUp",
+                },
+              });
+          return
+        }
+        return res.json()
+      })
       .then((createdUser) => {
         if (createdUser && createdUser.hasOwnProperty("token")) {
             setShowModal(false);
@@ -84,7 +101,7 @@ const RegisterModal = () => {
   return (
     <>
       <a
-        className="text-dark opacity-90 text-decoration-line: underline text-md font-bold mt-3 mb-3 cursor-pointer"
+        className=" text-primary underline text-md font-bold mt-3 mb-3 cursor-pointer"
         onClick={() => setShowModal(true)}
       >
         New User Registration
@@ -95,11 +112,11 @@ const RegisterModal = () => {
             <div className="relative w-full my-6 mx-auto max-w-[400px]">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl font=semibold text-burnt font-body">
+                  <h3 className="text-3xl text-burnt font-body">
                     Registration Form
                   </h3>
                   <button
-                    className="bg-transparent border-0 text-black float-right"
+                    className="bg-transparent border-0 float-right"
                     onClick={() => setShowModal(false)}
                   >
                     <span>
@@ -112,52 +129,52 @@ const RegisterModal = () => {
                     className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full"
                     onSubmit={handleRegister}
                   >
-                    <label className="block text-dark text-md text-left font-bold mb-2">
+                    <label className="block text-stone-600 text-md text-left mb-2">
                       First Name
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      className="shadow appearance-none border rounded w-full py-2 px-1 text-stone-700"
                       onChange={updateUser}
                       type="text"
                       id="first_name"
                       required
                       autoFocus
                     />
-                    <label className="block text-dark text-md text-left font-bold my-2">
+                    <label className="block text-stone-600 text-md text-left my-2">
                       Last Name
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      className="shadow appearance-none border rounded w-full py-2 px-1 text-stone-700"
                       onChange={updateUser}
                       type="text"
                       id="last_name"
                       required
                     />
-                    <label className="block text-dark text-md text-left font-bold my-2">
+                    <label className="block text-stone-600 text-md text-left my-2">
                       Your GSRH username
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      className="shadow appearance-none border rounded w-full py-2 px-1 text-stone-700"
                       onChange={updateUser}
                       type="text"
                       id="username"
                       required
                     />
-                    <label className="block text-dark text-md text-left font-bold my-2">
+                    <label className="block text-stone-600 text-md text-left my-2">
                       Password
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      className="shadow appearance-none border rounded w-full py-2 px-1 text-stone-600"
                       onChange={updateUser}
                       type="password"
                       id="password"
                       required
                     />
-                    <label className="block text-dark text-md text-left font-bold my-2">
+                    <label className="block text-stone-600 text-md text-left my-2">
                       Role
                     </label>
                     <select
-                      className="shadow appearance-none border text-dark rounded w-full py-2 px-1"
+                      className="shadow appearance-none border text-stone-600 rounded w-full py-2 px-1"
                       id="role"
                       onChange={updateUser}
                     >

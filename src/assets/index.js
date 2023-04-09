@@ -11,6 +11,8 @@ import calculator from "./calculator-icon1.png";
 import unread from "./closed-msg1.png";
 import read from "./open-msg2.png";
 import logo from "./wt-logo1.png";
+import footer from "./wt-logo23.png";
+
 
 
 
@@ -30,4 +32,5 @@ export {
   unread,
   read,
   logo,
+  footer,
 };
