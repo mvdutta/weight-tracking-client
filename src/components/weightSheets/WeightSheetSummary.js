@@ -2,7 +2,7 @@ import React from "react"
 import NavBar from "../nav/NavBar"
 import { useState, useEffect } from "react"
 import { fetchIt } from "../auth/fetchIt"
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./WeightSheets.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -25,8 +25,7 @@ const WeightSheetSummary = () => {
     const [employee, setEmployee] = useState({})
     const [alerts, showAlerts] = useState(false)
     const navigate = useNavigate()
-    const [location, setLocation] = useLocation();
-    const { date } = location.state
+    const { date } = useParams();
     const MySwal = withReactContent(Swal);
     const [finalized, setFinalized] = useState(false)
 
