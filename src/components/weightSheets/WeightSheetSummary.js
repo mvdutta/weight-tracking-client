@@ -90,52 +90,17 @@ const WeightSheetSummary = () => {
            },
          }).then((result) => {
            if (result.isConfirmed) {
-             //prepare post requests
-             const API = "http://localhost:8000";
-             const promiseArray = [];
-             if (patientListWithWeights.length > 0) {
-               for (let el of patientListWithWeights) {
-                 const address = `${API}/weightsheets/${el.weight_sheet_id}`;
-                 const requestBody = {
-                   resident: el.resident_id,
-                   reweighed: el.reweighed,
-                   refused: el.refused,
-                   not_in_room: el.not_in_room,
-                   daily_wts: el.daily_wts,
-                   show_alert: el.show_alert,
-                   scale_type: el.scale_type,
-                   final: true,
-                   weight: el.weight,
-                 };
-                 promiseArray.push(
-                   fetchIt(address, {
-                     method: "PUT",
-                     body: JSON.stringify(requestBody),
-                   })
-                 );
-               }
-               for (let el of patientListWithWeights) {
-                 const address = `${API}/weights/${el.weight_id}`;
-                 const requestBody = {
-                   resident: el.resident_id,
-                   date: date,
-                   weight: el.weight,
-                 };
-                 promiseArray.push(
-                   fetchIt(address, {
-                     method: "PUT",
-                     body: JSON.stringify(requestBody),
-                   })
-                 );
-               }
-             }
-
-             if (promiseArray.length > 0) {
-               Promise.any(promiseArray).then(()=>{
-                    setFinalized(true);
-                    navigate(0)
-               })
-             }
+            const address =
+              "http://localhost:8000/weightsheets/save_weightsheets";
+            const requestBody = {
+                date: date
+            }
+            fetchIt(address, {
+            method: "PUT",
+            body: JSON.stringify(requestBody),
+            }).then(()=>{
+                navigate(0)
+            })
            }
          });
         
