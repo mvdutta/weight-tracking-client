@@ -29,12 +29,15 @@ const formattedDateUI = (date) => {
 };
 
 
+
 const WeightSheetSummary = () => {
     const [patientListWithWeights, setPatientListWithWeights] = useState([])
     const [employee, setEmployee] = useState({})
     const [alerts, showAlerts] = useState(false)
     const navigate = useNavigate()
     const MySwal = withReactContent(Swal);
+    const [finalized, setFinalized] = useState(false)
+
 
     useEffect(() => {
         const current_user = localStorage.getItem("wt_token")
@@ -71,9 +74,11 @@ const WeightSheetSummary = () => {
         }
         getData()
 
-    },[])
+    },[finalized])
     const checkboxstyle =
         "w-4 h-4 text-blue-600 bg-stone-100 border-stone-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-stone-700 dark:focus:ring-offset-stone-700 focus:ring-2 dark:bg-stone-600 dark:border-stone-500"
+
+    // const CheckFinalized = () => patientListWithWeights.every(el=>el.final)
 
     const handleSubmit = () => {
          Swal.fire({
@@ -135,8 +140,8 @@ const WeightSheetSummary = () => {
              }
 
              if (promiseArray.length > 0) {
-               Promise.all(promiseArray).then((data) => {
-                 navigate(0);
+               Promise.any(promiseArray).then((data) => {
+                 setFinalized(true)
                });
              }
            }
@@ -190,6 +195,8 @@ const WeightSheetSummary = () => {
               final: el.final,
               weight: el.weight,
             };
+            console.log(el.weight_sheet_id);
+            console.log(requestBody);
             promiseArray.push(
               fetchIt(address, {
                 method: "PUT",
@@ -204,6 +211,8 @@ const WeightSheetSummary = () => {
               date: formattedDate(new Date()),
               weight: el.weight,
             };
+            console.log(el.weight_id);
+            console.log(requestBody);
             promiseArray.push(
               fetchIt(address, {
                 method: "PUT",
@@ -214,7 +223,7 @@ const WeightSheetSummary = () => {
         }
 
         if (promiseArray.length > 0) {
-          Promise.all(promiseArray).then((data) => {
+          Promise.any(promiseArray).then(() => {
              MySwal.fire({
                title: "Data Saved",
                confirmButtonColor: "#DAA520",
@@ -360,7 +369,8 @@ const WeightSheetSummary = () => {
             <span>Date: {formattedDateUI(new Date())}</span>
             <div className="flex justify-center sm:gap-20 gap-10 my-10">
               <button
-                className="bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-amber-600"
+                className={`bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-amber-600 `}
+                disabled={finalized}
                 value="Finalize"
                 onClick={handleSubmit}
               >
@@ -368,6 +378,7 @@ const WeightSheetSummary = () => {
               </button>
               <button
                 className="bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-sky-500"
+                disabled={finalized}
                 value="Save"
                 onClick={handleSave}
               >
@@ -411,6 +422,7 @@ const WeightSheetSummary = () => {
           <button
             className="bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border border-amber focus:outline-none focus:border-black"
             value="Finalize"
+            disabled={finalized}
             onClick={handleSubmit}
           >
             Finalize
@@ -418,6 +430,7 @@ const WeightSheetSummary = () => {
           <button
             className="bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"
             value="Save"
+            disabled={finalized}
             onClick={handleSave}
           >
             Save

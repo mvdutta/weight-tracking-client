@@ -32,6 +32,7 @@ const WeeklySheet = () => {
     const [patientListWithWeights, setPatientListWithWeights] = useState([])
     const [employee, setEmployee] = useState({})
     const [alerts, showAlerts] = useState(false)
+    const [finalized, setFinalized] = useState(false)
     const navigate = useNavigate()
     const MySwal = withReactContent(Swal);
 
@@ -70,6 +71,7 @@ const WeeklySheet = () => {
                     entry.prev_wt = previousWeights_entry.weight
                 }
             setPatientListWithWeights(weightsheets)
+            setFinalized(weightsheets.every(el=>el.final))
         }
         getData()
 
@@ -120,7 +122,7 @@ const WeeklySheet = () => {
     }
     
         if (promiseArray.length>0) {
-            Promise.all(promiseArray).then((data) => {
+            Promise.any(promiseArray).then((data) => {
                MySwal.fire({
                title: "Data Saved",
                confirmButtonColor: "#DAA520",
@@ -306,6 +308,7 @@ const WeeklySheet = () => {
               }
               value=""
               onClick={handleSubmit}
+              disabled ={finalized}
             >
               Save
             </button>
@@ -349,6 +352,7 @@ const WeeklySheet = () => {
             }
             value=""
             onClick={handleSubmit}
+            disabled={finalized}
           >
             Save
           </button>
