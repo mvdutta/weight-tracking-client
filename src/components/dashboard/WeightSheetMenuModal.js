@@ -98,8 +98,14 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <div className={role==="RD"||role==="CNA" ? "flex space-x-4":"hidden"}>
-                    <p>Create/Open  WeightSheet for </p>
+                  <div
+                    className={
+                      role === "RD" || role === "CNA"
+                        ? "flex space-x-4"
+                        : "hidden"
+                    }
+                  >
+                    <p>Create/Open WeightSheet for </p>
                     <input
                       type="date"
                       value={newDate}
@@ -109,9 +115,9 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
                     ></input>
                     <Link
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      to="/weeklysheet" state={{ date: newDate }}
+                      to={`${whichSheet[role]}/${encodeURI(newDate)}`}
                     >
-                      {dates.includes(newDate)?"Open":"Create"}
+                      {dates.includes(newDate) ? "Open" : "Create"}
                     </Link>
                   </div>
                   <p>Available Weightsheets</p>

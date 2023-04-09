@@ -27,7 +27,7 @@ const WeightSheetSummary = () => {
     const navigate = useNavigate()
     const { date } = useParams();
     const MySwal = withReactContent(Swal);
-    const [finalized, setFinalized] = useState(false)
+    const [finalized, setFinalized] = useState(true)
 
 
     useEffect(() => {
@@ -61,6 +61,7 @@ const WeightSheetSummary = () => {
                     entry.prev_wt = previousWeights_entry.weight
                 }
             setPatientListWithWeights(weightsheets)
+            setFinalized(weightsheets.every((el) => el.final));
         }
         getData()
 
@@ -130,9 +131,10 @@ const WeightSheetSummary = () => {
              }
 
              if (promiseArray.length > 0) {
-               Promise.any(promiseArray).then((data) => {
-                 setFinalized(true)
-               });
+               Promise.any(promiseArray).then(()=>{
+                    setFinalized(true);
+                    navigate(0)
+               })
              }
            }
          });
@@ -185,8 +187,6 @@ const WeightSheetSummary = () => {
               final: el.final,
               weight: el.weight,
             };
-            console.log(el.weight_sheet_id);
-            console.log(requestBody);
             promiseArray.push(
               fetchIt(address, {
                 method: "PUT",
@@ -201,8 +201,6 @@ const WeightSheetSummary = () => {
               date: date,
               weight: el.weight,
             };
-            console.log(el.weight_id);
-            console.log(requestBody);
             promiseArray.push(
               fetchIt(address, {
                 method: "PUT",
@@ -356,18 +354,17 @@ const WeightSheetSummary = () => {
         </header>
         <div className="container mx-auto flex flex-col">
           <div className="flex justify-between content-center items-center text-md sm:text-lg mx-10">
-            <span>Date: {formattedDateUI(new Date())}</span>
+            <span>Date: {date}</span>
             <div className="flex justify-center sm:gap-20 gap-10 my-10">
               <button
-                className={`bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-amber-600 `}
-                disabled={finalized}
+                className={finalized?"hidden":`bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-amber-600 `}
                 value="Finalize"
                 onClick={handleSubmit}
               >
                 Finalize
               </button>
               <button
-                className="bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-sky-500"
+                className={finalized?"hidden":"bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-sky-500"}
                 disabled={finalized}
                 value="Save"
                 onClick={handleSave}
@@ -410,15 +407,14 @@ const WeightSheetSummary = () => {
         </div>
         <div className="flex justify-center gap-20 my-10">
           <button
-            className="bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border border-amber focus:outline-none focus:border-black"
+            className={finalized?"hidden":"bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border border-amber focus:outline-none focus:border-black"}
             value="Finalize"
-            disabled={finalized}
             onClick={handleSubmit}
           >
             Finalize
           </button>
           <button
-            className="bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"
+            className={finalized?"hidden":"bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"}
             value="Save"
             disabled={finalized}
             onClick={handleSave}

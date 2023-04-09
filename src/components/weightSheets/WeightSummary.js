@@ -2,7 +2,7 @@ import React from "react";
 import NavBar from "../nav/NavBar";
 import { useState, useEffect } from "react";
 import { fetchIt } from "../auth/fetchIt";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ROLES = ["MD", "RN", "LPN", "NP"]
 
@@ -21,10 +21,8 @@ const formattedDateUI = (date) => {
 const WeightSummary = () => {
   const [patientListWithWeights, setPatientListWithWeights] = useState([]);
   const [employee, setEmployee] = useState({});
-  const [alerts, showAlerts] = useState(false);
   const navigate = useNavigate();
-  const [location, setLocation] = useLocation({});
-    const { date } = location.state;
+    const { date } = useParams();
 
   useEffect(() => {
     const current_user = localStorage.getItem("wt_token");
@@ -161,10 +159,10 @@ const WeightSummary = () => {
           {" "}
           Weekly Weight Summary
         </h1>
-      </header> 
+      </header>
       <div className="container mx-auto flex flex-col mt-20 mb-20">
         <div className="mb-10 ml-2 text-md sm:text-lg">
-          <span>Date: {formattedDateUI(new Date())}</span>
+          <span>Date: {date}</span>
         </div>
         <table className="shadow-md shadow-stone-300 bg-sky-50/40 border-separate overflow-x-auto">
           <thead>

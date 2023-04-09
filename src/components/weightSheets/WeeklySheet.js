@@ -26,7 +26,6 @@ const WeeklySheet = () => {
     const [finalized, setFinalized] = useState(false)
     const navigate = useNavigate()
     const { date } = useParams();
-    console.log(date)
     const MySwal = withReactContent(Swal);
 
     useEffect(() => {
@@ -295,12 +294,11 @@ const WeeklySheet = () => {
             <span>Weight Team Member: {employee.name}</span>
             <span>Date: {date}</span>
             <button
-              className={
+              className={finalized?"hidden":
                 "bg-sky-600 hover:bg-sky-500 uppercase text-sm py-2 px-6 mb-2 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-sky-700 shadow-md "
               }
               value=""
               onClick={handleSubmit}
-              disabled ={finalized}
             >
               Save
             </button>
@@ -340,11 +338,10 @@ const WeeklySheet = () => {
         <div className="my-10 flex justify-center">
           <button
             className={
-              "bg-sky-600 hover:bg-sky-500 uppercase text-md py-2 px-6 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-sky-700 shadow-md"
+             finalized?"hidden":"bg-sky-600 hover:bg-sky-500 uppercase text-md py-2 px-6 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-sky-700 shadow-md"
             }
             value=""
             onClick={handleSubmit}
-            disabled={finalized}
           >
             Save
           </button>
