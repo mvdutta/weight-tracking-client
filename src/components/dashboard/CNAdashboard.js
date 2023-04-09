@@ -6,21 +6,15 @@ import "./Dashboard.css"
 import { scale, list, message, alert } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
 import Footer from "../footer/Footer";
+import WeightSheetMenuModal from "./WeightSheetMenuModal";
 
-const formattedDate = (date) => {
-  const myDate = date;
-  let year = myDate.toLocaleString("default", { year: "numeric" });
-  let month = myDate.toLocaleString("default", { month: "2-digit" });
-  let day = myDate.toLocaleString("default", { day: "2-digit" });
-  const formattedDate = year + "-" + month + "-" + day;
-  return formattedDate;
-};
+
 
 const CNAdashboard = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
   const [numUnreadMsgs, setNumUnreadMsgs] = useState(0)
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
@@ -33,7 +27,7 @@ const CNAdashboard = () => {
        setNumUnreadMsgs(data.num_msgs)
       });
     }
-  }, [loggedIn]);
+  }, []);
 
   return (
     <>
@@ -62,8 +56,13 @@ const CNAdashboard = () => {
         </h3>
       </div>
       <div className="grid lg:grid-cols-3 gap-10 lg:gap-0 justify-items-center lg:m-auto lg:w-2/3">
-        <Link to="/weeklysheet" state={{ date: "2023-04-08" }}>
-          <div className=" rounded-lg p-6 shadow-lg shadow-sky-800/50 border-2 bg-amber-200/40 w-[300px] transform transition duration-500 hover:scale-90 hover:bg-sky-200/50">
+        <Link to="">
+          <div
+            className=" rounded-lg p-6 shadow-lg shadow-sky-800/50 border-2 bg-amber-200/40 w-[300px] transform transition duration-500 hover:scale-90 hover:bg-sky-200/50"
+            onClick={() => {
+              setShowModal(true);
+            }}
+          >
             <h5 className="mb-5 text-lg font-body leading-tight  text-sky-800 font-semibold text-center">
               Weekly Weight Sheet
             </h5>
@@ -93,6 +92,7 @@ const CNAdashboard = () => {
           </div>
         </Link>
       </div>
+      <WeightSheetMenuModal showModal={showModal} setShowModal={setShowModal} />
     </>
   );
 };
