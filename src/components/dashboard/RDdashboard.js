@@ -39,10 +39,12 @@ const RDdashboard = () => {
 
 
   useEffect(()=>{
+    if (selectedResident && selectedResident.id) {
     fetchIt(`http://localhost:8000/weights/rd_summary?resident=${selectedResident.id}`)
     .then((data)=>{
         setWeightData(data)
     })
+  }
 
   },[selectedResident])
   

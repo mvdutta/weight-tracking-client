@@ -4,12 +4,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { scale, list, message, alert } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
 import NavBar from "../nav/NavBar";
+import WeightSheetMenuModal from "./WeightSheetMenuModal";
 
 const RNdashboard = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [numUnreadMsgs, setNumUnreadMsgs] = useState(0);
+    const [showModal, setShowModal] = useState(false);
 
    useEffect(() => {
      const user = localStorage.getItem("wt_token");
@@ -40,7 +42,11 @@ const RNdashboard = () => {
          </h1>
        </div>
        <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end  md:mr-60 mt-5 mb-12 md:mb-[125px] text-stone-700">
-         <img src={alert} alt="logo" className="block opacity-80  w-8 md:w-14" />
+         <img
+           src={alert}
+           alt="logo"
+           className="block opacity-80  w-8 md:w-14"
+         />
          <h3>
            You have <span className="font-bold">{numUnreadMsgs}</span>{" "}
            <Link to="/inbox">
@@ -50,10 +56,15 @@ const RNdashboard = () => {
          </h3>
        </div>
        <div className="grid lg:grid-cols-3 gap-10 lg:gap-0 justify-items-center lg:m-auto lg:w-2/3">
-         <Link to="/weightsummary">
-           <div className=" rounded-lg p-6 shadow-lg shadow-sky-800/50 border-2 bg-amber-200/40 w-[300px] transform transition duration-500 hover:scale-90 hover:bg-sky-200/50">
+         <Link to="">
+           <div
+             className=" rounded-lg p-6 shadow-lg shadow-sky-800/50 border-2 bg-amber-200/40 w-[300px] transform transition duration-500 hover:scale-90 hover:bg-sky-200/50"
+             onClick={() => {
+               setShowModal(true);
+             }}
+           >
              <h5 className="mb-5 text-lg font-body leading-tight  text-sky-800 font-semibold text-center">
-               Weekly Weight Sheet
+               Weekly Weight Sheets
              </h5>
              <div className="flex justify-center mb-5">
                <img src={scale} alt="logo" className="block w-16" />
@@ -81,6 +92,10 @@ const RNdashboard = () => {
            </div>
          </Link>
        </div>
+       <WeightSheetMenuModal
+         showModal={showModal}
+         setShowModal={setShowModal}
+       />
      </>
    );
  

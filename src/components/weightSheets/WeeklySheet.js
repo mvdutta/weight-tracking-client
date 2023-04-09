@@ -2,7 +2,7 @@ import React from "react"
 import NavBar from "../nav/NavBar"
 import { useState, useEffect } from "react"
 import { fetchIt } from "../auth/fetchIt"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate, useLocation, useParams } from "react-router-dom"
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 
@@ -25,8 +25,9 @@ const WeeklySheet = () => {
     const [employee, setEmployee] = useState({})
     const [finalized, setFinalized] = useState(false)
     const navigate = useNavigate()
-    const location = useLocation();
-    const { date } = location.state;
+    const location = useLocation()
+    const { date } = useParams();
+    console.log(date)
     const MySwal = withReactContent(Swal);
 
     useEffect(() => {

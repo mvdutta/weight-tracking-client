@@ -12,53 +12,60 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
     const [role, setRole] = useState("")
     
     const navigate = useNavigate();
-    useEffect(()=>{
-        fetchIt("http://localhost:8000/weightsheets/dates")
-        .then((data)=>{
-            console.log(data)
-            setDates(data.dates)
-        })
+    // useEffect(()=>{
+    //     fetchIt("http://localhost:8000/weightsheets/dates")
+    //     .then((data)=>{
+    //         console.log(data)
+    //         setDates(data.dates)
+    //     })
 
-    },[])
+    // },[])
       useEffect(() => {
         const current_user = localStorage.getItem("wt_token");
+        let address = ""
         if (current_user) {
           const parsedUser = JSON.parse(current_user);
             setRole(parsedUser.role)
+            if (parsedUser.role==="CNA" || parsedUser.role ==="RD"){
+                address = "http://localhost:8000/weightsheets/dates";
+            }else{
+                address = "http://localhost:8000/weightsheets/finalized_dates";
+            }
+            fetchIt(address).then(
+                (data) => {
+                setDates(data.dates);
+                }
+            );
         } else {
           navigate("/home");
         }
       }, []);
 
-    // const whichSheet = () =>{
-    //     if (role==="CNA"){
-    //         return "/weeklysheet"
-    //     }
-    //     if (role === "RD") {
-    //         return "/weightsummary";
-    //     }
-    // }
 
     const whichSheet = {
       CNA: "/weeklysheet",
       RD: "/weightsheetsummary",
-      MD:"/weightsummary"
+      MD: "/weightsummary",
+      RN: "/weightsummary",
+      LPN: "/weightsummary",
+      NP: "/weightsummary",
     };
 
     const makeDateList = () =>{
         return (
           <ul>
-            {dates.map((el) => (
-              <li>
+            {dates.map((el, index) => {
+                const encodedDate = encodeURI(el)
+             return  <li key={index}>
                 <Link
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                  to={whichSheet[role]}
-                  state={{ date: el }}
+                  to={`${whichSheet[role]}\\${encodedDate}`}
                 >
                   {el}
                 </Link>
               </li>
-            ))}
+            }
+            )}
           </ul>
         );
     } 
@@ -91,7 +98,7 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
                 </div>
                 {/*body*/}
                 <div className="relative p-6 flex-auto">
-                  <div className="flex space-x-4">
+                  <div className={role==="RD"||role==="CNA" ? "flex space-x-4":"hidden"}>
                     <p>Create/Open  WeightSheet for </p>
                     <input
                       type="date"

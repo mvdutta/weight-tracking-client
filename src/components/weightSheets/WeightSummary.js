@@ -2,18 +2,10 @@ import React from "react";
 import NavBar from "../nav/NavBar";
 import { useState, useEffect } from "react";
 import { fetchIt } from "../auth/fetchIt";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ROLES = ["MD", "RN", "LPN", "NP"]
 
-const formattedDate = (date) => {
-  const myDate = date;
-  let year = myDate.toLocaleString("default", { year: "numeric" });
-  let month = myDate.toLocaleString("default", { month: "2-digit" });
-  let day = myDate.toLocaleString("default", { day: "2-digit" });
-  const formattedDate = year + "-" + month + "-" + day;
-  return formattedDate;
-};
 
 const formattedDateUI = (date) => {
   const myDate = date;
@@ -31,6 +23,8 @@ const WeightSummary = () => {
   const [employee, setEmployee] = useState({});
   const [alerts, showAlerts] = useState(false);
   const navigate = useNavigate();
+  const [location, setLocation] = useLocation({});
+    const { date } = location.state;
 
   useEffect(() => {
     const current_user = localStorage.getItem("wt_token");
@@ -43,9 +37,7 @@ const WeightSummary = () => {
   }, []);
 
   useEffect(() => {
-    const todaysDate = formattedDate(new Date());
-    const API1 = "http://localhost:8000/weightsheets/create_all_weightsheets";
-    const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${todaysDate}`;
+    const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`;
     const API3 = "http://localhost:8000/weights/closestdate_all?lookback=1week";
 
     //this function makes 3 api calls sequentially

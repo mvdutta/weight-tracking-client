@@ -25,7 +25,7 @@ const WeightSheetSummary = () => {
     const [employee, setEmployee] = useState({})
     const [alerts, showAlerts] = useState(false)
     const navigate = useNavigate()
-    const location = useLocation();
+    const [location, setLocation] = useLocation();
     const { date } = location.state
     const MySwal = withReactContent(Swal);
     const [finalized, setFinalized] = useState(false)

@@ -27,11 +27,11 @@ const navLinks = {
       title: "RD Dashboard",
       address: "/rddashboard",
     },
-    {
-      id: "wt_summary",
-      title: "Weight Sheet Summary",
-      address: "/weightsheetsummary",
-    },
+    // {
+    //   id: "wt_summary",
+    //   title: "Weight Sheet Summary",
+    //   address: "/weightsheetsummary",
+    // },
   ].concat(sameLinks),
 
   CNA: [
@@ -40,11 +40,11 @@ const navLinks = {
       title: "CNA Dashboard",
       address: "/cnadashboard",
     },
-    {
-      id: "weightsheet",
-      title: "Weight Sheet",
-      address: "/weeklysheet",
-    },
+    // {
+    //   id: "weightsheet",
+    //   title: "Weight Sheet",
+    //   address: "/weeklysheet",
+    // },
   ].concat(sameLinks),
 
   RN: [
@@ -53,11 +53,11 @@ const navLinks = {
       title: "Dashboard",
       address: "/rndashboard",
     },
-    {
-      id: "weightsummary",
-      title: "Weight Summary",
-      address: "/weightsummary",
-    },
+    // {
+    //   id: "weightsummary",
+    //   title: "Weight Summary",
+    //   address: "/weightsummary",
+    // },
   ].concat(sameLinks),
 };
 
@@ -85,7 +85,7 @@ const NavBar = () => {
     }
   }, []);
   const handleLogout = () => {
-    Swal.fire({
+    MySwal.fire({
       title: `${user.name}, are you sure you want to sign out?`,
       icon: "warning",
       iconColor: "#925631",
@@ -102,11 +102,15 @@ const NavBar = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
+        console.log("Jumped the gun")
+        navigate("/");
         localStorage.removeItem("wt_token");
-        navigate("/", { replace: true });
+
       }
     });
-
+    // if (!window.confirm("Are you sure?")) return;
+    //     navigate("/");
+    //     localStorage.removeItem("wt_token");
   };
   return (
     <>
