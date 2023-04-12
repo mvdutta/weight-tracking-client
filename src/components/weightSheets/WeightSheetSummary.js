@@ -6,18 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import "./WeightSheets.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
-
-const formattedDateUI = (date) => {
-  const myDate = date;
-
-  let year = myDate.toLocaleString("default", { year: "numeric" });
-  let month = myDate.toLocaleString("default", { month: "2-digit" });
-  let day = myDate.toLocaleString("default", { day: "2-digit" });
-  const formattedDateUI = month + "-" + day +"-"+year
-  return formattedDateUI;
-};
-
+import { formattedDateUI } from "../utilities/FormattedDate";
 
 
 const WeightSheetSummary = () => {
@@ -319,7 +308,7 @@ const WeightSheetSummary = () => {
         </header>
         <div className="container mx-auto flex flex-col">
           <div className="flex justify-between content-center items-center text-md sm:text-lg mx-10">
-            <span>Date: {date}</span>
+            <span>Date: {formattedDateUI(date)}</span>
             <div className="flex justify-center sm:gap-20 gap-10 my-10">
               <button
                 className={finalized?"hidden":`bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-amber-600 `}

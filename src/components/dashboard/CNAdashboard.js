@@ -2,19 +2,17 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavBar from "../nav/NavBar";
-import "./Dashboard.css"
+import "./Dashboard.css";
 import { scale, list, message, alert } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
 import Footer from "../footer/Footer";
-import WeightSheetMenuModal from "./WeightSheetMenuModal";
-
-
+import WeightSheetMenuModal from "../weightSheets/WeightSheetMenuModal";
 
 const CNAdashboard = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [numUnreadMsgs, setNumUnreadMsgs] = useState(0)
-  const [showModal, setShowModal] = useState(false)
+  const [numUnreadMsgs, setNumUnreadMsgs] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
@@ -24,7 +22,7 @@ const CNAdashboard = () => {
       fetchIt(
         `http://localhost:8000/employeemessages/unreadmessages?recipient=${parsedUser.id}`
       ).then((data) => {
-       setNumUnreadMsgs(data.num_msgs)
+        setNumUnreadMsgs(data.num_msgs);
       });
     }
   }, []);
@@ -34,19 +32,19 @@ const CNAdashboard = () => {
       <div>
         <NavBar />
         <header className="flex justify-center">
-          <h1 className="font-semibold text-stone-700 text-2xl my-8">
+          <h1 className="font-semibold text-stone-700 text-3xl my-8">
             {" "}
             CNA Dashboard
           </h1>
         </header>
       </div>
       <div className="text-center md:mt-5 md:mb-5 mb-10">
-        <h1 className="text-xl font-semibold text-stone-600">
+        <h1 className="text-2xl text-stone-600">
           {name ? `Welcome ${name}` : ""}
         </h1>
       </div>
       <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end  md:mr-60 mt-5 mb-12 md:mb-[125px] text-stone-700">
-        <img src={alert} alt="logo" className="block opacity-80 w-8 md:w-14" />
+        <img src={alert} alt="logo" className="block opacity-80 w-8 md:w-12" />
         <h3>
           You have <span className="font-bold">{numUnreadMsgs}</span>{" "}
           <Link to="/inbox">

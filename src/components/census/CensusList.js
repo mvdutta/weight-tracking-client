@@ -3,6 +3,7 @@ import NavBar from "../nav/NavBar";
 import { useState, useEffect } from "react";
 import { fetchIt } from "../auth/fetchIt";
 import "./Censuslist.css";
+import { formattedDateUI } from "../utilities/FormattedDate";
 
 const formattedDate = (date) => {
   const myDate = date;
@@ -42,7 +43,7 @@ useEffect(() => {
               <td className="px-6 py-4">
                 {el.last_name}, {el.first_name}
               </td>
-              <td className="px-6 py-4">{el.admission_date}</td>
+              <td className="px-6 py-4">{formattedDateUI(el.admission_date)}</td>
             </tr>
           </>
         ))}
@@ -54,7 +55,7 @@ useEffect(() => {
     <>
       <NavBar />
       <header className="flex justify-center">
-        <h1 className="font-semibold text-stone-700 text-2xl my-8 md:mb-32">
+        <h1 className="font-semibold text-stone-700 text-3xl my-8 md:mb-32">
           {" "}
           Current Census List
         </h1>

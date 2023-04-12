@@ -7,3 +7,10 @@ export const formattedDate = (date) => {
   return formattedDate;
 };
 
+
+
+
+export const formattedDateUI = (date) => {
+  const [yy, mm, dd] = date.split("-");
+  return mm + "-" + dd + "-" + yy;
+};

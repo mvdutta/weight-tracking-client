@@ -153,21 +153,21 @@ const Inbox = () => {
   return (
     <>
       <NavBar />
-      <div className=" flex-col justify-cente ml-auto mr-auto mb-[310px] sm:w-2/3">
+      <div className=" flex-col justify-center ml-auto mr-auto mb-[310px] sm:w-2/3">
         <header className="flex justify-center">
-          <h1 className="font-semibold text-stone-700 text-2xl my-8"> Inbox</h1>
+          <h1 className="font-semibold text-stone-700 text-3xl my-8"> Inbox</h1>
         </header>
         <div className="text-center md:mt-5 mb-10">
-          <h1 className="text-xl font-semibold text-stone-600">
+          <h1 className="text-2xl text-stone-600">
             {name ? `Welcome ${name}` : ""}
           </h1>
         </div>
-        <div className="flex items-center justify-center md:justify-start md:ml-40 mt-5 text-stone-700">
-          <img src={compose} alt="logo" className="block w-20 md:w-[75px]" />
+        <div className="flex items-center justify-center md:justify-start md:ml-40 mt-5 mb-5">
+          <img src={compose} alt="compose" className="block w-20 md:w-[75px]" />
           <h3>
             {" "}
             <Link to="/compose">
-              <span className="text-sky-800 underline -ml-3 ">
+              <span className="text-sky-800 underline -ml-3">
                 Compose New Message
               </span>
             </Link>
