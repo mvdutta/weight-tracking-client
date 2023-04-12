@@ -32,7 +32,7 @@ const WeightSheetSummary = () => {
     useEffect(()=>{
         const API1 = "http://localhost:8000/weightsheets/create_all_weightsheets"
         const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`
-        const API3 ="http://localhost:8000/weights/closestdate_all?lookback=1week"
+        const API3 = `http://localhost:8000/weights/closestdate_all?lookback=1week&date=${date}`;
 
         const getData =  async () =>{
             if (patientListWithWeights.length===0){
@@ -55,7 +55,7 @@ const WeightSheetSummary = () => {
         getData()
 
     },[finalized])
-    const checkboxstyle =
+    const checkBoxStyle =
         "w-4 h-4 text-blue-600 bg-stone-100 border-stone-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-stone-700 dark:focus:ring-offset-stone-700 focus:ring-2 dark:bg-stone-600 dark:border-stone-500"
 
     // const CheckFinalized = () => patientListWithWeights.every(el=>el.final)
@@ -215,7 +215,7 @@ const WeightSheetSummary = () => {
                     <input
                       disabled={el.final}
                       type="checkbox"
-                      className={checkboxstyle}
+                      className={checkBoxStyle}
                       checked={el.reweighed}
                       value={el.reweighed}
                       id={`put--${index}--reweighed`}
@@ -228,7 +228,7 @@ const WeightSheetSummary = () => {
                         <input
                           disabled={el.final}
                           type="checkbox"
-                          className={checkboxstyle}
+                          className={checkBoxStyle}
                           checked={el.not_in_room}
                           value={el.not_in_room}
                           id={`put--${index}--not_in_room`}
@@ -245,7 +245,7 @@ const WeightSheetSummary = () => {
                         <input
                           disabled={el.final}
                           type="checkbox"
-                          className={checkboxstyle}
+                          className={checkBoxStyle}
                           checked={el.refused}
                           value={el.refused}
                           id={`put--${index}--refused`}
@@ -279,7 +279,7 @@ const WeightSheetSummary = () => {
                     <input
                       disabled={el.final}
                       type="checkbox"
-                      className={checkboxstyle}
+                      className={checkBoxStyle}
                       checked={el.daily_wts}
                       value={el.daily_wts}
                       id={`put--${index}--daily_wts`}

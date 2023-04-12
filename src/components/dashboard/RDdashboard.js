@@ -6,6 +6,7 @@ import { fetchIt } from "../auth/fetchIt";
 import NavBar from "../nav/NavBar";
 import "./Dashboard.css";
 import WeightSheetMenuModal from "../weightSheets/WeightSheetMenuModal";
+import { formattedDateUI } from "../utilities/FormattedDate";
 
 const formatDecimal = (x) => Number.parseFloat(x).toFixed(2);
 
@@ -118,8 +119,8 @@ const RDdashboard = () => {
           {name ? `Welcome ${name}` : ""}
         </h1>
       </div>
-      <div className="grid grid-cols-3 justify-items-evenly text-xs md:text-lg md:justify-items-center mb-20">
-        <div className="flex items-center gap-2 justify-center text-stone-700 ">
+      <div className="grid grid-cols-3 ml-auto mr-auto justify-items-evenly text-xs md:text-lg md:justify-items-center mb-20 md:w-2/3">
+        <div className="flex items-center gap-2 justify-center text-stone-700 hover:underline ">
           <a
             href="https://mvdutta.github.io/metabolic-calculator/"
             target="_blank"
@@ -138,7 +139,7 @@ const RDdashboard = () => {
           </a>
         </div>
         <div
-          className="flex items-center gap-2 justify-center text-stone-700 "
+          className="flex items-center gap-2 justify-center text-stone-700 hover:underline cursor-pointer "
           onClick={() => {
             setShowModal(true);
           }}
@@ -146,7 +147,7 @@ const RDdashboard = () => {
           <img
             src={rdclipboard}
             alt="rdclipboard"
-            className="block opacity-80 w-6 md:w-12 hover:underline"
+            className="block opacity-80 w-6 md:w-12"
           />
           RD Weight Sheets
         </div>
@@ -161,7 +162,10 @@ const RDdashboard = () => {
             <span className="font-bold">{numUnreadMsgs}</span>{" "}
             <Link to="/inbox">
               {" "}
-              <span className="text-sky-700 underline">unread messages</span>
+              <span className="text-sky-700 underline">
+                {" "}
+                unread messages
+              </span>
             </Link>
           </h3>
         </div>
@@ -185,7 +189,6 @@ const RDdashboard = () => {
           <form className="max-w-sm px-2">
             <div className="relative">
               <svg
-                xmlns="http://www.w3.org/2000/svg"
                 className="absolute top-0 bottom-0 w-6 h-6 my-auto text-gray-400 left-3"
                 fill="none"
                 viewBox="0 0 24 24"

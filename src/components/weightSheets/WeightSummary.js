@@ -36,7 +36,7 @@ const WeightSummary = () => {
 
   useEffect(() => {
     const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`;
-    const API3 = "http://localhost:8000/weights/closestdate_all?lookback=1week";
+         const API3 = `http://localhost:8000/weights/closestdate_all?lookback=1week&date=${date}`;
 
     //this function makes 3 api calls sequentially
     const getData = async () => {
