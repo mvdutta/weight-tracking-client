@@ -6,14 +6,13 @@ import { fetchIt } from "../auth/fetchIt";
 import NavBar from "../nav/NavBar";
 import "./Dashboard.css";
 import WeightSheetMenuModal from "../weightSheets/WeightSheetMenuModal";
-import { formattedDateUI } from "../utilities/FormattedDate";
+import { formattedDate, formattedDateUI } from "../utilities/FormattedDate";
 
-const formatDecimal = (x) => Number.parseFloat(x).toFixed(2);
+const formatDecimal = (x) => x?Number.parseFloat(x).toFixed(2):"";
 
 const RDdashboard = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [selectedResident, setSelectedResident] = useState({});
   const [showSearchResults, setShowSearchResults] = useState(false);
@@ -32,7 +31,7 @@ const RDdashboard = () => {
         setNumUnreadMsgs(data.num_msgs);
       });
     }
-  }, [loggedIn]);
+  }, []);
 
   useEffect(() => {
     if (selectedResident && selectedResident.id) {
@@ -56,15 +55,6 @@ const RDdashboard = () => {
     } else {
       setShowSearchResults(false);
     }
-  };
-
-  const formattedDate = (date) => {
-    const myDate = date;
-    let year = myDate.toLocaleString("default", { year: "numeric" });
-    let month = myDate.toLocaleString("default", { month: "2-digit" });
-    let day = myDate.toLocaleString("default", { day: "2-digit" });
-    const formattedDate = month + "-" + day + "-" + year;
-    return formattedDate;
   };
 
   const makeTableRow = () => {
@@ -257,7 +247,7 @@ const RDdashboard = () => {
               </p>
               <div className="flex justify-between ">
                 <p className="mt-1 text-base text-stone-700 dark:text-stone-300">
-                  Admission Date: {selectedResident.admission_date}
+                  Admission Date: {formattedDateUI(selectedResident.admission_date)}
                 </p>
                 <p className="mt-1 text-base text-stone-700 dark:text-stone-300">
                   Current Date: {formattedDate(new Date())}

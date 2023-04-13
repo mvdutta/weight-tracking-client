@@ -31,7 +31,7 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
         } else {
           navigate("/home");
         }
-      }, [showModal]);//putthong showModal in dependency array makes the modal update every time it is opened
+      }, [showModal]);//putting showModal in dependency array makes the modal update every time it is opened
 
 
     const whichSheet = {
