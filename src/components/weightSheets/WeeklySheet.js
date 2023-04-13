@@ -40,6 +40,7 @@ const WeeklySheet = () => {
 
 
     useEffect(()=>{
+        const dates_api = "http://localhost:8000/weightsheets/dates"
         const API1 = "http://localhost:8000/weightsheets/create_all_weightsheets"
         const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`
         const API3 =
@@ -47,7 +48,8 @@ const WeeklySheet = () => {
 
         //this function makes 3 api calls sequentially 
         const getData =  async () =>{
-            if (patientListWithWeights.length===0){
+            const {dates} = await fetchIt(dates_api) //get all the dates for which weightsheets exist and create new weightsheets only if one doesn't exists
+            if (!dates.includes(date)){
             await   fetchIt(API1, {
                         method: "POST",
                         body: JSON.stringify({date: date}),

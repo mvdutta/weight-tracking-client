@@ -30,17 +30,19 @@ const WeightSheetSummary = () => {
     }, [])
 
     useEffect(()=>{
+        const dates_api = "http://localhost:8000/weightsheets/dates";
         const API1 = "http://localhost:8000/weightsheets/create_all_weightsheets"
         const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`
         const API3 = `http://localhost:8000/weights/closestdate_all?lookback=1week&date=${date}`;
 
         const getData =  async () =>{
-            if (patientListWithWeights.length===0){
-            await   fetchIt(API1, {
-                         method: "POST",
-                        body: JSON.stringify({date: date}),
-                    })
-                }
+            const { dates } = await fetchIt(dates_api); 
+            if (!dates.includes(date)) {
+              await fetchIt(API1, {
+                method: "POST",
+                body: JSON.stringify({ date: date }),
+              });
+            }
             const weightsheets = await fetchIt(API2)
             const previousWeights = await fetchIt(API3)
             for (let entry of weightsheets) {
