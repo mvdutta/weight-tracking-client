@@ -7,6 +7,7 @@ import NavBar from "../nav/NavBar";
 import "./Dashboard.css";
 import WeightSheetMenuModal from "../weightSheets/WeightSheetMenuModal";
 import { formattedDate, formattedDateUI } from "../utilities/FormattedDate";
+import { Graph } from "./Graph";
 
 const formatDecimal = (x) => x?Number.parseFloat(x).toFixed(2):"";
 
@@ -298,6 +299,9 @@ const RDdashboard = () => {
       )}
       <hr className="rd-hr mt-14"></hr>
       <WeightSheetMenuModal showModal={showModal} setShowModal={setShowModal} />
+      {/* <Graph id={1}/> */}
+      {selectedResident && selectedResident.id?
+      <Graph id={selectedResident?.id} name={selectedResident.first_name}/>:""}
     </>
   );
 };
