@@ -32,11 +32,15 @@ export const Graph = ({id, name}) => {
     const [weights, setWeights] = useState([])
 
     useEffect(()=>{
-        fetchIt(`http://localhost:8000/weights?resident=${id}`)
+        fetchIt(`http://localhost:8000/weights/rd_summary?resident=${id}`)
         .then((data)=>{
-            const lastSix = data.slice(-6);
-            setLabels(lastSix.map(el=>el.date))
-            setWeights(lastSix.map(el=>parseFloat(el.weight)))
+            console.log(data.weight_history.dates)
+            console.log(data.weight_history.weights);
+            setLabels(data.weight_history.dates)
+            setWeights(data.weight_history.weights)
+            // const lastSix = data.slice(-6);
+            // setLabels(lastSix.map(el=>el.date))
+            // setWeights(lastSix.map(el=>parseFloat(el.weight)))
         })
 
     },[])

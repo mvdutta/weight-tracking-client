@@ -7,6 +7,15 @@ export const formattedDate = (date) => {
   return formattedDate;
 };
 
+export const formattedDateMDY = (date) => {
+  const myDate = date;
+  let year = myDate.toLocaleString("default", { year: "numeric" });
+  let month = myDate.toLocaleString("default", { month: "2-digit" });
+  let day = myDate.toLocaleString("default", { day: "2-digit" });
+  const formattedDateMDY = month + "-" + day + "-" + year;
+  return formattedDateMDY;
+};
+
 
 
 
