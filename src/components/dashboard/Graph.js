@@ -34,43 +34,40 @@ export const Graph = ({id, name}) => {
     useEffect(()=>{
         fetchIt(`http://localhost:8000/weights/rd_summary?resident=${id}`)
         .then((data)=>{
-            console.log(data.weight_history.dates)
-            console.log(data.weight_history.weights);
             setLabels(data.weight_history.dates)
             setWeights(data.weight_history.weights)
-            // const lastSix = data.slice(-6);
-            // setLabels(lastSix.map(el=>el.date))
-            // setWeights(lastSix.map(el=>parseFloat(el.weight)))
         })
 
     },[])
     const options = {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           position: "top",
         },
         title: {
           display: true,
-          text: `Weight data for ${name}`,
+          text: `6 month weight summary for ${name}`,
         },
       },
+      
     };
 
     const data = {
-      labels:labels,
+      labels: labels,
       datasets: [
         {
-          label: "Dataset 1",
+          label: "Weight (lbs)",
           data: weights,
-          borderColor: "rgb(255, 99, 132)",
-          backgroundColor: "rgba(255, 99, 132, 0.5)",
+          borderColor: "rgb(82, 124, 148)",
+          backgroundColor: "rgb(2, 132, 199, .5)",
         },
       ],
     };
   return (
-  <div className='relative w-[600px] mx-auto'>
+    <div className="relative mx-auto h-[300px] w-full md:w-1/2 mt-20 border p-4 border-sky-600/30 shadow-md sm:rounded-lg">
       <Line options={options} data={data} />
-  </div>
-  )
+    </div>
+  );
 }

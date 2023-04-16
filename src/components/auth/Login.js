@@ -103,20 +103,20 @@ export const Login = () => {
     <figure className="h-screen flex">
       <div className="w-full max-w-md m-auto bg-white rounded-lg border-2 shadow-lg shadow-sky-800/30 pb-6 px-1">
         <div className="text-2xl font-medium text-center">
-          <p className="-mt-12">
+          <p className="-mt-[103px]">
             <img
-              className="w-[290px] opacity-80 m-auto"
+              className="w-[260px] m-auto opacity-98"
               src={logo}
               alt="weightTrackingLogo"
             />
           </p>
         </div>
         <div className="flex items-center justify-center">
-          <h1 className="text-[21px] font-medium font-body text-burnt -mt-40">
+          <h1 className="text-[21px] font-medium font-body text-burnt -mt-[100px]">
             Sign in to your account
           </h1>
         </div>
-        <div className=" text-gray-700 ml-6 mr-6 -mt-10">
+        <div className=" text-gray-700 ml-6 mr-6 ">
           <form>
             <label className="text-left text-dark font-bold font-body">
               Username:

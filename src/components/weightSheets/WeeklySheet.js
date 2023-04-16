@@ -5,19 +5,7 @@ import { fetchIt } from "../auth/fetchIt"
 import { useNavigate,  useParams } from "react-router-dom"
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-
-
-
-
-const formattedDateUI = (date) => {
-  const myDate = date;
-
-  let year = myDate.toLocaleString("default", { year: "numeric" });
-  let month = myDate.toLocaleString("default", { month: "2-digit" });
-  let day = myDate.toLocaleString("default", { day: "2-digit" });
-  const formattedDateUI = month + "-" + day + "-" + year;
-  return formattedDateUI;
-};
+import { formattedDateUI } from "../utilities/FormattedDate"
 
 //patientListWithWeights is a giant array which holds 10 objects (1 for each row of the table) 
 const WeeklySheet = () => {
@@ -277,7 +265,7 @@ const WeeklySheet = () => {
             Weekly Weight Sheet
           </h1>
         </header>
-        <div className="flex flex-col rounded-md items-center m-auto border-2 shadow-md border-sky-200/60 lg:w-1/3 py-3 px-10 text-smoke-600 shadow-sky-800/30">
+        <div className="flex flex-col rounded-md items-center m-auto border-2 shadow-md border-stone-200/60 lg:w-1/3 py-3 px-10 text-smoke-600 shadow-stone-900/30">
           <ol>
             <li className="font-semibold">Goals:</li>
             <li>
@@ -292,10 +280,10 @@ const WeeklySheet = () => {
           </ol>
         </div>
 
-        <div className="container mx-auto flex flex-col mt-20">
-          <div className="flex md:justify-around justify-between sm:mx-10 mb-8 content-center items-center text-md sm:text-lg">
+        <div className="container mx-auto flex flex-col mt-20 overflow-auto">
+          <div className="flex md:justify-around justify-between mx-5 sm:mx-10 mb-8 content-center items-center text-md sm:text-lg overflow-auto">
             <span>Weight Team Member: {employee.name}</span>
-            <span>Date: {date}</span>
+            <span className="text-md">Date: {formattedDateUI(date)}</span>
             <button
               className={finalized?"hidden":
                 "bg-sky-600 hover:bg-sky-500 uppercase text-sm py-2 px-6 mb-2 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-sky-700 shadow-md "

@@ -51,7 +51,7 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
              return (
                <li key={index}>
                  <Link
-                   className="text-sky-900 text-[17px] dark:text-blue-500 hover:underline"
+                   className="text-sky-900/90 text-[16px] dark:text-blue-500 hover:underline"
                    to={`${whichSheet[role]}\\${encodedDate}`}
                  >
                    {formattedDateUI(el)}
@@ -91,16 +91,16 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
                   </button>
                 </div>
                 {/*body*/}
-                <div className="relative p-6 flex-auto text-stone-700 text-sm md:text-lg font-semibold">
+                <div className="relative p-6 flex-auto text-stone-700 font-semibold">
                   <div
                     className={
                       role === "RD" || role === "CNA" ? "flex gap-2" : "hidden"
                     }
                   >
-                    <p className="">Create/Open Weight Sheet for: </p>
+                    <p className="text-lg">Create/Open Weight Sheet for: </p>
                     <input
                       type="date"
-                      className="mb-8 text-sky-900 text-[17px]"
+                      className="mb-8 text-sky-900/90 text-[16px]"
                       value={newDate}
                       onChange={(e) => {
                         setNewDate(e.target.value);
@@ -115,8 +115,8 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
                       </Link>
                     </div>
                   </div>
-                  <p className="mb-2">Available Weight Sheets</p>
-                  {makeDateList()}
+                  <p className="mb-2 text-lg">Available Weight Sheets</p>
+                  <div className="overflow-auto w-1/3 h-20">{makeDateList()}</div>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-stone-200 rounded-b"></div>

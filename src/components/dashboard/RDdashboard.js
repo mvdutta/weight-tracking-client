@@ -80,7 +80,7 @@ const RDdashboard = () => {
         <tbody>
           <tr
             key={`table-row-${0}`}
-            className="bg-white border-b text-base  text-stone-700  dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600"
+            className="bg-white border-b text-sm sm:text-base text-stone-700  dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600"
           >
             <td
               scope="row"
@@ -115,8 +115,8 @@ const RDdashboard = () => {
           {name ? `Welcome ${name}` : ""}
         </h1>
       </div>
-      <div className="grid grid-cols-3 ml-auto mr-auto justify-items-evenly text-xs md:text-lg md:justify-items-center mb-20 md:w-2/3">
-        <div className="flex items-center gap-2 justify-center text-stone-700 hover:underline ">
+      <div className="grid grid-cols-3 md:ml-auto md:mr-auto text-md md:text-lg md:justify-items-center mb-20 md:w-2/3">
+        <div className="flex items-center gap-1 md:gap-2 justify-center text-stone-700 hover:underline ">
           <a
             href="https://mvdutta.github.io/metabolic-calculator/"
             target="_blank"
@@ -130,12 +130,13 @@ const RDdashboard = () => {
           <a
             href="https://mvdutta.github.io/metabolic-calculator/"
             target="_blank"
+            className="w-[100px]"
           >
-            Dietetic Calculator
+            Calculator
           </a>
         </div>
         <div
-          className="flex items-center gap-2 justify-center text-stone-700 hover:underline cursor-pointer "
+          className="flex items-center gap-1 md:gap-2 justify-left text-stone-700 hover:underline cursor-pointer -ml-4 sm:ml-0"
           onClick={() => {
             setShowModal(true);
           }}
@@ -145,26 +146,24 @@ const RDdashboard = () => {
             alt="rdclipboard"
             className="block opacity-80 w-6 md:w-12"
           />
-          RD Weight Sheets
+          <span className="">Weight Sheets</span>
         </div>
-        <div className="flex items-center gap-2 md:gap-4 justify-center md:justify-end text-stone-700  ">
-          <img
-            src={alert}
-            alt="alert"
-            className="block opacity-80 w-6 md:w-12"
-          />
-          <h3>
-            <span className="hidden md:inline-block">You have </span>{" "}
-            <span className="font-bold">{numUnreadMsgs}</span>{" "}
-            <Link to="/inbox">
-              {" "}
-              <span className="text-sky-700 underline">
-                {" "}
+        <Link to="/inbox">
+          <div className="flex items-center gap-1 md:gap-4 text-stone-700 -ml-6  sm:ml-0 cursor-pointer">
+            <img
+              src={alert}
+              alt="alert"
+              className="block opacity-80 w-6 md:w-12"
+            />
+            <h3 className="">
+              <span className="hidden xl:inline-block">You have </span>{" "}
+              <span className="font-bold text-sky-900">{numUnreadMsgs}</span>{" "}
+              <span className="text-stone-700 hover:underline">
                 unread messages
               </span>
-            </Link>
-          </h3>
-        </div>
+            </h3>
+          </div>
+        </Link>
       </div>
       <hr className="rd-hr"></hr>
 
@@ -177,7 +176,7 @@ const RDdashboard = () => {
 
       <div className="flex items-center ml-10 sm:ml-20 md:ml-60">
         <div>
-          <h1 className="text-stone-600 font-semibold text-sm md:text-lg">
+          <h1 className="text-stone-600 font-semibold text-lg">
             Search by Resident:
           </h1>
         </div>
@@ -234,7 +233,7 @@ const RDdashboard = () => {
         ""
       ) : (
         <div>
-          <h1 className="text-sm md:text-lg ml-10 sm:ml-20 md:ml-60 mt-5 mb-10 text-stone-800">
+          <h1 className="text-lg ml-10 sm:ml-20 md:ml-60 mt-5 mb-10 text-stone-800">
             Weight Summary for:{" "}
             <span className="italic text-stone-700 ">
               {selectedResident.first_name} {selectedResident.last_name}
@@ -245,52 +244,55 @@ const RDdashboard = () => {
       {searchResults.length === 0 ? (
         ""
       ) : (
-        <div className=" container flex flex-col m-auto before:relative shadow-md sm:rounded-lg md:w-1/2 font-body border-solid border-2 border-sky-600/20 pb-5 px-4 text-sm md:text-lg">
-          <table className="text-md  text-stone-700 dark:text-stone-500">
-            <caption className="p-5 text-lg font-semibold text-stone-800 bg-white dark:text-white dark:bg-gray-800">
-              <p className="text-left">
-                {selectedResident.first_name} {selectedResident.last_name}
-              </p>
-              <div className="flex justify-between ">
-                <p className="mt-1 text-base text-stone-700 dark:text-stone-300">
-                  Admission Date: {formattedDateUI(selectedResident.admission_date)}
+        <div className=" container flex flex-col m-auto shadow-md sm:rounded-lg md:w-1/2 font-body border border-sky-600/30 pb-5 px-4 text-sm md:text-lg overflow-x-scroll">
+          <div className="w-auto overflow-x-auto">
+            <table className="text-md text-stone-700 dark:text-stone-500">
+              <caption className="p-5 text-lg font-semibold text-stone-800 bg-white dark:text-white dark:bg-gray-800">
+                <p className="text-left">
+                  {selectedResident.first_name} {selectedResident.last_name}
                 </p>
-                <p className="mt-1 text-base text-stone-700 dark:text-stone-300">
-                  Current Date: {formattedDateMDY(new Date())}
-                </p>
-              </div>
-            </caption>
-            <thead className="text-sm text-sky-900  font-semibold bg-stone-200 dark:bg-stone-700 dark:text-stone-400">
-              <tr>
-                <th scope="col" className="px-6 py-3">
-                  ABW (lbs)
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  PBW (lbs)
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  CBW (lbs)
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  BMI (kg/m^2)
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  % Change x 1 wk
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  % Change x 1 month
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  % Change x 3 mos.
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  % Change x 6 mos.
-                </th>
-              </tr>
-            </thead>
-            {makeTableRow()}
-          </table>
-          <div className="text-stone-600 text-xs mt-3">
+                <div className="flex justify-between">
+                  <p className="mt-1 text-base text-stone-700 dark:text-stone-300">
+                    Admission Date:{" "}
+                    {formattedDateUI(selectedResident.admission_date)}
+                  </p>
+                  <p className="mt-1 text-base text-stone-700 dark:text-stone-300">
+                    Current Date: {formattedDateMDY(new Date())}
+                  </p>
+                </div>
+              </caption>
+              <thead className="text-xs sm:text-sm text-sky-900  font-semibold bg-stone-200 dark:bg-stone-700 dark:text-stone-400">
+                <tr>
+                  <th scope="col" className="px-2 py-2 sm:px-6 sm:py-3">
+                    ABW (lbs)
+                  </th>
+                  <th scope="col" className="px-2 py-2 sm:px-6 sm:py-3">
+                    PBW (lbs)
+                  </th>
+                  <th scope="col" className="px-2 py-2 sm:px-6 sm:py-3">
+                    CBW (lbs)
+                  </th>
+                  <th scope="col" className="px-2 py-2 sm:px-6 sm:py-3">
+                    BMI (kg/m^2)
+                  </th>
+                  <th scope="col" className="px-2 py-2 sm:px-6 sm:py-3">
+                    % Change x 1 week
+                  </th>
+                  <th scope="col" className="px-2 py-2 sm:px-6 sm:py-3">
+                    % Change x 1 month
+                  </th>
+                  <th scope="col" className="px-2 py-2 sm:px-6 sm:py-3">
+                    % Change x 3 months
+                  </th>
+                  <th scope="col" className="px-2 py-2 sm:px-6 sm:py-3">
+                    % Change x 6 months
+                  </th>
+                </tr>
+              </thead>
+              {makeTableRow()}
+            </table>
+          </div>
+          <div className="text-stone-600 text-xs mt-3 tracking-wider">
             <p>ABW: Admission Body Weight</p>
             <p>PBW: Previous Body Weight (previous week or measurement)</p>
             <p>CBW: Current Body Weight</p>
@@ -302,11 +304,16 @@ const RDdashboard = () => {
           </div>
         </div>
       )}
-      <hr className="rd-hr mt-14"></hr>
       <WeightSheetMenuModal showModal={showModal} setShowModal={setShowModal} />
       {/* <Graph id={1}/> */}
-      {selectedResident && selectedResident.id ?
-      <Graph id={selectedResident?.id} name={`${selectedResident.last_name}, ${selectedResident.first_name}`}/>:""}
+      {selectedResident && selectedResident.id ? (
+        <Graph
+          id={selectedResident?.id}
+          name={`${selectedResident.first_name} ${selectedResident.last_name}`}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
