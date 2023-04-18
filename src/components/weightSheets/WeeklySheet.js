@@ -149,103 +149,105 @@ const WeeklySheet = () => {
     }
     const makeTableRows = () => {
         const filledWeightRows =
-            patientListWithWeights.length > 0
-                ? patientListWithWeights.map((el, index) => (
-                      <tr key={`table-row-${el.resident_id}`} >
-                          <td className="border px-8 py-4">{el.room_num}</td>
-                          <td className="border px-8 py-4">
-                              {el.first_name} {el.last_name}
-                          </td>
-                          <td className="border text-center py-4">
-                              <input
-                              //if the final property is true, then disabled will = true and the button can't be clicked
-                                  disabled={el.final}
-                                  type="Number"
-                                  className=" bg-stone-50 border w-1/2 border-stone-300"
-                                  value={el.weight || ""}
-                                  id={`put--${index}--weight`}
-                                  onChange={(e) => handleChange(e)}
-                              />
-                          </td>
-                          <td className="border py-4 text-center">{el.prev_wt}</td>
-                          <td className="border py-4 text-center ">
-                              <input
-                                  disabled={el.final}
-                                  type="checkbox"
-                                  className={checkboxstyle}
-                                  checked={el.reweighed}
-                                  value={el.reweighed}
-                                  id={`put--${index}--reweighed`}
-                                  onChange={(e) => handleChange(e)}
-                              />
-                          </td>
-                          <td className="border text-center flex justify-center py-4">
-                            <div className="flex flex-col items-start">
-                              <div className="flex items-center justify-center mb-4">
-                                  <input
-                                      disabled={el.final}
-                                      type="checkbox"
-                                      className={checkboxstyle}
-                                      checked={el.not_in_room}
-                                      value={el.not_in_room}
-                                      id={`put--${index}--not_in_room`}
-                                      onChange={(e) => handleChange(e)}
-                                  />
-                                  <label
-                                      htmlFor="default-radio-1"
-                                      className="ml-2 text-sm font-medium text-stone-900 dark:text-stone-300"
-                                  >
-                                      Absent
-                                  </label>
-                              </div>
-                              <div className="flex items-center justify-center">
-                                  <input
-                                      disabled={el.final}
-                                      type="checkbox"
-                                      className={checkboxstyle}
-                                      checked={el.refused}
-                                      value={el.refused}
-                                      id={`put--${index}--refused`}
-                                      onChange={(e) => handleChange(e)}
-                                  />
-                                  <label
-                                      htmlFor="default-radio-2"
-                                      className="ml-2 text-sm font-medium text-stone-900 dark:text-stone-300"
-                                  >
-                                      Refused
-                                  </label>
-                              </div>
-                              </div>
-                          </td>
-                          <td className="border px-8 py-4">
-                              <select
-                                  disabled={el.final}
-                                  id={`put--${index}--scale_type`}
-                                  className="flex bg-stone-50 border border-separate border-stone-300 text-stone-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full  dark:bg-stone-700 dark:border-stone-600 dark:placeholder-stone-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  value={el.scale_type}
-                                  onChange={(e) => handleChange(e)}
-                              >
-                                  <option value="">Select</option>
-                                  <option value="floor">Floor</option>
-                                  <option value="wheelchair">Wheelchair</option>
-                                  <option value="chair">Chair</option>
-                                  <option value="bed">Bed</option>
-                              </select>
-                          </td>
-                          <td className="border text-center py-4">
-                              <input
-                                  disabled={el.final}
-                                  type="checkbox"
-                                  className={checkboxstyle}
-                                  checked={el.daily_wts}
-                                  value={el.daily_wts}
-                                  id={`put--${index}--daily_wts`}
-                                  onChange={(e) => handleChange(e)}
-                              />
-                          </td>
-                      </tr>
-                  ))
-                : []
+          patientListWithWeights.length > 0
+            ? patientListWithWeights.map((el, index) => (
+                <tr key={`table-row-${el.resident_id}`}>
+                  <td className="border px-8 py-4">{el.room_num}</td>
+                  <td className="border px-8 py-4">
+                    {el.first_name} {el.last_name}
+                  </td>
+                  <td className="border text-center py-4">
+                    <input
+                      //if the final property is true, then disabled will = true and the button can't be clicked
+                      disabled={el.final}
+                      type="Number"
+                      className=" bg-stone-50 border w-1/2 border-stone-300"
+                      value={el.weight || ""}
+                      id={`put--${index}--weight`}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </td>
+                  <td className="border text-center py-4">
+                    {el.prev_wt && el.prev_wt > 0 ? el.prev_wt : "N/A"}
+                  </td>
+                  <td className="border py-4 text-center ">
+                    <input
+                      disabled={el.final}
+                      type="checkbox"
+                      className={checkboxstyle}
+                      checked={el.reweighed}
+                      value={el.reweighed}
+                      id={`put--${index}--reweighed`}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </td>
+                  <td className="border text-center flex justify-center py-4">
+                    <div className="flex flex-col items-start">
+                      <div className="flex items-center justify-center mb-4">
+                        <input
+                          disabled={el.final}
+                          type="checkbox"
+                          className={checkboxstyle}
+                          checked={el.not_in_room}
+                          value={el.not_in_room}
+                          id={`put--${index}--not_in_room`}
+                          onChange={(e) => handleChange(e)}
+                        />
+                        <label
+                          htmlFor="default-radio-1"
+                          className="ml-2 text-sm font-medium text-stone-900 dark:text-stone-300"
+                        >
+                          Absent
+                        </label>
+                      </div>
+                      <div className="flex items-center justify-center">
+                        <input
+                          disabled={el.final}
+                          type="checkbox"
+                          className={checkboxstyle}
+                          checked={el.refused}
+                          value={el.refused}
+                          id={`put--${index}--refused`}
+                          onChange={(e) => handleChange(e)}
+                        />
+                        <label
+                          htmlFor="default-radio-2"
+                          className="ml-2 text-sm font-medium text-stone-900 dark:text-stone-300"
+                        >
+                          Refused
+                        </label>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="border px-8 py-4">
+                    <select
+                      disabled={el.final}
+                      id={`put--${index}--scale_type`}
+                      className="flex bg-stone-50 border border-separate border-stone-300 text-stone-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full  dark:bg-stone-700 dark:border-stone-600 dark:placeholder-stone-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      value={el.scale_type}
+                      onChange={(e) => handleChange(e)}
+                    >
+                      <option value="">Select</option>
+                      <option value="floor">Floor</option>
+                      <option value="wheelchair">Wheelchair</option>
+                      <option value="chair">Chair</option>
+                      <option value="bed">Bed</option>
+                    </select>
+                  </td>
+                  <td className="border text-center py-4">
+                    <input
+                      disabled={el.final}
+                      type="checkbox"
+                      className={checkboxstyle}
+                      checked={el.daily_wts}
+                      value={el.daily_wts}
+                      id={`put--${index}--daily_wts`}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </td>
+                </tr>
+              ))
+            : [];
  
 
         return (

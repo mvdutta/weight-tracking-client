@@ -212,7 +212,7 @@ const WeightSheetSummary = () => {
                       onChange={(e) => handleChange(e)}
                     />
                   </td>
-                  <td className="border text-center py-4">{el.prev_wt}</td>
+                  <td className="border text-center py-4">{el.prev_wt && el.prev_wt>0? el.prev_wt:"N/A"}</td>
                   <td className="border text-center py-4">
                     <input
                       disabled={el.final}

@@ -38,7 +38,7 @@ export const Graph = ({id, name}) => {
             setWeights(data.weight_history.weights)
         })
 
-    },[])
+    },[id])
     const options = {
       responsive: true,
       maintainAspectRatio: false,
@@ -51,7 +51,24 @@ export const Graph = ({id, name}) => {
           text: `6 month weight summary for ${name}`,
         },
       },
-      
+      scales: {
+        x: {
+          labels: labels,
+          title: {
+            display: true,
+            text: "Date",
+            color: "rgb(82, 124, 148)",
+          },
+        },
+        y: {
+          labels: weights,
+          title: {
+            display: true,
+            text: "Weight",
+            color: "rgb(82, 124, 148)",
+          },
+        },
+      },
     };
 
     const data = {
