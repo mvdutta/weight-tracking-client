@@ -54,7 +54,7 @@ const WeightSummary = () => {
     getData();
   }, []);
 
-  const checkboxstyle =
+  const checkBoxStyle =
     "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500";
 
   
@@ -68,15 +68,15 @@ const WeightSummary = () => {
               <td className="border px-8 py-4">
                 {el.first_name} {el.last_name}
               </td>
+              <td className="border text-center py-4">{el.weight || ""}</td>
               <td className="border text-center py-4">
-                {el.weight || ""}
+                {el.prev_wt && el.prev_wt > 0 ? el.prev_wt : "N/A"}
               </td>
-              <td className="border py-4 text-center">{el.prev_wt}</td>
               <td className="border py-4 text-center ">
                 <input
                   disabled
                   type="checkbox"
-                  className={checkboxstyle}
+                  className={checkBoxStyle}
                   checked={el.reweighed}
                   value={el.reweighed}
                   id={`put--${index}--reweighed`}
@@ -88,11 +88,10 @@ const WeightSummary = () => {
                     <input
                       disabled
                       type="checkbox"
-                      className={checkboxstyle}
+                      className={checkBoxStyle}
                       checked={el.not_in_room}
                       value={el.not_in_room}
                       id={`put--${index}--not_in_room`}
-
                     />
                     <label
                       htmlFor="default-radio-1"
@@ -105,7 +104,7 @@ const WeightSummary = () => {
                     <input
                       disabled
                       type="checkbox"
-                      className={checkboxstyle}
+                      className={checkBoxStyle}
                       checked={el.refused}
                       value={el.refused}
                       id={`put--${index}--refused`}
@@ -137,7 +136,7 @@ const WeightSummary = () => {
                 <input
                   disabled
                   type="checkbox"
-                  className={checkboxstyle}
+                  className={checkBoxStyle}
                   checked={el.daily_wts}
                   value={el.daily_wts}
                   id={`put--${index}--daily_wts`}

@@ -60,7 +60,6 @@ const WeightSheetSummary = () => {
     const checkBoxStyle =
         "w-4 h-4 text-blue-600 bg-stone-100 border-stone-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-stone-700 dark:focus:ring-offset-stone-700 focus:ring-2 dark:bg-stone-600 dark:border-stone-500"
 
-    // const CheckFinalized = () => patientListWithWeights.every(el=>el.final)
 
     const handleSubmit = () => {
          Swal.fire({

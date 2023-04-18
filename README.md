@@ -17,18 +17,20 @@ Each user has different responsibilities:
 1. From their dashboard, CNAs can:
     - check and send messages to multiple users
     - view the current census list
-    - start a new weight sheet for the week and enter in data for each patient
+    - create a new weight sheet for the week and enter in data for each patient
+    - view previous weight sheets
     - save and update entered data at any time before the weight sheet is finalized by the RD
 2. From their dashboard, RDs can:
     - check and send messages to multiple users
     - view the current census list
-    - view, edit and finalize the current weight sheet submitted by the CNA
+    - view, edit, save and finalize a weight sheet
+    - view previous weight sheets
     - submitted weight sheet highlights missing or concerning data for RD to investigate
-    - search for individual patients by name and display a table of weight trends over a 6 month period to monitor significant weight changes
+    - search for individual patients by name and view a table and graph of weight trends over a 6 month period to monitor significant weight changes
 3. From their dashboard, RNs/NPs/MDs can:
     - check and send messages to multiple users
     - view current census list
-    - view finalized weekly weight sheet 
+    - view finalized weekly weight sheets 
 
 # User Experience
 ## Register a new user and login

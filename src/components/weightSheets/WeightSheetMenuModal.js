@@ -115,8 +115,8 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
                       </Link>
                     </div>
                   </div>
-                  <p className="mb-2 text-lg">Available Weight Sheets</p>
-                  <div className="overflow-auto w-1/3 h-20">{makeDateList()}</div>
+                  <p className="mb-4 text-lg">Available Weight Sheets</p>
+                  <div className="overflow-auto w-1/3 h-28">{makeDateList()}</div>
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-stone-200 rounded-b"></div>

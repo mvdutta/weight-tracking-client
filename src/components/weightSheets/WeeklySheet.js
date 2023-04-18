@@ -59,7 +59,7 @@ const WeeklySheet = () => {
 
     },[])
 
-    const checkboxstyle =
+    const checkBoxStyle =
         "w-4 h-4 text-blue-600 bg-stone-100 border-stone-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-stone-700 dark:focus:ring-offset-stone-700 focus:ring-2 dark:bg-stone-600 dark:border-stone-500"
 
     const handleSubmit = () => {
@@ -167,14 +167,12 @@ const WeeklySheet = () => {
                       onChange={(e) => handleChange(e)}
                     />
                   </td>
-                  <td className="border text-center py-4">
-                    {el.prev_wt && el.prev_wt > 0 ? el.prev_wt : "N/A"}
-                  </td>
+                   <td className="border text-center py-4">{el.prev_wt && el.prev_wt>0? el.prev_wt:"N/A"}</td>
                   <td className="border py-4 text-center ">
                     <input
                       disabled={el.final}
                       type="checkbox"
-                      className={checkboxstyle}
+                      className={checkBoxStyle}
                       checked={el.reweighed}
                       value={el.reweighed}
                       id={`put--${index}--reweighed`}
@@ -187,7 +185,7 @@ const WeeklySheet = () => {
                         <input
                           disabled={el.final}
                           type="checkbox"
-                          className={checkboxstyle}
+                          className={checkBoxStyle}
                           checked={el.not_in_room}
                           value={el.not_in_room}
                           id={`put--${index}--not_in_room`}
@@ -204,7 +202,7 @@ const WeeklySheet = () => {
                         <input
                           disabled={el.final}
                           type="checkbox"
-                          className={checkboxstyle}
+                          className={checkBoxStyle}
                           checked={el.refused}
                           value={el.refused}
                           id={`put--${index}--refused`}
@@ -238,7 +236,7 @@ const WeeklySheet = () => {
                     <input
                       disabled={el.final}
                       type="checkbox"
-                      className={checkboxstyle}
+                      className={checkBoxStyle}
                       checked={el.daily_wts}
                       value={el.daily_wts}
                       id={`put--${index}--daily_wts`}
