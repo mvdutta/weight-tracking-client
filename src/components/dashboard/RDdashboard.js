@@ -159,7 +159,7 @@ const RDdashboard = () => {
               <span className="hidden xl:inline-block">You have </span>{" "}
               <span className="font-bold text-sky-900">{numUnreadMsgs}</span>{" "}
               <span className="text-stone-700 hover:underline">
-                unread messages
+                unread message(s)
               </span>
             </h3>
           </div>

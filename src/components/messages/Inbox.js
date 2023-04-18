@@ -7,6 +7,7 @@ import { discard, compose, read, unread } from "../../assets";
 import MessageDetailModal from "./MessageDetailModal";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import "../weightSheets/WeightSheets.css";
 
 const formattedDate = (date) => {
   const myDate = date;
@@ -62,17 +63,25 @@ const Inbox = () => {
       title: "Are you sure?",
       text: "This email will be permanently deleted!",
       icon: "warning",
+      iconColor: "#925631",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#DAA520",
+      cancelButtonColor: "#0284c7",
       confirmButtonText: "Yes, delete it!",
+      customClass: "final-warning",
+      showClass: {
+        popup: "animate__animated animate__fadeInDown",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutUp",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
-            fetchIt(`http://localhost:8000/employeemessages/${id}`, {
-              method: "DELETE",
-            }).then(() => {
-               setMsgClicked((x) => !x); //sends signal to refresh the inbox
-            });
+        fetchIt(`http://localhost:8000/employeemessages/${id}`, {
+          method: "DELETE",
+        }).then(() => {
+          setMsgClicked((x) => !x); //sends signal to refresh the inbox
+        });
       }
     });
   };
