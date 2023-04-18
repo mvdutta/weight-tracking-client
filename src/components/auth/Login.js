@@ -3,21 +3,47 @@ import { Link, useNavigate } from "react-router-dom";
 import { fetchIt } from "./fetchIt";
 import "./Login.css";
 import RegisterModal from "./RegisterModal";
+import { logo } from "../../assets";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+
 
 export const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (username === "") {
-      window.alert("Please enter your username");
+     MySwal.fire({
+       title: "Please enter your username",
+       confirmButtonColor: "#DAA520",
+       customClass: "sweet-warning",
+       showClass: {
+         popup: "animate__animated animate__fadeInDown",
+       },
+       hideClass: {
+         popup: "animate__animated animate__fadeOutUp",
+       },
+     });
       return;
     }
     if (password === "") {
-      window.alert("Please enter your password");
+      MySwal.fire({
+        title: "Please enter your password",
+        confirmButtonColor: "#DAA520",
+        customClass: "sweet-warning",
+        showClass: {
+          popup: "animate__animated animate__fadeInDown",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
+      });
       return;
     }
     fetch(`http://localhost:8000/login`, {
@@ -44,7 +70,17 @@ export const Login = () => {
           );
           setLoggedIn(true);
         } else {
-          window.alert("Invalid login");
+           MySwal.fire({
+             title: "Invalid Credentials",
+             confirmButtonColor: "#DAA520",
+             customClass: "sweet-warning",
+             showClass: {
+               popup: "animate__animated animate__fadeInDown",
+             },
+             hideClass: {
+               popup: "animate__animated animate__fadeOutUp",
+             },
+           });
         }
       })
       .then(() => {
@@ -64,19 +100,23 @@ export const Login = () => {
   };
 
   return (
-    <figure className="h-screen flex">
-      <div className="w-full max-w-md m-auto bg-white rounded-lg border-4 shadow-md py-10 px-1">
-        <blockquote className="text-2xl font-medium text-center">
-          <p className="text-2xl text-primary font-body font-semibold mb-5">
-            Welcome to WeightTracker
+    <figure className="h-screen flex -mb-60">
+      <div className="w-full max-w-md m-auto bg-white rounded-lg border-2 shadow-lg shadow-sky-800/30 pb-6 px-1">
+        <div className="text-2xl font-medium text-center">
+          <p className="-mt-[103px]">
+            <img
+              className="w-[260px] m-auto opacity-98"
+              src={logo}
+              alt="weightTrackingLogo"
+            />
           </p>
-        </blockquote>
-        <div className=" text-gray-700 m-6">
-          <div className="flex items-center mt-3 justify-center">
-            <h1 className="text-2xl font-medium font-body text-burnt mb-2">
-              Login to your account
-            </h1>
-          </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <h1 className="text-[21px] font-medium font-body text-burnt -mt-[100px]">
+            Sign in to your account
+          </h1>
+        </div>
+        <div className=" text-gray-700 ml-6 mr-6 ">
           <form>
             <label className="text-left text-dark font-bold font-body">
               Username:
@@ -115,22 +155,22 @@ export const Login = () => {
                 "w-full p-2 text-burnt border-2 rounded-md outline-none text-sm transition duration-150 ease-in-out mb-4"
               }
             />
-            <div className="flex items-center mt-3 justify-center">
+            <div className="flex items-center mt-6 mb-6 justify-center">
               <button
                 className={
-                  "bg-sky-600 hover:bg-sky-400 py-2 px-6 text-md text-white rounded-full border shadow border-blue focus:outline-none focus:border-stone-200"
+                  "bg-sky-600 hover:bg-sky-400 py-2 px-5 uppercase text-xs font-bold text-white rounded-full border shadow border-blue focus:outline-none focus:border-stone-200"
                 }
                 value="Login"
-                onClick={handleLogin}
+                onClick={(e)=>{handleLogin(e)}}
               >
-                Login
+                Sign In
               </button>
             </div>
           </form>
           <div className="flex items-center mt-3 justify-center">
-            <button className={"justify-center text-primary hover:underline"}>
+            <div className={"justify-center text-primary hover:underline"}>
               <RegisterModal />
-            </button>
+            </div>
           </div>
         </div>
       </div>

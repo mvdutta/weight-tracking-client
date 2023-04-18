@@ -2,18 +2,10 @@ import React from "react";
 import NavBar from "../nav/NavBar";
 import { useState, useEffect } from "react";
 import { fetchIt } from "../auth/fetchIt";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const ROLES = ["MD", "RN", "LPN", "NP"]
 
-const formattedDate = (date) => {
-  const myDate = date;
-  let year = myDate.toLocaleString("default", { year: "numeric" });
-  let month = myDate.toLocaleString("default", { month: "2-digit" });
-  let day = myDate.toLocaleString("default", { day: "2-digit" });
-  const formattedDate = year + "-" + month + "-" + day;
-  return formattedDate;
-};
 
 const formattedDateUI = (date) => {
   const myDate = date;
@@ -29,8 +21,8 @@ const formattedDateUI = (date) => {
 const WeightSummary = () => {
   const [patientListWithWeights, setPatientListWithWeights] = useState([]);
   const [employee, setEmployee] = useState({});
-  const [alerts, showAlerts] = useState(false);
   const navigate = useNavigate();
+    const { date } = useParams();
 
   useEffect(() => {
     const current_user = localStorage.getItem("wt_token");
@@ -43,10 +35,8 @@ const WeightSummary = () => {
   }, []);
 
   useEffect(() => {
-    const todaysDate = formattedDate(new Date());
-    const API1 = "http://localhost:8000/weightsheets/create_all_weightsheets";
-    const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${todaysDate}`;
-    const API3 = "http://localhost:8000/weights/closestdate_all?lookback=1week";
+    const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`;
+         const API3 = `http://localhost:8000/weights/closestdate_all?lookback=1week&date=${date}`;
 
     //this function makes 3 api calls sequentially
     const getData = async () => {
@@ -64,83 +54,11 @@ const WeightSummary = () => {
     getData();
   }, []);
 
-  const checkboxstyle =
+  const checkBoxStyle =
     "w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500";
 
-  const handleSubmit = () => {
-    //prepare post requests
-    const API = "http://localhost:8000";
-    const promiseArray = [];
-    if (patientListWithWeights.length > 0) {
-      for (let el of patientListWithWeights) {
-        const address = `${API}/weightsheets/${el.weight_sheet_id}`;
-        const requestBody = {
-          resident: el.resident_id,
-          reweighed: el.reweighed,
-          refused: el.refused,
-          not_in_room: el.not_in_room,
-          daily_wts: el.daily_wts,
-          show_alert: el.show_alert,
-          scale_type: el.scale_type,
-          final: el.final,
-          weight: el.weight,
-        };
-        promiseArray.push(
-          fetchIt(address, {
-            method: "PUT",
-            body: JSON.stringify(requestBody),
-          })
-        );
-      }
-      for (let el of patientListWithWeights) {
-        const address = `${API}/weights/${el.weight_id}`;
-        const requestBody = {
-          resident: el.resident_id,
-          date: formattedDate(new Date()),
-          weight: el.weight,
-        };
-        promiseArray.push(
-          fetchIt(address, {
-            method: "PUT",
-            body: JSON.stringify(requestBody),
-          })
-        );
-      }
-    }
+  
 
-    if (promiseArray.length > 0) {
-      Promise.all(promiseArray).then((data) => {
-        window.alert("Data saved");
-      });
-    }
-  };
-
-  const handleChange = (e) => {
-    const [type, index, field] = e.target.id.split("--");
-    const copy = [...patientListWithWeights];
-    if (field === "weight") {
-      copy[index][field] = parseFloat(e.target.value);
-    }
-    if (field === "reweighed" || field === "daily_wts") {
-      copy[index][field] = !copy[index][field]; //toggles the value from true to false and vice versa
-    }
-    if (field === "not_in_room") {
-      copy[index][field] = !copy[index][field];
-      if (copy[index][field]) {
-        copy[index]["refused"] = false;
-      }
-    }
-    if (field === "refused") {
-      copy[index][field] = !copy[index][field];
-      if (copy[index][field]) {
-        copy[index]["not_in_room"] = false;
-      }
-    }
-    if (field === "scale_type") {
-      copy[index][field] = e.target.value;
-    }
-    setPatientListWithWeights(copy);
-  };
   const makeTableRows = () => {
     const filledWeightRows =
       patientListWithWeights.length > 0
@@ -150,19 +68,18 @@ const WeightSummary = () => {
               <td className="border px-8 py-4">
                 {el.first_name} {el.last_name}
               </td>
+              <td className="border text-center py-4">{el.weight || ""}</td>
               <td className="border text-center py-4">
-                {el.weight || ""}
+                {el.prev_wt && el.prev_wt > 0 ? el.prev_wt : "N/A"}
               </td>
-              <td className="border py-4 text-center">{el.prev_wt}</td>
               <td className="border py-4 text-center ">
                 <input
                   disabled
                   type="checkbox"
-                  className={checkboxstyle}
+                  className={checkBoxStyle}
                   checked={el.reweighed}
                   value={el.reweighed}
                   id={`put--${index}--reweighed`}
-                  onChange={(e) => handleChange(e)}
                 />
               </td>
               <td className="border text-center flex justify-center py-4">
@@ -171,11 +88,10 @@ const WeightSummary = () => {
                     <input
                       disabled
                       type="checkbox"
-                      className={checkboxstyle}
+                      className={checkBoxStyle}
                       checked={el.not_in_room}
                       value={el.not_in_room}
                       id={`put--${index}--not_in_room`}
-                      onChange={(e) => handleChange(e)}
                     />
                     <label
                       htmlFor="default-radio-1"
@@ -188,11 +104,10 @@ const WeightSummary = () => {
                     <input
                       disabled
                       type="checkbox"
-                      className={checkboxstyle}
+                      className={checkBoxStyle}
                       checked={el.refused}
                       value={el.refused}
                       id={`put--${index}--refused`}
-                      onChange={(e) => handleChange(e)}
                     />
                     <label
                       htmlFor="default-radio-2"
@@ -207,9 +122,8 @@ const WeightSummary = () => {
                 <select
                   disabled={el.final}
                   id={`put--${index}--scale_type`}
-                  className="flex bg-gray-50 border border-separate border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="flex bg-gray-50 -z-50 border border-separate border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   value={el.scale_type}
-                  onChange={(e) => handleChange(e)}
                 >
                   <option value="">Select</option>
                   <option value="floor">Floor</option>
@@ -222,11 +136,10 @@ const WeightSummary = () => {
                 <input
                   disabled
                   type="checkbox"
-                  className={checkboxstyle}
+                  className={checkBoxStyle}
                   checked={el.daily_wts}
                   value={el.daily_wts}
                   id={`put--${index}--daily_wts`}
-                  onChange={(e) => handleChange(e)}
                 />
               </td>
             </tr>
@@ -245,34 +158,34 @@ const WeightSummary = () => {
           {" "}
           Weekly Weight Summary
         </h1>
-      </header> 
-      <div className="container mx-auto flex flex-col mt-20">
-        <div className="flex md:justify-around justify-between sm-mx-10 mb-8 content-center items-center text-md sm:text-lg">
-          <span>Date: {formattedDateUI(new Date())}</span>
+      </header>
+      <div className="container mx-auto flex flex-col mt-20 mb-20">
+        <div className="mb-10 ml-2 text-md sm:text-lg">
+          <span>Date: {date}</span>
         </div>
-        <table className="shadow-lg bg-white border-separate overflow-x-auto">
+        <table className="shadow-md shadow-stone-300 bg-sky-50/40 border-separate overflow-x-auto">
           <thead>
             <tr className="font-body text-stone-800">
-              <th className="bg-blue-100 border text-left px-8 py-4">Room</th>
-              <th className="bg-blue-100 border text-left px-8 py-4">
+              <th className="bg-sky-600/20 border text-left px-8 py-4">Room</th>
+              <th className="bg-sky-600/20 border text-left px-8 py-4">
                 Resident Name
               </th>
-              <th className="bg-blue-100 border text-left px-8 py-4">
+              <th className="bg-sky-600/20 border text-left px-8 py-4">
                 Current Weight
               </th>
-              <th className="bg-blue-100 border text-left px-8 py-4">
+              <th className="bg-sky-600/20 border text-left px-8 py-4">
                 Previous Weight
               </th>
-              <th className="bg-blue-100 border text-left px-8 py-4">
+              <th className="bg-sky-600/20 border text-left px-8 py-4">
                 ReWeighed?
               </th>
-              <th className="bg-blue-100 border text-left px-8 py-4">
+              <th className="bg-sky-600/20 border text-left px-8 py-4">
                 Absent or Refused
               </th>
-              <th className="bg-blue-100 border text-left px-12 lg:px-8 py-4">
+              <th className="bg-sky-600/20 border text-left px-12 lg:px-8 py-4">
                 Scale Type
               </th>
-              <th className="bg-blue-100 border text-left px-8 py-4">
+              <th className="bg-sky-600/20 border text-left px-8 py-4">
                 Daily Weights
               </th>
             </tr>

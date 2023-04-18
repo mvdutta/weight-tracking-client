@@ -2,28 +2,11 @@ import React from "react"
 import NavBar from "../nav/NavBar"
 import { useState, useEffect } from "react"
 import { fetchIt } from "../auth/fetchIt"
-import { useNavigate } from "react-router-dom"
-
-
-const formattedDate = (date) => {
-    const myDate = date
-
-    let year = myDate.toLocaleString("default", { year: "numeric" })
-    let month = myDate.toLocaleString("default", { month: "2-digit" })
-    let day = myDate.toLocaleString("default", { day: "2-digit" })
-    const formattedDate = year + "-" + month + "-" + day
-    return formattedDate
-}
-
-const formattedDateUI = (date) => {
-  const myDate = date;
-
-  let year = myDate.toLocaleString("default", { year: "numeric" });
-  let month = myDate.toLocaleString("default", { month: "2-digit" });
-  let day = myDate.toLocaleString("default", { day: "2-digit" });
-  const formattedDateUI = month + "-" + day +"-"+year
-  return formattedDateUI;
-};
+import { useNavigate, useParams } from "react-router-dom";
+import "./WeightSheets.css";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { formattedDateUI } from "../utilities/FormattedDate";
 
 
 const WeightSheetSummary = () => {
@@ -31,6 +14,10 @@ const WeightSheetSummary = () => {
     const [employee, setEmployee] = useState({})
     const [alerts, showAlerts] = useState(false)
     const navigate = useNavigate()
+    const { date } = useParams();
+    const MySwal = withReactContent(Swal);
+    const [finalized, setFinalized] = useState(true)
+
 
     useEffect(() => {
         const current_user = localStorage.getItem("wt_token")
@@ -43,18 +30,19 @@ const WeightSheetSummary = () => {
     }, [])
 
     useEffect(()=>{
-        const todaysDate = formattedDate(new Date())
+        const dates_api = "http://localhost:8000/weightsheets/dates";
         const API1 = "http://localhost:8000/weightsheets/create_all_weightsheets"
-        const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${todaysDate}`
-        const API3 ="http://localhost:8000/weights/closestdate_all?lookback=1week"
+        const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`
+        const API3 = `http://localhost:8000/weights/closestdate_all?lookback=1week&date=${date}`;
 
         const getData =  async () =>{
-            if (patientListWithWeights.length===0){
-            await   fetchIt(API1, {
-                         method: "POST",
-                        body: JSON.stringify({date: todaysDate}),
-                    })
-                }
+            const { dates } = await fetchIt(dates_api); 
+            if (!dates.includes(date)) {
+              await fetchIt(API1, {
+                method: "POST",
+                body: JSON.stringify({ date: date }),
+              });
+            }
             const weightsheets = await fetchIt(API2)
             const previousWeights = await fetchIt(API3)
             for (let entry of weightsheets) {
@@ -64,60 +52,47 @@ const WeightSheetSummary = () => {
                     entry.prev_wt = previousWeights_entry.weight
                 }
             setPatientListWithWeights(weightsheets)
+            setFinalized(weightsheets.every((el) => el.final));
         }
         getData()
 
-    },[])
-    const checkboxstyle =
+    },[finalized])
+    const checkBoxStyle =
         "w-4 h-4 text-blue-600 bg-stone-100 border-stone-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-stone-700 dark:focus:ring-offset-stone-700 focus:ring-2 dark:bg-stone-600 dark:border-stone-500"
 
+
     const handleSubmit = () => {
-        //prepare post requests
-        if (!window.confirm("Saved values cannot be changed!")) return
-        const API = "http://localhost:8000"
-        const promiseArray = []
-         if (patientListWithWeights.length>0){
-        for (let el of patientListWithWeights) {
-            const address = `${API}/weightsheets/${el.weight_sheet_id}`
+         Swal.fire({
+           title: `Are you sure?`,
+           text: 'Finalized values cannot be changed!',
+           icon: "warning",
+           iconColor: "#925631",
+           showCancelButton: true,
+           confirmButtonColor: "#DAA520",
+           cancelButtonColor: "#0284c7",
+           confirmButtonText: "Finalize",
+           customClass: "final-warning",
+           showClass: {
+             popup: "animate__animated animate__fadeInDown",
+           },
+           hideClass: {
+             popup: "animate__animated animate__fadeOutUp",
+           },
+         }).then((result) => {
+           if (result.isConfirmed) {
+            const address =
+              "http://localhost:8000/weightsheets/save_weightsheets";
             const requestBody = {
-                resident: el.resident_id,
-                reweighed: el.reweighed,
-                refused: el.refused,
-                not_in_room: el.not_in_room,
-                daily_wts: el.daily_wts,
-                show_alert: el.show_alert,
-                scale_type: el.scale_type,
-                final: true,
-                weight: el.weight,
+                date: date
             }
-            promiseArray.push(
-                fetchIt(address, {
-                    method: "PUT",
-                    body: JSON.stringify(requestBody),
-                })
-            )
-        }
-        for (let el of patientListWithWeights) {
-            const address = `${API}/weights/${el.weight_id}`
-            const requestBody = {
-                resident: el.resident_id,
-                date: formattedDate(new Date()),
-                weight: el.weight,
-            }
-            promiseArray.push(
-                fetchIt(address, {
-                    method: "PUT",
-                    body: JSON.stringify(requestBody),
-                })
-            )
-        }
-    }
-    
-        if (promiseArray.length>0) {
-            Promise.all(promiseArray).then((data) => {
+            fetchIt(address, {
+            method: "PUT",
+            body: JSON.stringify(requestBody),
+            }).then(()=>{
                 navigate(0)
             })
-        }
+           }
+         });
         
     }
 
@@ -148,6 +123,64 @@ const WeightSheetSummary = () => {
         }
         setPatientListWithWeights(copy)
     }
+
+      const handleSave = () => {
+        //prepare post requests
+        const API = "http://localhost:8000";
+        const promiseArray = [];
+        if (patientListWithWeights.length > 0) {
+          for (let el of patientListWithWeights) {
+            const address = `${API}/weightsheets/${el.weight_sheet_id}`;
+            const requestBody = {
+              resident: el.resident_id,
+              reweighed: el.reweighed,
+              refused: el.refused,
+              not_in_room: el.not_in_room,
+              daily_wts: el.daily_wts,
+              show_alert: el.show_alert,
+              scale_type: el.scale_type,
+              final: el.final,
+              weight: el.weight,
+            };
+            promiseArray.push(
+              fetchIt(address, {
+                method: "PUT",
+                body: JSON.stringify(requestBody),
+              })
+            );
+          }
+          for (let el of patientListWithWeights) {
+            const address = `${API}/weights/${el.weight_id}`;
+            const requestBody = {
+              resident: el.resident_id,
+              date: date,
+              weight: el.weight,
+            };
+            promiseArray.push(
+              fetchIt(address, {
+                method: "PUT",
+                body: JSON.stringify(requestBody),
+              })
+            );
+          }
+        }
+
+        if (promiseArray.length > 0) {
+          Promise.any(promiseArray).then(() => {
+             MySwal.fire({
+               title: "Data Saved",
+               confirmButtonColor: "#DAA520",
+               customClass: "sweet-warning",
+               showClass: {
+                 popup: "animate__animated animate__fadeInDown",
+               },
+               hideClass: {
+                 popup: "animate__animated animate__fadeOutUp",
+               },
+             });
+          });
+        }
+      };
     const makeTableRows = () => {
         const filledWeightRows =
           patientListWithWeights.length > 0
@@ -160,7 +193,7 @@ const WeightSheetSummary = () => {
                     Math.abs(el.weight - el.prev_wt) > 5 ||
                     el.not_in_room ||
                     el.refused
-                      ? "bg-orange-200"
+                      ? "bg-amber-400/40"
                       : ""
                   }
                 >
@@ -178,12 +211,12 @@ const WeightSheetSummary = () => {
                       onChange={(e) => handleChange(e)}
                     />
                   </td>
-                  <td className="border text-center py-4">{el.prev_wt}</td>
+                  <td className="border text-center py-4">{el.prev_wt && el.prev_wt>0? el.prev_wt:"N/A"}</td>
                   <td className="border text-center py-4">
                     <input
                       disabled={el.final}
                       type="checkbox"
-                      className={checkboxstyle}
+                      className={checkBoxStyle}
                       checked={el.reweighed}
                       value={el.reweighed}
                       id={`put--${index}--reweighed`}
@@ -196,7 +229,7 @@ const WeightSheetSummary = () => {
                         <input
                           disabled={el.final}
                           type="checkbox"
-                          className={checkboxstyle}
+                          className={checkBoxStyle}
                           checked={el.not_in_room}
                           value={el.not_in_room}
                           id={`put--${index}--not_in_room`}
@@ -213,7 +246,7 @@ const WeightSheetSummary = () => {
                         <input
                           disabled={el.final}
                           type="checkbox"
-                          className={checkboxstyle}
+                          className={checkBoxStyle}
                           checked={el.refused}
                           value={el.refused}
                           id={`put--${index}--refused`}
@@ -247,7 +280,7 @@ const WeightSheetSummary = () => {
                     <input
                       disabled={el.final}
                       type="checkbox"
-                      className={checkboxstyle}
+                      className={checkBoxStyle}
                       checked={el.daily_wts}
                       value={el.daily_wts}
                       id={`put--${index}--daily_wts`}
@@ -275,53 +308,74 @@ const WeightSheetSummary = () => {
           </h1>
         </header>
         <div className="container mx-auto flex flex-col">
-          <div className="flex md:justify-around justify-between sm:mx-10 my-10 content-center items-center text-md sm:text-lg">
-            <span>Date: {formattedDateUI(new Date())}</span>
-            <button
-              className={
-                "bg-sky-600 hover:bg-sky-400 py-2 px-6 mb-2 sm:text-xl text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"
-              }
-              value="Finalize"
-              onClick={handleSubmit}
-            >
-              Finalize
-            </button>
-            {/* <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={handleSubmit}
-                    >
-                        Save
-                    </button> */}
+          <div className="flex justify-between content-center items-center text-md sm:text-lg mx-10">
+            <span>Date: {formattedDateUI(date)}</span>
+            <div className="flex justify-center sm:gap-20 gap-10 my-10">
+              <button
+                className={finalized?"hidden":`bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-amber-600 `}
+                value="Finalize"
+                onClick={handleSubmit}
+              >
+                Finalize
+              </button>
+              <button
+                className={finalized?"hidden":"bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-sky-500"}
+                disabled={finalized}
+                value="Save"
+                onClick={handleSave}
+              >
+                Save
+              </button>
+            </div>
           </div>
-          <table className="shadow-lg bg-white border-separate overflow-scroll">
+          <table className="shadow-md shadow-stone-300  bg-sky-50/40 border-separate overflow-scroll">
             <thead>
               <tr className=" font-body text-stone-800">
-                <th className="bg-blue-100 border text-left px-8 py-4">Room</th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
+                  Room
+                </th>
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Resident Name
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Current Weight
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Previous Weight
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   ReWeighed?
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Absent or Refused
                 </th>
-                <th className="bg-blue-100 border text-left px-12 lg:px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-12 lg:px-8 py-4">
                   Scale Type
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Daily Weights
                 </th>
               </tr>
             </thead>
             {makeTableRows()}
           </table>
+        </div>
+        <div className="flex justify-center gap-20 my-10">
+          <button
+            className={finalized?"hidden":"bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border border-amber focus:outline-none focus:border-black"}
+            value="Finalize"
+            onClick={handleSubmit}
+          >
+            Finalize
+          </button>
+          <button
+            className={finalized?"hidden":"bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"}
+            value="Save"
+            disabled={finalized}
+            onClick={handleSave}
+          >
+            Save
+          </button>
         </div>
       </div>
     );

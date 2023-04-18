@@ -3,6 +3,7 @@ import NavBar from "../nav/NavBar";
 import { useState, useEffect } from "react";
 import { fetchIt } from "../auth/fetchIt";
 import "./Censuslist.css";
+import { formattedDateUI } from "../utilities/FormattedDate";
 
 const formattedDate = (date) => {
   const myDate = date;
@@ -42,7 +43,7 @@ useEffect(() => {
               <td className="px-6 py-4">
                 {el.last_name}, {el.first_name}
               </td>
-              <td className="px-6 py-4">{el.admission_date}</td>
+              <td className="px-6 py-4">{formattedDateUI(el.admission_date)}</td>
             </tr>
           </>
         ))}
@@ -54,12 +55,12 @@ useEffect(() => {
     <>
       <NavBar />
       <header className="flex justify-center">
-        <h1 className="font-semibold text-stone-700 text-2xl my-8 md:mb-32">
+        <h1 className="font-semibold text-stone-700 text-3xl my-8 md:mb-32">
           {" "}
           Current Census List
         </h1>
       </header>
-      <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg md:w-1/2 font-body border-solid  border-2 border-sky-600/20 py-6 px-4">
+      <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg shadow-sky-600/30 md:w-1/2 font-body border border-sky-600/20 py-6 px-4">
         <table className="text-md text-center text-stone-700 dark:text-stone-500">
           <caption className="p-5 text-lg font-semibold text-sky-900 bg-white dark:text-white dark:bg-gray-800 text-center">
             Gaffney Scranton Rehabilitation & Healing
@@ -73,7 +74,7 @@ useEffect(() => {
               Current Residents ({residentList.length})
             </p>
           </caption>
-          <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
+          <thead className="text-sm text-sky-900 uppercase font-semibold dark:bg-stone-700 dark:text-stone-400 bg-stone-200/80">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Room Number

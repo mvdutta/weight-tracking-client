@@ -18,14 +18,17 @@ export const ApplicationViews = () => {
       <Route path="/cnadashboard" element={<CNAdashboard />} />
       <Route path="/rddashboard" element={<RDdashboard />} />
       <Route path="/rndashboard" element={<RNdashboard />} />
-      <Route path="/weeklysheet" element={<WeeklySheet />} />
+      <Route path="/weeklysheet/:date" element={<WeeklySheet />} />
       <Route path="/inbox" element={<Inbox />} />
       <Route path="/censuslist" element={<CensusList />} />
-      <Route path="/weightsummary" element={<WeightSummary />} />
+      <Route path="/weightsummary/:date" element={<WeightSummary />} />
       <Route path="/noaccess" element={<NoAccess />} />
       <Route path="/compose" element={<Compose />} />
       <Route path="/messagedetail/:id" element={<MessageDetailModal />} />
-      <Route path="/weightsheetsummary" element={<WeightSheetSummary />} />
+      <Route
+        path="/weightsheetsummary/:date"
+        element={<WeightSheetSummary />}
+      />
     </Routes>
   );
 };

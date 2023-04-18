@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { close, menu } from "../../assets";
 import "./NavBar.css";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const sameLinks = [
   {
@@ -25,11 +27,11 @@ const navLinks = {
       title: "RD Dashboard",
       address: "/rddashboard",
     },
-    {
-      id: "wt_summary",
-      title: "Weight Sheet Summary",
-      address: "/weightsheetsummary",
-    },
+    // {
+    //   id: "wt_summary",
+    //   title: "Weight Sheet Summary",
+    //   address: "/weightsheetsummary",
+    // },
   ].concat(sameLinks),
 
   CNA: [
@@ -38,11 +40,11 @@ const navLinks = {
       title: "CNA Dashboard",
       address: "/cnadashboard",
     },
-    {
-      id: "weightsheet",
-      title: "Weight Sheet",
-      address: "/weeklysheet",
-    },
+    // {
+    //   id: "weightsheet",
+    //   title: "Weight Sheet",
+    //   address: "/weeklysheet",
+    // },
   ].concat(sameLinks),
 
   RN: [
@@ -51,11 +53,11 @@ const navLinks = {
       title: "Dashboard",
       address: "/rndashboard",
     },
-    {
-      id: "weightsummary",
-      title: "Weight Summary",
-      address: "/weightsummary",
-    },
+    // {
+    //   id: "weightsummary",
+    //   title: "Weight Summary",
+    //   address: "/weightsummary",
+    // },
   ].concat(sameLinks),
 };
 
@@ -64,6 +66,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({ id: "", token: "", name: "", role: "" });
   const [links, setLinks] = useState([]);
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     const current_user = localStorage.getItem("wt_token");
@@ -82,10 +85,32 @@ const NavBar = () => {
     }
   }, []);
   const handleLogout = () => {
-    if (window.confirm(`${user.name}, are you sure you want to log out?`)) {
-      localStorage.removeItem("wt_token");
-      navigate("/", { replace: true });
-    }
+    MySwal.fire({
+      title: `${user.name}, are you sure you want to sign out?`,
+      icon: "warning",
+      iconColor: "#925631",
+      showCancelButton: true,
+      confirmButtonColor: "#0284c7",
+      cancelButtonColor: "#DAA520",
+      confirmButtonText: "Sign Out",
+      customClass: "sweet-warning",
+      showClass: {
+        popup: "animate__animated animate__fadeInDown",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutUp",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("Jumped the gun")
+        navigate("/");
+        localStorage.removeItem("wt_token");
+
+      }
+    });
+    // if (!window.confirm("Are you sure?")) return;
+    //     navigate("/");
+    //     localStorage.removeItem("wt_token");
   };
   return (
     <>
@@ -108,7 +133,7 @@ const NavBar = () => {
             >
               {" "}
               <Link to="" onClick={handleLogout}>
-                Logout
+                Sign Out
               </Link>
             </li>
           </ul>
@@ -140,7 +165,7 @@ const NavBar = () => {
                 >
                   {" "}
                   <Link to="" onClick={handleLogout}>
-                    Logout
+                    Sign Out
                   </Link>
                 </li>
               </ul>

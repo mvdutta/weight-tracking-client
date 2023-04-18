@@ -1,5 +1,5 @@
 # WeightTracker 
-## ***An app to help prevent unintentional weight loss in health care facilities***  <br><br>
+## ***An app to prevent unintentional weight loss in health care facilities***  <br><br>
 
 # Application Overview  
 
@@ -11,22 +11,32 @@
 
 # Features
 There are three primary types of users that can register and log in to their account: (CNA, RD, and RN/NP/MD).<br>
+Responsive design allows for use on most screen sizes.<br>
+
 Each user has different responsibilities:  
 1. From their dashboard, CNAs can:
     - check and send messages to multiple users
     - view the current census list
-    - start a new weight sheet for the week and enter in data for each patient
+    - create a new weight sheet for the week and enter in data for each patient
+    - view previous weight sheets
     - save and update entered data at any time before the weight sheet is finalized by the RD
 2. From their dashboard, RDs can:
     - check and send messages to multiple users
     - view the current census list
-    - view, edit and finalize the current weight sheet submitted by the CNA
+    - view, edit, save and finalize a weight sheet
+    - view previous weight sheets
     - submitted weight sheet highlights missing or concerning data for RD to investigate
-    - search for individual patients by name and display a table of weight trends over a 6 month period to monitor significant weight changes
+    - search for individual patients by name and view a table and graph of weight trends over a 6 month period to monitor significant weight changes
 3. From their dashboard, RNs/NPs/MDs can:
     - check and send messages to multiple users
     - view current census list
-    - view finalized weekly weight sheet 
+    - view finalized weekly weight sheets 
+
+# User Experience
+## Register a new user and login
+
+![](src/assets/gifs/register.gif)
+
 
 
 # Technologies
@@ -41,13 +51,9 @@ Each user has different responsibilities:
  ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
 
 
-![alt text](https://raw.githubusercontent.com/mvdutta/weight-tracking-client/main/public/gsrh-logo3.png)
 
-## Live Site 
 
-Play Tortoise Scrabble [here](https://sourish33.github.io/ScrabbleReact) 
 
-While all screen sizes are supported, Desktops and Tablets are recommended for the best experience. Touch Screen is supported.
 
 
 ## Installation

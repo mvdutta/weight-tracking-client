@@ -2,35 +2,19 @@ import React from "react"
 import NavBar from "../nav/NavBar"
 import { useState, useEffect } from "react"
 import { fetchIt } from "../auth/fetchIt"
-import { useNavigate } from "react-router-dom"
-
-
-
-const formattedDate = (date) => {
-  const myDate = date;
-  let year = myDate.toLocaleString("default", { year: "numeric" });
-  let month = myDate.toLocaleString("default", { month: "2-digit" });
-  let day = myDate.toLocaleString("default", { day: "2-digit" });
-  const formattedDate = year + "-" + month + "-" + day;
-  return formattedDate;
-};
-
-const formattedDateUI = (date) => {
-  const myDate = date;
-
-  let year = myDate.toLocaleString("default", { year: "numeric" });
-  let month = myDate.toLocaleString("default", { month: "2-digit" });
-  let day = myDate.toLocaleString("default", { day: "2-digit" });
-  const formattedDateUI = month + "-" + day + "-" + year;
-  return formattedDateUI;
-};
+import { useNavigate,  useParams } from "react-router-dom"
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import { formattedDateUI } from "../utilities/FormattedDate"
 
 //patientListWithWeights is a giant array which holds 10 objects (1 for each row of the table) 
 const WeeklySheet = () => {
     const [patientListWithWeights, setPatientListWithWeights] = useState([])
     const [employee, setEmployee] = useState({})
-    const [alerts, showAlerts] = useState(false)
+    const [finalized, setFinalized] = useState(false)
     const navigate = useNavigate()
+    const { date } = useParams();
+    const MySwal = withReactContent(Swal);
 
     useEffect(() => {
         const current_user = localStorage.getItem("wt_token")
@@ -44,17 +28,19 @@ const WeeklySheet = () => {
 
 
     useEffect(()=>{
-        const todaysDate = formattedDate(new Date())
+        const dates_api = "http://localhost:8000/weightsheets/dates"
         const API1 = "http://localhost:8000/weightsheets/create_all_weightsheets"
-        const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${todaysDate}`
-        const API3 ="http://localhost:8000/weights/closestdate_all?lookback=1week"
+        const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`
+        const API3 =
+          `http://localhost:8000/weights/closestdate_all?lookback=1week&date=${date}`;
 
         //this function makes 3 api calls sequentially 
         const getData =  async () =>{
-            if (patientListWithWeights.length===0){
+            const {dates} = await fetchIt(dates_api) //get all the dates for which weightsheets exist and create new weightsheets only if one doesn't exists
+            if (!dates.includes(date)){
             await   fetchIt(API1, {
                         method: "POST",
-                        body: JSON.stringify({date: todaysDate}),
+                        body: JSON.stringify({date: date}),
                     })
                 }
             const weightsheets = await fetchIt(API2)
@@ -67,12 +53,13 @@ const WeeklySheet = () => {
                     entry.prev_wt = previousWeights_entry.weight
                 }
             setPatientListWithWeights(weightsheets)
+            setFinalized(weightsheets.every(el=>el.final))
         }
         getData()
 
     },[])
 
-    const checkboxstyle =
+    const checkBoxStyle =
         "w-4 h-4 text-blue-600 bg-stone-100 border-stone-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-stone-700 dark:focus:ring-offset-stone-700 focus:ring-2 dark:bg-stone-600 dark:border-stone-500"
 
     const handleSubmit = () => {
@@ -104,7 +91,7 @@ const WeeklySheet = () => {
             const address = `${API}/weights/${el.weight_id}`
             const requestBody = {
                 resident: el.resident_id,
-                date: formattedDate(new Date()),
+                date: date,
                 weight: el.weight,
             }
             promiseArray.push(
@@ -117,10 +104,19 @@ const WeeklySheet = () => {
     }
     
         if (promiseArray.length>0) {
-            Promise.all(promiseArray).then((data) => {
-                window.alert("Data saved")
-
-            })
+            Promise.any(promiseArray).then((data) => {
+               MySwal.fire({
+               title: "Data Saved",
+               confirmButtonColor: "#DAA520",
+               customClass: "sweet-warning",
+               showClass: {
+                 popup: "animate__animated animate__fadeInDown",
+               },
+               hideClass: {
+                 popup: "animate__animated animate__fadeOutUp",
+               },
+             });
+          });
         }
         
     }
@@ -153,103 +149,103 @@ const WeeklySheet = () => {
     }
     const makeTableRows = () => {
         const filledWeightRows =
-            patientListWithWeights.length > 0
-                ? patientListWithWeights.map((el, index) => (
-                      <tr key={`table-row-${el.resident_id}`} >
-                          <td className="border px-8 py-4">{el.room_num}</td>
-                          <td className="border px-8 py-4">
-                              {el.first_name} {el.last_name}
-                          </td>
-                          <td className="border text-center py-4">
-                              <input
-                              //if the final property is true, then disabled will = true and the button can't be clicked
-                                  disabled={el.final}
-                                  type="Number"
-                                  className=" bg-stone-50 border w-1/2 border-stone-300"
-                                  value={el.weight || ""}
-                                  id={`put--${index}--weight`}
-                                  onChange={(e) => handleChange(e)}
-                              />
-                          </td>
-                          <td className="border py-4 text-center">{el.prev_wt}</td>
-                          <td className="border py-4 text-center ">
-                              <input
-                                  disabled={el.final}
-                                  type="checkbox"
-                                  className={checkboxstyle}
-                                  checked={el.reweighed}
-                                  value={el.reweighed}
-                                  id={`put--${index}--reweighed`}
-                                  onChange={(e) => handleChange(e)}
-                              />
-                          </td>
-                          <td className="border text-center flex justify-center py-4">
-                            <div className="flex flex-col items-start">
-                              <div className="flex items-center justify-center mb-4">
-                                  <input
-                                      disabled={el.final}
-                                      type="checkbox"
-                                      className={checkboxstyle}
-                                      checked={el.not_in_room}
-                                      value={el.not_in_room}
-                                      id={`put--${index}--not_in_room`}
-                                      onChange={(e) => handleChange(e)}
-                                  />
-                                  <label
-                                      htmlFor="default-radio-1"
-                                      className="ml-2 text-sm font-medium text-stone-900 dark:text-stone-300"
-                                  >
-                                      Absent
-                                  </label>
-                              </div>
-                              <div className="flex items-center justify-center">
-                                  <input
-                                      disabled={el.final}
-                                      type="checkbox"
-                                      className={checkboxstyle}
-                                      checked={el.refused}
-                                      value={el.refused}
-                                      id={`put--${index}--refused`}
-                                      onChange={(e) => handleChange(e)}
-                                  />
-                                  <label
-                                      htmlFor="default-radio-2"
-                                      className="ml-2 text-sm font-medium text-stone-900 dark:text-stone-300"
-                                  >
-                                      Refused
-                                  </label>
-                              </div>
-                              </div>
-                          </td>
-                          <td className="border px-8 py-4">
-                              <select
-                                  disabled={el.final}
-                                  id={`put--${index}--scale_type`}
-                                  className="flex bg-stone-50 border border-separate border-stone-300 text-stone-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full  dark:bg-stone-700 dark:border-stone-600 dark:placeholder-stone-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                  value={el.scale_type}
-                                  onChange={(e) => handleChange(e)}
-                              >
-                                  <option value="">Select</option>
-                                  <option value="floor">Floor</option>
-                                  <option value="wheelchair">Wheelchair</option>
-                                  <option value="chair">Chair</option>
-                                  <option value="bed">Bed</option>
-                              </select>
-                          </td>
-                          <td className="border text-center py-4">
-                              <input
-                                  disabled={el.final}
-                                  type="checkbox"
-                                  className={checkboxstyle}
-                                  checked={el.daily_wts}
-                                  value={el.daily_wts}
-                                  id={`put--${index}--daily_wts`}
-                                  onChange={(e) => handleChange(e)}
-                              />
-                          </td>
-                      </tr>
-                  ))
-                : []
+          patientListWithWeights.length > 0
+            ? patientListWithWeights.map((el, index) => (
+                <tr key={`table-row-${el.resident_id}`}>
+                  <td className="border px-8 py-4">{el.room_num}</td>
+                  <td className="border px-8 py-4">
+                    {el.first_name} {el.last_name}
+                  </td>
+                  <td className="border text-center py-4">
+                    <input
+                      //if the final property is true, then disabled will = true and the button can't be clicked
+                      disabled={el.final}
+                      type="Number"
+                      className=" bg-stone-50 border w-1/2 border-stone-300"
+                      value={el.weight || ""}
+                      id={`put--${index}--weight`}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </td>
+                   <td className="border text-center py-4">{el.prev_wt && el.prev_wt>0? el.prev_wt:"N/A"}</td>
+                  <td className="border py-4 text-center ">
+                    <input
+                      disabled={el.final}
+                      type="checkbox"
+                      className={checkBoxStyle}
+                      checked={el.reweighed}
+                      value={el.reweighed}
+                      id={`put--${index}--reweighed`}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </td>
+                  <td className="border text-center flex justify-center py-4">
+                    <div className="flex flex-col items-start">
+                      <div className="flex items-center justify-center mb-4">
+                        <input
+                          disabled={el.final}
+                          type="checkbox"
+                          className={checkBoxStyle}
+                          checked={el.not_in_room}
+                          value={el.not_in_room}
+                          id={`put--${index}--not_in_room`}
+                          onChange={(e) => handleChange(e)}
+                        />
+                        <label
+                          htmlFor="default-radio-1"
+                          className="ml-2 text-sm font-medium text-stone-900 dark:text-stone-300"
+                        >
+                          Absent
+                        </label>
+                      </div>
+                      <div className="flex items-center justify-center">
+                        <input
+                          disabled={el.final}
+                          type="checkbox"
+                          className={checkBoxStyle}
+                          checked={el.refused}
+                          value={el.refused}
+                          id={`put--${index}--refused`}
+                          onChange={(e) => handleChange(e)}
+                        />
+                        <label
+                          htmlFor="default-radio-2"
+                          className="ml-2 text-sm font-medium text-stone-900 dark:text-stone-300"
+                        >
+                          Refused
+                        </label>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="border px-8 py-4">
+                    <select
+                      disabled={el.final}
+                      id={`put--${index}--scale_type`}
+                      className="flex bg-stone-50 border border-separate border-stone-300 text-stone-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full  dark:bg-stone-700 dark:border-stone-600 dark:placeholder-stone-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      value={el.scale_type}
+                      onChange={(e) => handleChange(e)}
+                    >
+                      <option value="">Select</option>
+                      <option value="floor">Floor</option>
+                      <option value="wheelchair">Wheelchair</option>
+                      <option value="chair">Chair</option>
+                      <option value="bed">Bed</option>
+                    </select>
+                  </td>
+                  <td className="border text-center py-4">
+                    <input
+                      disabled={el.final}
+                      type="checkbox"
+                      className={checkBoxStyle}
+                      checked={el.daily_wts}
+                      value={el.daily_wts}
+                      id={`put--${index}--daily_wts`}
+                      onChange={(e) => handleChange(e)}
+                    />
+                  </td>
+                </tr>
+              ))
+            : [];
  
 
         return (
@@ -269,7 +265,7 @@ const WeeklySheet = () => {
             Weekly Weight Sheet
           </h1>
         </header>
-        <div className="flex flex-col rounded-md items-center m-auto border-2 shadow-md border-sky-100 lg:w-1/3 py-3 px-10 text-smoke-600">
+        <div className="flex flex-col rounded-md items-center m-auto border-2 shadow-md border-stone-200/60 lg:w-1/3 py-3 px-10 text-smoke-600 shadow-stone-900/30">
           <ol>
             <li className="font-semibold">Goals:</li>
             <li>
@@ -277,54 +273,69 @@ const WeeklySheet = () => {
               pm
             </li>
             <li>2. Make and save changes as needed</li>
-            <li>3. If CBW is +/- 5lbs. from PBW, reweigh the resident to confirm</li>
+            <li>
+              3. If CBW is +/- 5lbs. from PBW, reweigh the resident to confirm
+            </li>
             <li>4. Message dietitian or RN with questions/concerns</li>
           </ol>
         </div>
 
-        <div className="container mx-auto flex flex-col mt-20">
-          <div className="flex md:justify-around justify-between sm:mx-10 mb-8 content-center items-center text-md sm:text-lg">
+        <div className="container mx-auto flex flex-col mt-20 overflow-auto">
+          <div className="flex md:justify-around justify-between mx-5 sm:mx-10 mb-8 content-center items-center text-md sm:text-lg overflow-auto">
             <span>Weight Team Member: {employee.name}</span>
-            <span>Date: {formattedDateUI(new Date())}</span>
+            <span className="text-md">Date: {formattedDateUI(date)}</span>
             <button
-              className={
-                "bg-sky-600 hover:bg-sky-500 uppercase py-2 px-4 mb-2 sm:text-lg text-white font-bold rounded-full border border-blue focus:outline-none focus:border-stone-500 shadow-md "
+              className={finalized?"hidden":
+                "bg-sky-600 hover:bg-sky-500 uppercase text-sm py-2 px-6 mb-2 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-sky-700 shadow-md "
               }
-              value="Save"
+              value=""
               onClick={handleSubmit}
             >
               Save
             </button>
           </div>
-          <table className="shadow-lg bg-white border-separate overflow-scroll">
+          <table className="shadow-md shadow-stone-300 bg-sky-50/40 border-separate overflow-scroll">
             <thead>
               <tr className="font-body text-stone-800">
-                <th className="bg-blue-100 border text-left px-8 py-4">Room</th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
+                  Room
+                </th>
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Resident Name
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Current Weight
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Previous Weight
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   ReWeighed?
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Absent or Refused
                 </th>
-                <th className="bg-blue-100 border text-left px-12 lg:px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-12 lg:px-8 py-4">
                   Scale Type
                 </th>
-                <th className="bg-blue-100 border text-left px-8 py-4">
+                <th className="bg-sky-600/20 border text-left px-8 py-4">
                   Daily Weights
                 </th>
               </tr>
             </thead>
             {makeTableRows()}
           </table>
+        </div>
+        <div className="my-10 flex justify-center">
+          <button
+            className={
+             finalized?"hidden":"bg-sky-600 hover:bg-sky-500 uppercase text-md py-2 px-6 text-white font-bold rounded-full border border-blue focus:outline-none focus:border-sky-700 shadow-md"
+            }
+            value=""
+            onClick={handleSubmit}
+          >
+            Save
+          </button>
         </div>
       </div>
     );

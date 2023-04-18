@@ -5,6 +5,9 @@ import { fetchIt } from "../auth/fetchIt";
 import NavBar from "../nav/NavBar";
 import { discard, compose, read, unread } from "../../assets";
 import MessageDetailModal from "./MessageDetailModal";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import "../weightSheets/WeightSheets.css";
 
 const formattedDate = (date) => {
   const myDate = date;
@@ -24,6 +27,7 @@ const Inbox = () => {
   const [emails, setEmails] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState("");
   const [msgClicked, setMsgClicked] = useState(false);
+  const MySwal = withReactContent(Swal);
 
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
@@ -55,14 +59,30 @@ const Inbox = () => {
   }, [selectedMessage]);
 
   const deleteEmail = (id) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this email?"
-    );
-    if (!confirmed) return;
-    fetchIt(`http://localhost:8000/employeemessages/${id}`, {
-      method: "DELETE",
-    }).then(() => {
-      navigate(0); //refreshes the page
+    MySwal.fire({
+      title: "Are you sure?",
+      text: "This email will be permanently deleted!",
+      icon: "warning",
+      iconColor: "#925631",
+      showCancelButton: true,
+      confirmButtonColor: "#DAA520",
+      cancelButtonColor: "#0284c7",
+      confirmButtonText: "Yes, delete it!",
+      customClass: "final-warning",
+      showClass: {
+        popup: "animate__animated animate__fadeInDown",
+      },
+      hideClass: {
+        popup: "animate__animated animate__fadeOutUp",
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetchIt(`http://localhost:8000/employeemessages/${id}`, {
+          method: "DELETE",
+        }).then(() => {
+          setMsgClicked((x) => !x); //sends signal to refresh the inbox
+        });
+      }
     });
   };
 
@@ -81,14 +101,18 @@ const Inbox = () => {
              "
               >
                 {el.message.read ? (
-                  <img src={read} alt="read" className="block w-8 md:w-8" />
+                  <img src={read} alt="read" className="block w-10 sm:w-8" />
                 ) : (
-                  <img src={unread} alt="unread" className="block w-8 md:w-8" />
+                  <img
+                    src={unread}
+                    alt="unread"
+                    className="block w-10 sm:w-8"
+                  />
                 )}
               </td>
               <td
                 scope="row"
-                className="pl-6 py-4 font-medium text-stone-900 whitespace-nowrap"
+                className="pl-6 py-4 font-sm sm:font-medium text-stone-900 whitespace-nowrap"
               >
                 {`${el.sender.user.first_name.slice(0, 1)}. ${
                   el.sender.user.last_name
@@ -99,8 +123,8 @@ const Inbox = () => {
                   to=""
                   className={
                     el.message.read
-                      ? "font-medium text-stone-600 hover:underline"
-                      : "font-medium text-blue-600 hover:underline"
+                      ? "font-sm sm:font-medium text-stone-600 hover:underline"
+                      : "font-sm sm:font-medium text-sky-800 hover:underline"
                   }
                   onClick={() => {
                     setShowModal(true);
@@ -111,7 +135,7 @@ const Inbox = () => {
                   {el.message.subject}
                 </Link>{" "}
               </td>
-              <td className="pl-6 py-4 text-stone-900">
+              <td className="pl-6 py-4 text-stone-900 font-sm sm:font-medium">
                 {formattedDate(new Date(el.message.date_created))}
               </td>
               <td className="pl-6 py-4">
@@ -120,7 +144,7 @@ const Inbox = () => {
                     src={discard}
                     alt="logo"
                     id={`delete--${el.id}`}
-                    className="block w-28 md:w-6 cursor-pointer"
+                    className="block w-5 md:w-6 cursor-pointer opacity-90"
                     onClick={(evt) => {
                       const [_, id] = evt.target.id.split("--");
                       deleteEmail(id);
@@ -138,27 +162,27 @@ const Inbox = () => {
   return (
     <>
       <NavBar />
-      <div className=" container justify-center m-auto w-2/3">
+      <div className=" flex-col justify-center ml-auto mr-auto mb-[310px] sm:w-2/3">
         <header className="flex justify-center">
-          <h1 className="font-semibold text-stone-700 text-2xl my-8"> Inbox</h1>
+          <h1 className="font-semibold text-stone-700 text-3xl my-8"> Inbox</h1>
         </header>
         <div className="text-center md:mt-5 mb-10">
-          <h1 className="text-xl font-semibold text-stone-600">
+          <h1 className="text-2xl text-stone-600">
             {name ? `Welcome ${name}` : ""}
           </h1>
         </div>
-        <div className="flex items-center gap-2 md:gap-2 justify-center md:justify-start md:ml-40 mt-5 mb-10 md:mb-18 text-stone-700">
-          <img src={compose} alt="logo" className="block  w-8 md:w-14" />
+        <div className="flex items-center justify-center md:justify-start md:ml-40 mt-5 mb-5">
+          <img src={compose} alt="compose" className="block w-20 md:w-[75px]" />
           <h3>
             {" "}
             <Link to="/compose">
-              <span className="text-stone-700 underline">
+              <span className="text-sky-800 underline -ml-3">
                 Compose New Message
               </span>
             </Link>
           </h3>
         </div>
-        <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg md:w-2/3 font-body border-solid  border-2 border-sky-600/20 py-6 px-4">
+        <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md shadow-sky-800/40 sm:rounded-lg md:w-2/3 font-body border-solid  border-2 border-sky-600/20 py-6 px-6 sm:px-8">
           <table className="text-md text-left text-stone-700 dark:text-stone-500">
             <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
               <tr>
