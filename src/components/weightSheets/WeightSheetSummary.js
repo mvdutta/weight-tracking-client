@@ -302,7 +302,7 @@ const WeightSheetSummary = () => {
       <div>
         <NavBar />
         <header className="flex justify-center">
-          <h1 className="font-semibold text-stone-700 text-2xl mt-8 mb-20">
+          <h1 className="font-semibold text-stone-700 text-3xl mt-8 mb-20">
             {" "}
             Weekly Weight Sheet
           </h1>

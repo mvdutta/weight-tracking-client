@@ -3,19 +3,10 @@ import NavBar from "../nav/NavBar";
 import { useState, useEffect } from "react";
 import { fetchIt } from "../auth/fetchIt";
 import { useNavigate, useParams } from "react-router-dom";
+import { formattedDateUI } from "../utilities/FormattedDate";
 
 const ROLES = ["MD", "RN", "LPN", "NP"]
 
-
-const formattedDateUI = (date) => {
-  const myDate = date;
-
-  let year = myDate.toLocaleString("default", { year: "numeric" });
-  let month = myDate.toLocaleString("default", { month: "2-digit" });
-  let day = myDate.toLocaleString("default", { day: "2-digit" });
-  const formattedDateUI = month + "-" + day + "-" + year;
-  return formattedDateUI;
-};
 
 //patientListWithWeights is a giant array which holds 10 objects (1 for each row of the table)
 const WeightSummary = () => {
@@ -154,14 +145,14 @@ const WeightSummary = () => {
       <NavBar />
 
       <header className="flex justify-center">
-        <h1 className="font-semibold text-stone-700 text-2xl mt-8 mb-20">
+        <h1 className="font-semibold text-stone-700 text-3xl mt-8 mb-20">
           {" "}
           Weekly Weight Summary
         </h1>
       </header>
       <div className="container mx-auto flex flex-col mt-20 mb-20">
         <div className="mb-10 ml-2 text-md sm:text-lg">
-          <span>Date: {date}</span>
+          <span>Date: {formattedDateUI(date)}</span>
         </div>
         <table className="shadow-md shadow-stone-300 bg-sky-50/40 border-separate overflow-x-auto">
           <thead>

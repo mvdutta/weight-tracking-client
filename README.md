@@ -1,4 +1,5 @@
 # WeightTracker 
+
 ## ***An app to prevent unintentional weight loss in health care facilities***  <br><br>
 
 # Application Overview  
@@ -33,11 +34,28 @@ Each user has different responsibilities:
     - view finalized weekly weight sheets 
 
 # User Experience
-## Register a new user and login
+## Register a new user and sign in to view  CNA dashboard
 
 ![](src/assets/gifs/register.gif)
 
+## CNA creates a new weekly weight sheet and saves data
 
+![](src/assets/gifs/create_wt_sheet.gif)
+
+## CNA completes weight sheet and sends message to RD and RN
+![](src/assets/gifs/completed_wt_sheet.gif)
+
+## RD checks messages, finalizes weight sheet, and notifies MD and NP of resident at risk
+![](src/assets/gifs/RD_wt_sheet.gif)
+
+## RD searches by resident to view 6 month summary of weight history
+![](src/assets/gifs/RD_summary.gif)
+
+## RN/LPN/NP/MD can check messages and view finalized weight sheets from dashboard
+![](src/assets/gifs/MD_dashboard.gif)
+
+## Responsive layout using Tailwind CSS
+![](src/assets/gifs/responsive.gif)
 
 # Technologies
 
@@ -58,23 +76,9 @@ Each user has different responsibilities:
 
 ## Installation
 
-* Fork and clone the repository
-* Install necesary packages.
-```bash
-npm install
-```
-* Once all necessary packages are installed, start the game in development mode
-```bash
-npm start
-```
 
 
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
 
 
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
 
