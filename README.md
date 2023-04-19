@@ -6,7 +6,7 @@
 
 >In a health care setting, unintentional weight loss is associated with adverse clinical outcomes and decline, especially in the elderly. Therefore, it is an important quality indicator for long term care and some skilled nursing/rehab facilities. Although the facility’s registered dietitian (RD) is commonly responsible for this quality indicator, interventions to prevent or treat weight loss are often multifaceted and require an interdisciplinary approach. 
 
->WeightTracker is a full-stack application designed to be used in conjuntion with a facility's EMR to allow the RD to obtain patient weights timely and systematically. It is also designed to identify patients at risk, display weight trends over time, and allow fast and efficient communication between disciplines.
+>WeightTracker is a full-stack application I created as my final capstone project for Nashville Software School. The app is designed to be used in conjuntion with a facility's EMR to allow the RD to obtain patient weights timely and systematically. It is also designed to identify patients at risk, display weight trends over time, and allow fast and efficient communication between disciplines.
 
 >To demonstrate this application, a fictitious rehab and long term care facility called Gaffney Scranton Rehab and Healing (GSHR) was created. Users of WeightTracker include trained Certified Nursing Assistants (CNAs), RDs, Registered Nurses(RNs) and Licensed Practical Nurses (LPNs), Nurse Practitioners(NPs), and MDs. 
 
@@ -69,13 +69,22 @@ Each user has different responsibilities:
  ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray)
 
 
+## Installation Instructions
 
+Requirements: [NPM](https://www.npmjs.com/)
 
-
-
-
-## Installation
-
+1. In the terminal, run  ```git clone https://github.com/mvdutta/weight-tracking-client.git```
+2. Move into the folder you just created ```cd weight-tracking-client```
+3. Run ```npm install```
+4. Run ```npm start```
+5. This will bring up a browser window showing the react app, but you won't be able to log into the site or access data without running the database side of this project. 
+6. To download and start the server, go to [https://github.com/mvdutta/weight-tracking-api](https://github.com/mvdutta/weight-tracking-api) and follow the readme there.
+7. Once the backend is running, you can explore the app by registering a new user in any of the available roles (CNA, RD, LPN, RN, NP, MD) 
+   
+ 
+## Author
+### Maia Dutta
+[<img alt="Github" src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">](https://github.com/mvdutta)[<img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">](https://www.linkedin.com/in/maia-v-dutta/)
 
 
 
