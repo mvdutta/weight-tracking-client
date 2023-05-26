@@ -6,9 +6,11 @@ import { close } from "../../assets";
 import "./Login.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { getAPIroot } from "../utilities/getAPIroot";
 
 
 const ROLES = ["NP", "RD", "MD", "RN", "LPN", "CNA"]; 
+const APIROOT = getAPIroot()
 
 const RegisterModal = () => {
   const [showModal, setShowModal] = useState(false);
@@ -39,7 +41,7 @@ const RegisterModal = () => {
         return
     }
 
-    return fetch("http://localhost:8000/register", {
+    return fetch(`${APIROOT}register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

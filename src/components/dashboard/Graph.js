@@ -13,6 +13,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import styles from './Graph.css'
 import { fetchIt } from '../auth/fetchIt';
+import { getAPIroot } from '../utilities/getAPIroot';
 
 
 ChartJS.register(
@@ -25,6 +26,8 @@ ChartJS.register(
   Legend
 );
 
+const APIROOT = getAPIroot();
+
 
 
 export const Graph = ({id, name}) => {
@@ -32,7 +35,7 @@ export const Graph = ({id, name}) => {
     const [weights, setWeights] = useState([])
 
     useEffect(()=>{
-        fetchIt(`http://localhost:8000/weights/rd_summary?resident=${id}`)
+        fetchIt(`${APIROOT}weights/rd_summary?resident=${id}`)
         .then((data)=>{
             setLabels(data.weight_history.dates)
             setWeights(data.weight_history.weights)

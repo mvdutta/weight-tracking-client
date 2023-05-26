@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { close } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
 import { formattedDate, formattedDateUI } from "../utilities/FormattedDate";
+import { getAPIroot } from "../utilities/getAPIroot";
+
+const APIROOT = getAPIroot();
 
 const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
 
@@ -19,9 +22,9 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
           const parsedUser = JSON.parse(current_user);
             setRole(parsedUser.role)
             if (parsedUser.role==="CNA" || parsedUser.role ==="RD"){
-                address = "http://localhost:8000/weightsheets/dates";
+                address = "${APIROOT}weightsheets/dates";
             }else{
-                address = "http://localhost:8000/weightsheets/finalized_dates";
+                address = "${APIROOT}weightsheets/finalized_dates";
             }
             fetchIt(address).then(
                 (data) => {

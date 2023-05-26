@@ -6,6 +6,7 @@ import { add } from "../../assets";
 import NavBar from '../nav/NavBar'
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { getAPIroot } from '../utilities/getAPIroot';
 
 const formattedDate = (date) => {
     const myDate = date
@@ -17,6 +18,8 @@ const formattedDate = (date) => {
     return formattedDate
 }
 
+const APIROOT = getAPIroot()
+
 const Compose = () => {
 const [employees, setEmployees] = useState([])
 const [message, setMessage] = useState({subject:"", message_body:""})
@@ -26,7 +29,7 @@ const MySwal = withReactContent(Swal);
 
 //get all employees and add an extra boolean property called checked to control whether they are selected or not
 useEffect(() => {
-  fetchIt(`http://localhost:8000/employees`).then((data) => {
+  fetchIt(`${APIROOT}employees`).then((data) => {
     const employeeData = data.map(el=>{
         return {...el, checked: false}
     })
@@ -44,7 +47,7 @@ const handleSubmit = () =>{
     deleted:false,
     recipients: employees.filter(el => el.checked).map(el=>el.id) //filtering the list of employees to find the ones that are checked and then getting the id of selected recipients
   }
-  const address = "http://localhost:8000/messages";
+  const address = "${APIROOT}messages";
   fetchIt(address, {method: "POST", body: JSON.stringify(postBody)})
   .then((data)=>{
      MySwal.fire({

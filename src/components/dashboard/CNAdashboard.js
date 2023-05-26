@@ -7,6 +7,9 @@ import { scale, list, message, alert } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
 import Footer from "../footer/Footer";
 import WeightSheetMenuModal from "../weightSheets/WeightSheetMenuModal";
+import { getAPIroot } from "../utilities/getAPIroot";
+
+const APIROOT = getAPIroot()
 
 const CNAdashboard = () => {
   const navigate = useNavigate();
@@ -20,7 +23,7 @@ const CNAdashboard = () => {
       const parsedUser = JSON.parse(user);
       setName(parsedUser.name);
       fetchIt(
-        `http://localhost:8000/employeemessages/unreadmessages?recipient=${parsedUser.id}`
+        `${APIROOT}employeemessages/unreadmessages?recipient=${parsedUser.id}`
       ).then((data) => {
         setNumUnreadMsgs(data.num_msgs);
       });

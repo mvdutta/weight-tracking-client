@@ -8,6 +8,7 @@ import MessageDetailModal from "./MessageDetailModal";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import "../weightSheets/WeightSheets.css";
+import { getAPIroot } from "../utilities/getAPIroot";
 
 const formattedDate = (date) => {
   const myDate = date;
@@ -19,6 +20,8 @@ const formattedDate = (date) => {
   return formattedDate;
 };
 
+const APIROOT = getAPIroot();
+
 const Inbox = () => {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -29,6 +32,8 @@ const Inbox = () => {
   const [msgClicked, setMsgClicked] = useState(false);
   const MySwal = withReactContent(Swal);
 
+
+
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
     if (user) {
@@ -36,7 +41,7 @@ const Inbox = () => {
       setName(parsedUser.name);
       setUser(parsedUser);
       fetchIt(
-        `http://localhost:8000/employeemessages?recipient=${parsedUser.id}`
+        `${APIROOT}employeemessages?recipient=${parsedUser.id}`
       ).then((data) => {
         data.sort(
           (a, b) =>
@@ -50,7 +55,7 @@ const Inbox = () => {
   useEffect(() => {
     if (selectedMessage.id && !selectedMessage.message.read) {
       fetchIt(
-        `http://localhost:8000/messages/${selectedMessage.message.id}/changeunreadtoread`,
+        `${APIROOT}messages/${selectedMessage.message.id}/changeunreadtoread`,
         {
           method: "PUT",
         }
@@ -77,7 +82,7 @@ const Inbox = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        fetchIt(`http://localhost:8000/employeemessages/${id}`, {
+        fetchIt(`${APIROOT}employeemessages/${id}`, {
           method: "DELETE",
         }).then(() => {
           setMsgClicked((x) => !x); //sends signal to refresh the inbox

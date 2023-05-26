@@ -8,6 +8,7 @@ import "./Dashboard.css";
 import WeightSheetMenuModal from "../weightSheets/WeightSheetMenuModal";
 import { formattedDate, formattedDateMDY, formattedDateUI } from "../utilities/FormattedDate";
 import { Graph } from "./Graph";
+import { getAPIroot } from "../utilities/getAPIroot";
 
 const formatDecimal = (x) => {
   if (x== undefined || isNaN(x)) {
@@ -26,13 +27,15 @@ const RDdashboard = () => {
   const [numUnreadMsgs, setNumUnreadMsgs] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
+  const APIROOT = getAPIroot();
+
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
     if (user) {
       const parsedUser = JSON.parse(user);
       setName(parsedUser.name);
       fetchIt(
-        `http://localhost:8000/employeemessages/unreadmessages?recipient=${parsedUser.id}`
+        `${APIROOT}employeemessages/unreadmessages?recipient=${parsedUser.id}`
       ).then((data) => {
         setNumUnreadMsgs(data.num_msgs);
       });
@@ -42,7 +45,7 @@ const RDdashboard = () => {
   useEffect(() => {
     if (selectedResident && selectedResident.id) {
       fetchIt(
-        `http://localhost:8000/weights/rd_summary?resident=${selectedResident.id}`
+        `${APIROOT}weights/rd_summary?resident=${selectedResident.id}`
       ).then((data) => {
         setWeightData(data);
       });
@@ -53,7 +56,7 @@ const RDdashboard = () => {
     const searchTerm = e.target.value;
     if (searchTerm.length > 0) {
       setShowSearchResults(true);
-      fetchIt(`http://localhost:8000/residents?keyword=${searchTerm}`).then(
+      fetchIt(`${APIROOT}residents?keyword=${searchTerm}`).then(
         (data) => {
           setSearchResults(data);
         }

@@ -6,6 +6,9 @@ import { useNavigate,  useParams } from "react-router-dom"
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { formattedDateUI } from "../utilities/FormattedDate"
+import { getAPIroot } from "../utilities/getAPIroot"
+
+const APIROOT = getAPIroot()
 
 //patientListWithWeights is a giant array which holds 10 objects (1 for each row of the table) 
 const WeeklySheet = () => {
@@ -28,11 +31,11 @@ const WeeklySheet = () => {
 
 
     useEffect(()=>{
-        const dates_api = "http://localhost:8000/weightsheets/dates"
-        const API1 = "http://localhost:8000/weightsheets/create_all_weightsheets"
-        const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`
+        const dates_api = `${APIROOT}weightsheets/dates`
+        const API1 = `${APIROOT}weightsheets/create_all_weightsheets`
+        const API2 = `${APIROOT}weightsheets/detailedview_rd?date=${date}`
         const API3 =
-          `http://localhost:8000/weights/closestdate_all?lookback=1week&date=${date}`;
+          `${APIROOT}weights/closestdate_all?lookback=1week&date=${date}`;
 
         //this function makes 3 api calls sequentially 
         const getData =  async () =>{
@@ -64,11 +67,10 @@ const WeeklySheet = () => {
 
     const handleSubmit = () => {
         //prepare post requests
-        const API = "http://localhost:8000"
         const promiseArray = []
         if (patientListWithWeights.length>0){
         for (let el of patientListWithWeights) {
-            const address = `${API}/weightsheets/${el.weight_sheet_id}`
+            const address = `${APIROOT}weightsheets/${el.weight_sheet_id}`
             const requestBody = {
                 resident: el.resident_id,
                 reweighed: el.reweighed,
@@ -88,7 +90,7 @@ const WeeklySheet = () => {
             )
         }
         for (let el of patientListWithWeights) {
-            const address = `${API}/weights/${el.weight_id}`
+            const address = `${APIROOT}weights/${el.weight_id}`
             const requestBody = {
                 resident: el.resident_id,
                 date: date,

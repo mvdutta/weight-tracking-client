@@ -5,6 +5,7 @@ import { scale, list, message, alert } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
 import NavBar from "../nav/NavBar";
 import WeightSheetMenuModal from "../weightSheets/WeightSheetMenuModal";
+import { getAPIroot } from "../utilities/getAPIroot";
 
 const RNdashboard = () => {
   const navigate = useNavigate();
@@ -13,13 +14,15 @@ const RNdashboard = () => {
   const [numUnreadMsgs, setNumUnreadMsgs] = useState(0);
   const [showModal, setShowModal] = useState(false);
 
+  const APIROOT = getAPIroot();
+
   useEffect(() => {
     const user = localStorage.getItem("wt_token");
     if (user) {
       const parsedUser = JSON.parse(user);
       setName(parsedUser.name);
       fetchIt(
-        `http://localhost:8000/employeemessages/unreadmessages?recipient=${parsedUser.id}`
+        `${APIROOT}employeemessages/unreadmessages?recipient=${parsedUser.id}`
       ).then((data) => {
         setNumUnreadMsgs(data.num_msgs);
       });
