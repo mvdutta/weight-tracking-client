@@ -47,7 +47,7 @@ const handleSubmit = () =>{
     deleted:false,
     recipients: employees.filter(el => el.checked).map(el=>el.id) //filtering the list of employees to find the ones that are checked and then getting the id of selected recipients
   }
-  const address = "${APIROOT}messages";
+  const address = `${APIROOT}messages`;
   fetchIt(address, {method: "POST", body: JSON.stringify(postBody)})
   .then((data)=>{
      MySwal.fire({

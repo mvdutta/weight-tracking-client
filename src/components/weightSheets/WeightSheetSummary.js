@@ -84,7 +84,7 @@ const WeightSheetSummary = () => {
          }).then((result) => {
            if (result.isConfirmed) {
             const address =
-              "${APIROOT}weightsheets/save_weightsheets";
+              `${APIROOT}weightsheets/save_weightsheets`;
             const requestBody = {
                 date: date
             }
