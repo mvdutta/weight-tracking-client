@@ -4,8 +4,10 @@ import { useState, useEffect } from "react";
 import { fetchIt } from "../auth/fetchIt";
 import { useNavigate, useParams } from "react-router-dom";
 import { formattedDateUI } from "../utilities/FormattedDate";
+import { getAPIroot } from "../utilities/getAPIroot";
 
 const ROLES = ["MD", "RN", "LPN", "NP"]
+const APIROOT = getAPIroot();
 
 
 //patientListWithWeights is a giant array which holds 10 objects (1 for each row of the table)
@@ -26,8 +28,8 @@ const WeightSummary = () => {
   }, []);
 
   useEffect(() => {
-    const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`;
-         const API3 = `http://localhost:8000/weights/closestdate_all?lookback=1week&date=${date}`;
+    const API2 = `${APIROOT}weightsheets/detailedview_rd?date=${date}`;
+         const API3 = `${APIROOT}weights/closestdate_all?lookback=1week&date=${date}`;
 
     //this function makes 3 api calls sequentially
     const getData = async () => {

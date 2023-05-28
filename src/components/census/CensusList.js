@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { fetchIt } from "../auth/fetchIt";
 import "./Censuslist.css";
 import { formattedDateUI } from "../utilities/FormattedDate";
+import { getAPIroot } from "../utilities/getAPIroot";
 
 const formattedDate = (date) => {
   const myDate = date;
@@ -14,11 +15,13 @@ const formattedDate = (date) => {
   return formattedDate;
 };
 
+ const APIROOT = getAPIroot();
+
 export const CensusList = () => {
   const [residentList, setResidentList] = useState([]);
 
 useEffect(() => {
-  fetchIt(`http://localhost:8000/residents`)
+  fetchIt(`${APIROOT}residents`)
     .then((data) => {
       setResidentList(data);
     });

@@ -6,6 +6,7 @@ import RegisterModal from "./RegisterModal";
 import { logo } from "../../assets";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { getAPIroot } from "../utilities/getAPIroot";
 
 
 
@@ -15,6 +16,7 @@ export const Login = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
+  const APIROOT = getAPIroot()
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -46,7 +48,7 @@ export const Login = () => {
       });
       return;
     }
-    fetch(`http://localhost:8000/login`, {
+    fetch(`${APIROOT}login`, {
       method: "POST",
       body: JSON.stringify({
         username: username,
@@ -161,7 +163,9 @@ export const Login = () => {
                   "bg-sky-600 hover:bg-sky-400 py-2 px-5 uppercase text-xs font-bold text-white rounded-full border shadow border-blue focus:outline-none focus:border-stone-200"
                 }
                 value="Login"
-                onClick={(e)=>{handleLogin(e)}}
+                onClick={(e) => {
+                  handleLogin(e);
+                }}
               >
                 Sign In
               </button>

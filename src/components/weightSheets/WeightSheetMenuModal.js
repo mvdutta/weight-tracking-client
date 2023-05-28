@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { close } from "../../assets";
 import { fetchIt } from "../auth/fetchIt";
 import { formattedDate, formattedDateUI } from "../utilities/FormattedDate";
+import { getAPIroot } from "../utilities/getAPIroot";
+
+const APIROOT = getAPIroot();
 
 const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
 
@@ -11,6 +14,8 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
     const [newDate, setNewDate] = useState(formattedDate(new Date()))
     const [role, setRole] = useState("")
     const navigate = useNavigate();
+          const descriptor =
+            role === "RD" || role === "CNA" ? "Recent" : "Available";
 
       useEffect(() => {
         const current_user = localStorage.getItem("wt_token");
@@ -19,9 +24,9 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
           const parsedUser = JSON.parse(current_user);
             setRole(parsedUser.role)
             if (parsedUser.role==="CNA" || parsedUser.role ==="RD"){
-                address = "http://localhost:8000/weightsheets/dates";
+                address = `${APIROOT}weightsheets/dates`;
             }else{
-                address = "http://localhost:8000/weightsheets/finalized_dates";
+                address = `${APIROOT}weightsheets/finalized_dates`;
             }
             fetchIt(address).then(
                 (data) => {
@@ -44,9 +49,14 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
     };
 
     const makeDateList = () =>{
+
+      const recentDates = dates.length>4? dates.slice(0,4):dates
+      const dateList = role==="RD" || role === "CNA" ? recentDates : dates
+
+      
         return (
           <ul>
-            {dates.map((el, index) => {
+            {dateList.map((el, index) => {
                 const encodedDate = encodeURI(el)
              return (
                <li key={index}>
@@ -115,7 +125,7 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
                       </Link>
                     </div>
                   </div>
-                  <p className="mb-4 text-lg">Available Weight Sheets</p>
+                  <p className="mb-4 text-lg">{descriptor} Weight Sheets</p>
                   <div className="overflow-auto w-1/3 h-28">{makeDateList()}</div>
                 </div>
                 {/*footer*/}

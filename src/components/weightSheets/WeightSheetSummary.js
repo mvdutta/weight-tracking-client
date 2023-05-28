@@ -7,6 +7,9 @@ import "./WeightSheets.css";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { formattedDateUI } from "../utilities/FormattedDate";
+import { getAPIroot } from "../utilities/getAPIroot";
+
+const APIROOT = getAPIroot();
 
 
 const WeightSheetSummary = () => {
@@ -30,10 +33,10 @@ const WeightSheetSummary = () => {
     }, [])
 
     useEffect(()=>{
-        const dates_api = "http://localhost:8000/weightsheets/dates";
-        const API1 = "http://localhost:8000/weightsheets/create_all_weightsheets"
-        const API2 = `http://localhost:8000/weightsheets/detailedview_rd?date=${date}`
-        const API3 = `http://localhost:8000/weights/closestdate_all?lookback=1week&date=${date}`;
+        const dates_api = `${APIROOT}weightsheets/dates`;
+        const API1 = `${APIROOT}weightsheets/create_all_weightsheets`
+        const API2 = `${APIROOT}weightsheets/detailedview_rd?date=${date}`
+        const API3 = `${APIROOT}weights/closestdate_all?lookback=1week&date=${date}`;
 
         const getData =  async () =>{
             const { dates } = await fetchIt(dates_api); 
@@ -81,7 +84,7 @@ const WeightSheetSummary = () => {
          }).then((result) => {
            if (result.isConfirmed) {
             const address =
-              "http://localhost:8000/weightsheets/save_weightsheets";
+              `${APIROOT}weightsheets/save_weightsheets`;
             const requestBody = {
                 date: date
             }
@@ -126,11 +129,10 @@ const WeightSheetSummary = () => {
 
       const handleSave = () => {
         //prepare post requests
-        const API = "http://localhost:8000";
         const promiseArray = [];
         if (patientListWithWeights.length > 0) {
           for (let el of patientListWithWeights) {
-            const address = `${API}/weightsheets/${el.weight_sheet_id}`;
+            const address = `${APIROOT}weightsheets/${el.weight_sheet_id}`;
             const requestBody = {
               resident: el.resident_id,
               reweighed: el.reweighed,
@@ -150,7 +152,7 @@ const WeightSheetSummary = () => {
             );
           }
           for (let el of patientListWithWeights) {
-            const address = `${API}/weights/${el.weight_id}`;
+            const address = `${APIROOT}weights/${el.weight_id}`;
             const requestBody = {
               resident: el.resident_id,
               date: date,

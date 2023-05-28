@@ -102,7 +102,6 @@ const NavBar = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        console.log("Jumped the gun")
         navigate("/");
         localStorage.removeItem("wt_token");
 
