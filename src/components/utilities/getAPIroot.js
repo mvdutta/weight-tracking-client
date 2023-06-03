@@ -3,7 +3,7 @@ export const getAPIroot = () => {
   const APIROOT =
     environment === "development"
       ? "http://localhost:8000/"
-      : "https://q72y0iroi2.execute-api.us-west-2.amazonaws.com/";
-    // const APIROOT = "https://q72y0iroi2.execute-api.us-west-2.amazonaws.com/";
+      : "https://weighttracker-api.onrender.com/";
+    // const APIROOT = "https://weighttracker-api.onrender.com/";
   return APIROOT;
 };

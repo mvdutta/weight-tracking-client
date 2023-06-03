@@ -130,7 +130,7 @@ export const Login = () => {
               onChange={(evt) => setUsername(evt.target.value)}
               onKeyUp={(evt) => {
                 if (evt.key === "Enter") {
-                  handleLogin();
+                  handleLogin(evt);
                 }
               }}
               required
@@ -145,7 +145,7 @@ export const Login = () => {
               onChange={(evt) => setPassword(evt.target.value)}
               onKeyUp={(evt) => {
                 if (evt.key === "Enter") {
-                  handleLogin();
+                  handleLogin(evt);
                 }
               }}
               type="password"

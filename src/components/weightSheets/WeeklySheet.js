@@ -55,6 +55,7 @@ const WeeklySheet = () => {
                     )
                     entry.prev_wt = previousWeights_entry.weight
                 }
+            weightsheets.sort((x,y)=>x.room_num-y.room_num)//sort the weight sheets by room number
             setPatientListWithWeights(weightsheets)
             setFinalized(weightsheets.every(el=>el.final))
         }
