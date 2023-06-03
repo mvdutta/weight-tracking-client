@@ -39,23 +39,24 @@ const WeightSheetSummary = () => {
         const API3 = `${APIROOT}weights/closestdate_all?lookback=1week&date=${date}`;
 
         const getData =  async () =>{
-            const { dates } = await fetchIt(dates_api); 
-            if (!dates.includes(date)) {
-              await fetchIt(API1, {
-                method: "POST",
-                body: JSON.stringify({ date: date }),
-              });
-            }
-            const weightsheets = await fetchIt(API2)
-            const previousWeights = await fetchIt(API3)
-            for (let entry of weightsheets) {
-                    const previousWeights_entry = previousWeights.find(
-                        (el) => el.resident_id === entry.resident_id
-                    )
-                    entry.prev_wt = previousWeights_entry.weight
-                }
-            setPatientListWithWeights(weightsheets)
-            setFinalized(weightsheets.every((el) => el.final));
+          const { dates } = await fetchIt(dates_api);
+          if (!dates.includes(date)) {
+            await fetchIt(API1, {
+              method: "POST",
+              body: JSON.stringify({ date: date }),
+            });
+          }
+          const weightsheets = await fetchIt(API2);
+          const previousWeights = await fetchIt(API3);
+          for (let entry of weightsheets) {
+            const previousWeights_entry = previousWeights.find(
+              (el) => el.resident_id === entry.resident_id
+            );
+            entry.prev_wt = previousWeights_entry.weight;
+          }
+          weightsheets.sort((x, y) => x.room_num - y.room_num); //sort the weight sheets by room number
+          setPatientListWithWeights(weightsheets);
+          setFinalized(weightsheets.every((el) => el.final));
         }
         getData()
 
