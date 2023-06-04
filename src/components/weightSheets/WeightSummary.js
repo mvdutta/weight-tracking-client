@@ -5,6 +5,7 @@ import { fetchIt } from "../auth/fetchIt";
 import { useNavigate, useParams } from "react-router-dom";
 import { formattedDateUI } from "../utilities/FormattedDate";
 import { getAPIroot } from "../utilities/getAPIroot";
+import Spinner from "../utilities/Spinner";
 
 const ROLES = ["MD", "RN", "LPN", "NP"]
 const APIROOT = getAPIroot();
@@ -15,7 +16,8 @@ const WeightSummary = () => {
   const [patientListWithWeights, setPatientListWithWeights] = useState([]);
   const [employee, setEmployee] = useState({});
   const navigate = useNavigate();
-    const { date } = useParams();
+  const { date } = useParams();
+  const [showSpinner, setShowSpinner] = useState(false);
 
   useEffect(() => {
     const current_user = localStorage.getItem("wt_token");
@@ -33,6 +35,7 @@ const WeightSummary = () => {
 
     //this function makes 3 api calls sequentially
     const getData = async () => {
+      setShowSpinner(true);
       const weightsheets = await fetchIt(API2);
       const previousWeights = await fetchIt(API3);
       //join the wt sheet table with the table of previous wts by resident id
@@ -44,6 +47,7 @@ const WeightSummary = () => {
       }
       weightsheets.sort((x, y) => x.room_num - y.room_num); //sort the weight sheets by room number
       setPatientListWithWeights(weightsheets);
+      setShowSpinner(false);
     };
     getData();
   }, []);
@@ -186,6 +190,9 @@ const WeightSummary = () => {
           </thead>
           {makeTableRows()}
         </table>
+      </div>
+      <div className="my-10 flex justify-center">
+        {showSpinner ? <Spinner /> : ""}
       </div>
     </div>
   );
