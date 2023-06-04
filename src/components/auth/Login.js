@@ -7,6 +7,8 @@ import { logo } from "../../assets";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { getAPIroot } from "../utilities/getAPIroot";
+import Spinner from "../utilities/Spinner";
+
 
 
 
@@ -17,6 +19,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const MySwal = withReactContent(Swal);
   const APIROOT = getAPIroot()
+  const [showSpinner, setShowSpinner] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -48,6 +51,7 @@ export const Login = () => {
       });
       return;
     }
+    setShowSpinner(true)
     fetch(`${APIROOT}login`, {
       method: "POST",
       body: JSON.stringify({
@@ -97,6 +101,7 @@ export const Login = () => {
         } else {
           whichProfile = "/rndashboard";
         }
+        setShowSpinner(false)
         navigate(whichProfile);
       });
   };
@@ -159,8 +164,9 @@ export const Login = () => {
             />
             <div className="flex items-center mt-6 mb-6 justify-center">
               <button
+                disabled = {showSpinner}
                 className={
-                  "bg-sky-600 hover:bg-sky-400 py-2 px-5 uppercase text-xs font-bold text-white rounded-full border shadow border-blue focus:outline-none focus:border-stone-200"
+                  "bg-sky-600 hover:bg-sky-400 py-2 px-5 uppercase text-xs font-bold text-white rounded-full border shadow border-blue focus:outline-none focus:border-stone-200 disabled:opacity-50 disabled:hover:bg-sky-600"
                 }
                 value="Login"
                 onClick={(e) => {
@@ -169,6 +175,9 @@ export const Login = () => {
               >
                 Sign In
               </button>
+            </div>
+            <div className="flex items-center mt-3 justify-center">
+              {showSpinner ? <Spinner/> : ""}
             </div>
           </form>
           <div className="flex items-center mt-3 justify-center">
