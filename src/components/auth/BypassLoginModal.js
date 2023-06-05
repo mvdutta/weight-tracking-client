@@ -1,42 +1,33 @@
-import React from 'react'
+import React, { useState } from "react";
 import { close } from "../../assets";
+import Spinner from "../utilities/Spinner";
+import { getAPIroot } from "../utilities/getAPIroot";
+import { useNavigate } from "react-router-dom";
 
 const BypassLoginModal = ({showBypassModal, setShowBypassModal}) => {
-      const handleLogin = (e) => {
-        e.preventDefault();
-        if (username === "") {
-          MySwal.fire({
-            title: "Please enter your username",
-            confirmButtonColor: "#DAA520",
-            customClass: "sweet-warning",
-            showClass: {
-              popup: "animate__animated animate__fadeInDown",
-            },
-            hideClass: {
-              popup: "animate__animated animate__fadeOutUp",
-            },
-          });
-          return;
-        }
-        if (password === "") {
-          MySwal.fire({
-            title: "Please enter your password",
-            confirmButtonColor: "#DAA520",
-            customClass: "sweet-warning",
-            showClass: {
-              popup: "animate__animated animate__fadeInDown",
-            },
-            hideClass: {
-              popup: "animate__animated animate__fadeOutUp",
-            },
-          });
-          return;
+    const [showSpinner, setShowSpinner] = useState(false);
+    const navigate = useNavigate();
+    const APIROOT = getAPIroot();
+
+      const handleLogin = (loginType) => {
+
+        let userName = ""
+        let password = "password123"
+
+        if (loginType === "CNA") {
+            userName = "guestCNA"
+        } else if ( loginType === "RD") {
+            userName = "guestRD"
+        } else if ( loginType === "NP") {
+            userName = "guestNP"
+        } else {
+            throw new Error("Invalid Login Type Provided")
         }
         setShowSpinner(true);
         fetch(`${APIROOT}login`, {
           method: "POST",
           body: JSON.stringify({
-            username: username,
+            username: userName,
             password: password,
           }),
           headers: {
@@ -45,7 +36,6 @@ const BypassLoginModal = ({showBypassModal, setShowBypassModal}) => {
         })
           .then((res) => res.json())
           .then((authInfo) => {
-            if (authInfo && authInfo.valid) {
               localStorage.setItem(
                 "wt_token",
                 JSON.stringify({
@@ -54,21 +44,7 @@ const BypassLoginModal = ({showBypassModal, setShowBypassModal}) => {
                   name: authInfo.name,
                   role: authInfo.role,
                 })
-              );
-              setLoggedIn(true);
-            } else {
-              MySwal.fire({
-                title: "Invalid Credentials",
-                confirmButtonColor: "#DAA520",
-                customClass: "sweet-warning",
-                showClass: {
-                  popup: "animate__animated animate__fadeInDown",
-                },
-                hideClass: {
-                  popup: "animate__animated animate__fadeOutUp",
-                },
-              });
-            }
+              ); 
           })
           .then(() => {
             const wtToken = localStorage.getItem("wt_token");
@@ -112,19 +88,40 @@ const BypassLoginModal = ({showBypassModal, setShowBypassModal}) => {
                  <div className="relative p-6 flex-auto">
                    <p className="my-3 text-stone-600 text-lg leading-relaxed underline">
                      <div>
-                       <a className="cursor-pointer">
+                       <a
+                         className="cursor-pointer"
+                         onClick={(e) => {
+                           e.preventDefault();
+                           handleLogin("CNA");
+                         }}
+                       >
                          Certified Nursing Assistant (CNA)
                        </a>
                      </div>
                      <div>
-                       <a className="cursor-pointer">
+                       <a
+                         className="cursor-pointer"
+                         onClick={(e) => {
+                           e.preventDefault();
+                           handleLogin("RD");
+                         }}
+                       >
                          Registered Dietitian (RD){" "}
                        </a>
                      </div>
                      <div>
-                       <a className="cursor-pointer">
+                       <a
+                         className="cursor-pointer"
+                         onClick={(e) => {
+                           e.preventDefault();
+                           handleLogin("NP");
+                         }}
+                       >
                          Nurse Practitioner (NP)
                        </a>
+                     </div>
+                     <div className="flex items-center justify-center">
+                       {showSpinner ? <Spinner /> : ""}
                      </div>
                    </p>
                  </div>
