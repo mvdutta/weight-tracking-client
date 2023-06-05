@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { formattedDateUI } from "../utilities/FormattedDate";
 import { getAPIroot } from "../utilities/getAPIroot";
+import Spinner from "../utilities/Spinner";
 
 const APIROOT = getAPIroot();
 
@@ -20,6 +21,7 @@ const WeightSheetSummary = () => {
     const { date } = useParams();
     const MySwal = withReactContent(Swal);
     const [finalized, setFinalized] = useState(true)
+    const [showSpinner, setShowSpinner] = useState(false);
 
 
     useEffect(() => {
@@ -39,6 +41,7 @@ const WeightSheetSummary = () => {
         const API3 = `${APIROOT}weights/closestdate_all?lookback=1week&date=${date}`;
 
         const getData =  async () =>{
+          setShowSpinner(true);
           const { dates } = await fetchIt(dates_api);
           if (!dates.includes(date)) {
             await fetchIt(API1, {
@@ -57,6 +60,7 @@ const WeightSheetSummary = () => {
           weightsheets.sort((x, y) => x.room_num - y.room_num); //sort the weight sheets by room number
           setPatientListWithWeights(weightsheets);
           setFinalized(weightsheets.every((el) => el.final));
+          setShowSpinner(false);
         }
         getData()
 
@@ -315,14 +319,22 @@ const WeightSheetSummary = () => {
             <span>Date: {formattedDateUI(date)}</span>
             <div className="flex justify-center sm:gap-20 gap-10 my-10">
               <button
-                className={finalized?"hidden":`bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-amber-600 `}
+                className={
+                  finalized
+                    ? "hidden"
+                    : `bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-amber focus:outline-none focus:border-amber-600 `
+                }
                 value="Finalize"
                 onClick={handleSubmit}
               >
                 Finalize
               </button>
               <button
-                className={finalized?"hidden":"bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-sky-500"}
+                className={
+                  finalized
+                    ? "hidden"
+                    : "bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-sky-500"
+                }
                 disabled={finalized}
                 value="Save"
                 onClick={handleSave}
@@ -363,16 +375,27 @@ const WeightSheetSummary = () => {
             {makeTableRows()}
           </table>
         </div>
+        <div className="my-10 flex justify-center">
+          {showSpinner ? <Spinner /> : ""}
+        </div>
         <div className="flex justify-center gap-20 my-10">
           <button
-            className={finalized?"hidden":"bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border border-amber focus:outline-none focus:border-black"}
+            className={
+              finalized
+                ? "hidden"
+                : "bg-amber-500/80 hover:bg-amber-400 w-24 py-3 mb-3 text-sm font-bold uppercase text-white rounded-full border border-amber focus:outline-none focus:border-black"
+            }
             value="Finalize"
             onClick={handleSubmit}
           >
             Finalize
           </button>
           <button
-            className={finalized?"hidden":"bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"}
+            className={
+              finalized
+                ? "hidden"
+                : "bg-sky-600/80 hover:bg-sky-400 w-24 mb-3 text-sm font-bold uppercase text-white rounded-full border shadow border-blue focus:outline-none focus:border-black"
+            }
             value="Save"
             disabled={finalized}
             onClick={handleSave}

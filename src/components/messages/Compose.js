@@ -37,8 +37,43 @@ useEffect(() => {
   });
 }, []);
 
-const handleSubmit = () =>{
+const clearMessage = () => {
+  const messageCopy = { ...message };
+  messageCopy.message_body = "";
+  messageCopy.subject = ""
+  setMessage(messageCopy);
 
+}
+
+const handleSubmit = () =>{
+  if(message.subject === "") {
+        MySwal.fire({
+          title: "Please enter a subject",
+          confirmButtonColor: "#DAA520",
+          customClass: "sweet-warning",
+          showClass: {
+            popup: "animate__animated animate__fadeInDown",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+        });
+    return
+  }
+    if (message.message_body === "") {
+          MySwal.fire({
+            title: "Please enter a message",
+            confirmButtonColor: "#DAA520",
+            customClass: "sweet-warning",
+            showClass: {
+              popup: "animate__animated animate__fadeInDown",
+            },
+            hideClass: {
+              popup: "animate__animated animate__fadeOutUp",
+            },
+          });
+      return;
+    }
   const postBody = {
     subject: message.subject,
     message_body: message.message_body,
@@ -61,6 +96,7 @@ const handleSubmit = () =>{
          popup: "animate__animated animate__fadeOutUp",
        },
      });
+     clearMessage()
   })
 }
   
@@ -202,7 +238,7 @@ const handleSubmit = () =>{
             className={
               "bg-sky-600/90 hover:bg-sky-600 py-2 px-5 md:py-3 md:px-6 text-sm md:text-md text-white rounded-full font-bold border border-blue focus:outline-none focus:border-sky-700"
             }
-            onClick={handleSubmit}
+            onClick= {handleSubmit}
           >
             SEND
           </button>
