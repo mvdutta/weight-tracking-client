@@ -111,7 +111,7 @@ export const Login = () => {
   return (
     <>
       <figure className="h-screen flex -mb-60">
-        <div className="w-full max-w-md m-auto bg-white rounded-lg border-2 shadow-lg shadow-sky-800/30 pb-6 px-1">
+        <div className="w-full max-w-md m-auto bg-white rounded-lg border-2 shadow-md shadow-sky-800/30 pb-6 px-1">
           <div className="text-2xl font-medium text-center">
             <p className="-mt-[103px]">
               <img
@@ -191,7 +191,7 @@ export const Login = () => {
       </figure>
       <div className="flex justify-center mt-5">
         <a
-          className=" text-burnt underline text-lg font-bold mt-3 mb-3 cursor-pointer"
+          className=" text-burnt underline sm:text-md font-bold  my-6 sm:my-3 cursor-pointer"
           onClick={() => {
             setShowBypassModal(true);
           }}

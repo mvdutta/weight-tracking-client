@@ -103,7 +103,7 @@ const RegisterModal = () => {
   return (
     <>
       <a
-        className=" text-primary underline text-md font-bold mt-3 mb-3 cursor-pointer"
+        className=" text-primary underline text-md font-bold my-4 sm:my-2 cursor-pointer"
         onClick={() => setShowModal(true)}
       >
         New User Registration

@@ -67,7 +67,7 @@ const BypassLoginModal = ({showBypassModal, setShowBypassModal}) => {
        {showBypassModal ? (
          <>
            <div className="justify-center items-center flex overflow-scroll fixed inset-0 z-50 outline-none focus:outline-none">
-             <div className="relative  w-2/3 md:w-1/3 my-6 mx-auto">
+             <div className="relative  w-100 lg:w-1/3 my-6 mx-auto">
                {/*content*/}
                <div className="border-0 rounded-lg shadow-xl relative flex flex-col w-full bg-white outline-none focus:outline-none">
                  {/*header*/}
@@ -80,7 +80,7 @@ const BypassLoginModal = ({showBypassModal, setShowBypassModal}) => {
                      onClick={() => setShowBypassModal(false)}
                    >
                      <span className="">
-                       <img className="w-7" src={close} alt="close-icon" />
+                       <img className="w-7 invisible lg:visible" src={close} alt="close-icon" />
                      </span>
                    </button>
                  </div>
