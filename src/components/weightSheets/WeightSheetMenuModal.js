@@ -83,12 +83,12 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
       {showModal ? (
         <>
           <div className="justify-center items-center flex overflow-scroll fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative md:w-2/3 lg:w-1/3 my-6 mx-auto">
+            <div className="relative w-full sm:w-[600px] lg:w-1/3 my-6 mx-auto">
               {/*content*/}
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-sky-100 outline-none focus:outline-none">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-stone-100 outline-none focus:outline-none">
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-stone-200 rounded-t">
-                  <h3 className="text-2xl font-body text-stone-700 font-semibold">
+                  <h3 className=" text-xl md:text-2xl font-body text-stone-700 font-semibold">
                     Weight Sheet Menu
                   </h3>
                   <button
@@ -107,7 +107,7 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
                       role === "RD" || role === "CNA" ? "flex gap-2" : "hidden"
                     }
                   >
-                    <p className="text-lg">Create/Open Weight Sheet for: </p>
+                    <p className=" sm:text-lg">Create/Open Weight Sheet for: </p>
                     <input
                       type="date"
                       className="mb-8 text-sky-900/90 text-[16px]"
@@ -125,7 +125,7 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
                       </Link>
                     </div>
                   </div>
-                  <p className="mb-4 text-lg">{descriptor} Weight Sheets</p>
+                  <p className="mb-4 sm:text-lg">{descriptor} Weight Sheets:</p>
                   <div className="overflow-auto w-1/3 h-28">{makeDateList()}</div>
                 </div>
                 {/*footer*/}
