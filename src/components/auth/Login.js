@@ -196,7 +196,7 @@ export const Login = () => {
             setShowBypassModal(true);
           }}
         >
-          Guest User Bypass Sign In
+          Guest User Sign In
         </a>
         <BypassLoginModal 
         showBypassModal={showBypassModal}
