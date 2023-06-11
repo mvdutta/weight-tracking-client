@@ -43,7 +43,7 @@ useEffect(() => {
               >
                 {el.room_num}
               </td>
-              <td className="px-6 py-4">
+              <td>
                 {el.last_name}, {el.first_name}
               </td>
               <td className="px-6 py-4">{formattedDateUI(el.admission_date)}</td>
@@ -58,12 +58,12 @@ useEffect(() => {
     <>
       <NavBar />
       <header className="flex justify-center">
-        <h1 className="font-semibold text-stone-700 text-3xl my-8 md:mb-32">
+        <h1 className="font-semibold text-stone-700 text-3xl my-8 lg:mb-32">
           {" "}
           Current Census List
         </h1>
       </header>
-      <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md sm:rounded-lg shadow-sky-600/30 md:w-1/2 font-body border border-sky-600/20 py-6 px-4">
+      <div className=" container flex flex-col md:m-auto before:relative overflow-auto sm:shadow-md sm:rounded-lg sm:shadow-stone-600 lg:w-1/2 font-body py-6 px-4 border border-3">
         <table className="text-md text-center text-stone-700 dark:text-stone-500">
           <caption className="p-5 text-lg font-semibold text-sky-900 bg-white dark:text-white dark:bg-gray-800 text-center">
             Gaffney Scranton Rehabilitation & Healing
@@ -77,7 +77,7 @@ useEffect(() => {
               Current Residents ({residentList.length})
             </p>
           </caption>
-          <thead className="text-sm text-sky-900 uppercase font-semibold dark:bg-stone-700 dark:text-stone-400 bg-stone-200/80">
+          <thead className="md:text-sm text-sky-900 uppercase font-semibold dark:bg-stone-700 dark:text-stone-400 bg-stone-200/80">
             <tr>
               <th scope="col" className="px-6 py-3">
                 Room Number

@@ -272,7 +272,7 @@ const WeeklySheet = () => {
             Weekly Weight Sheet
           </h1>
         </header>
-        <div className="flex flex-col rounded-md items-center m-auto border-2 shadow-md border-stone-200/60 lg:w-1/3 py-3 px-10 text-smoke-600 shadow-stone-900/30">
+        <div className="flex flex-col rounded-md items-center m-auto border-2 shadow-md border-stone-200/60 sm:w-[600px] lg:w-1/3 py-3 px-5 md:px-10 text-smoke-600 shadow-stone-900/30">
           <ol>
             <li className="font-semibold">Goals:</li>
             <li>
@@ -288,7 +288,7 @@ const WeeklySheet = () => {
         </div>
 
         <div className="container mx-auto flex flex-col mt-20 overflow-auto">
-          <div className="flex md:justify-around justify-between mx-5 sm:mx-10 mb-8 content-center items-center text-md sm:text-lg overflow-auto">
+          <div className="flex flex-col gap-5 sm:flex-row sm:gap-0 sm:justify-around mx-5 sm:mx-10 mb-8 content-center items-center text-md sm:text-lg overflow-auto">
             <span>Weight Team Member: {employee.name}</span>
             <span className="text-md">Date: {formattedDateUI(date)}</span>
             <button

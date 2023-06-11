@@ -85,8 +85,8 @@ const BypassLoginModal = ({showBypassModal, setShowBypassModal}) => {
                    </button>
                  </div>
                  {/*body*/}
-                 <div className="relative p-6 flex-auto">
-                   <p className="my-3 text-stone-600 text-lg leading-relaxed underline">
+                 <div className="p-4">
+                   <p className="text-stone-600 text-lg leading-relaxed underline grid grid-rows-3 gap-3 ">
                      <div>
                        <a
                          className="cursor-pointer"
@@ -106,7 +106,7 @@ const BypassLoginModal = ({showBypassModal, setShowBypassModal}) => {
                            handleLogin("RD");
                          }}
                        >
-                         Registered Dietitian (RD){" "}
+                         Registered Dietitian (RD){" "} 
                        </a>
                      </div>
                      <div>
