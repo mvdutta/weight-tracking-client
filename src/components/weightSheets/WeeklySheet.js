@@ -313,10 +313,10 @@ const WeeklySheet = () => {
                   Resident Name
                 </th>
                 <th className="bg-sky-600/20 border text-left px-8 py-4">
-                  Current Weight
+                  Current Weight (lbs)
                 </th>
                 <th className="bg-sky-600/20 border text-left px-8 py-4">
-                  Previous Weight
+                  Previous Weight (lbs)
                 </th>
                 <th className="bg-sky-600/20 border text-left px-8 py-4">
                   ReWeighed?

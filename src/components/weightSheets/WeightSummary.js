@@ -158,7 +158,7 @@ const WeightSummary = () => {
         </h1>
       </header>
       <div className="container mx-auto flex flex-col mt-20 mb-20">
-        <div className="mb-10 ml-2 text-md sm:text-lg">
+        <div className="mb-10 ml-2 text-xl sm:text-lg">
           <span>Date: {formattedDateUI(date)}</span>
         </div>
         <table className="shadow-md shadow-stone-300 bg-sky-50/40 border-separate overflow-x-auto">
@@ -169,10 +169,10 @@ const WeightSummary = () => {
                 Resident Name
               </th>
               <th className="bg-sky-600/20 border text-left px-8 py-4">
-                Current Weight
+                Current Weight (lbs)
               </th>
               <th className="bg-sky-600/20 border text-left px-8 py-4">
-                Previous Weight
+                Previous Weight (lbs)
               </th>
               <th className="bg-sky-600/20 border text-left px-8 py-4">
                 ReWeighed?

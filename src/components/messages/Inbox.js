@@ -102,34 +102,33 @@ const Inbox = () => {
             >
               <td
                 scope="row"
-                className="pl-6 py-4
-             "
+                className=""
               >
                 {el.message.read ? (
-                  <img src={read} alt="read" className="block w-10 sm:w-8" />
+                  <img src={read} alt="read" className="w-10 sm:w-8" />
                 ) : (
                   <img
                     src={unread}
                     alt="unread"
-                    className="block w-10 sm:w-8"
+                    className= "w-10 sm:w-8"
                   />
                 )}
               </td>
               <td
                 scope="row"
-                className="pl-6 py-4 font-sm sm:font-medium text-stone-900 whitespace-nowrap"
+                className="pl-5 py-4 text-stone-900"
               >
                 {`${el.sender.user.first_name.slice(0, 1)}. ${
                   el.sender.user.last_name
                 }`}
               </td>
-              <td className="pl-6 py-4">
+              <td className=" pl-5 py-4">
                 <Link
                   to=""
                   className={
                     el.message.read
-                      ? "font-sm sm:font-medium text-stone-600 hover:underline"
-                      : "font-sm sm:font-medium text-sky-800 hover:underline"
+                      ? "text-stone-900 hover:underline"
+                      : "text-sky-800 hover:underline"
                   }
                   onClick={() => {
                     setShowModal(true);
@@ -140,16 +139,16 @@ const Inbox = () => {
                   {el.message.subject}
                 </Link>{" "}
               </td>
-              <td className="pl-6 py-4 text-stone-900 font-sm sm:font-medium">
+              <td className="pl-6 py-4 text-stone-900">
                 {formattedDate(new Date(el.message.date_created))}
               </td>
-              <td className="pl-6 py-4">
+              <td className="pl-6 lg:pl-0 py-4">
                 {
                   <img
                     src={discard}
-                    alt="logo"
+                    alt="delete"
                     id={`delete--${el.id}`}
-                    className="block w-5 md:w-6 cursor-pointer opacity-90"
+                    className="w-5 md:w-6 cursor-pointer opacity-90"
                     onClick={(evt) => {
                       const [_, id] = evt.target.id.split("--");
                       deleteEmail(id);
@@ -167,7 +166,7 @@ const Inbox = () => {
   return (
     <>
       <NavBar />
-      <div className=" flex-col justify-center ml-auto mr-auto mb-[310px] sm:w-2/3">
+      <div className=" flex-col justify-center ml-auto mr-auto mb-[275px] lg:w-2/3">
         <header className="flex justify-center">
           <h1 className="font-semibold text-stone-700 text-3xl my-8"> Inbox</h1>
         </header>
@@ -176,18 +175,18 @@ const Inbox = () => {
             {name ? `Welcome ${name}` : ""}
           </h1>
         </div>
-        <div className="flex items-center justify-center md:justify-start md:ml-40 mt-5 mb-5">
-          <img src={compose} alt="compose" className="block w-20 md:w-[75px]" />
+        <div className="flex items-center md:justify-start md:ml-20 lg:ml-40 mt-5 mb-5">
+          <img src={compose} alt="compose" className="block w-20 sm:w-[100px] lg:w-[75px]" />
           <h3>
             {" "}
             <Link to="/compose">
-              <span className="text-sky-800 underline -ml-3">
+              <span className="text-sky-800 underline -ml-3 text-lg">
                 Compose New Message
               </span>
             </Link>
           </h3>
         </div>
-        <div className=" container flex flex-col md:m-auto before:relative overflow-auto shadow-md shadow-sky-800/40 sm:rounded-lg md:w-2/3 font-body border-solid  border-2 border-sky-600/20 py-6 px-6 sm:px-8">
+        <div className=" flex flex-col m-auto overflow-auto sm:shadow-md border-2 shadow-stone-400 sm:rounded-lg w-full md:w-2/3 font-body py-6 px-6 sm:px-8">
           <table className="text-md text-left text-stone-700 dark:text-stone-500">
             <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
               <tr>

@@ -132,12 +132,12 @@ const handleSubmit = () =>{
                  </label>
                </div>
              </td>
-             <td key={`table-cell2-${el.id}`}  className="px-6 py-4 text-xs">
+             <td key={`table-cell2-${el.id}`}  className="px-6 py-4 text-sm">
                {el.role}
              </td>
              <td
                scope="row"
-               className="px-6 py-4 text-xs text-stone-900 whitespace-nowrap dark:text-white"
+               className="px-6 py-4 text-sm text-stone-900 whitespace-nowrap dark:text-white"
              >
                {`${el.user.first_name.slice(0, 1)}. ${el.user.last_name}`}
              </td>
@@ -158,7 +158,7 @@ const handleSubmit = () =>{
         </h1>
       </header>
       <div className="flex justify-center">
-        <div className=" md:border-2 rounded-md shadow-md shadow-sky-800/40 border-sky-800/30 md:pb-8 px-10 mt-10 inline-block content-center">
+        <div className=" md:border-2 rounded-md sm:shadow-md shadow-stone-800/40 border-stone-800/30 md:pb-8 px-10 mt-10 inline-block content-center">
           <div className="mt-5">
             <h6 className="font-semibold text-stone-800">
               Select Recipient(s):
@@ -166,7 +166,7 @@ const handleSubmit = () =>{
           </div>
           <div className="flex flex-col md:flex-row justify-center mt-5 ml-[74px]">
             <div>
-              <div className=" container flex before:relative overflow-scroll shadow-md sm:rounded-lg h-40 md:h-60 w-[320px] font-body border-solid  border-2 border-sky-600/20 py-3 px-2">
+              <div className=" container flex before:relative overflow-scroll shadow-md sm:rounded-lg h-40 md:h-60 w-[320px] font-body border-solid  border-2 border-stone-600/20 py-3 px-2">
                 <table className="text-md text-left m-auto w-full text-stone-700 dark:text-stone-500">
                   <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
                     <tr>
