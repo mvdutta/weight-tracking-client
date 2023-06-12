@@ -29,7 +29,6 @@ const Inbox = () => {
   const [showModal, setShowModal] = useState(false);
   const [emails, setEmails] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState("");
-  const [msgClicked, setMsgClicked] = useState(false);
   const MySwal = withReactContent(Swal);
 
 
@@ -50,7 +49,7 @@ const Inbox = () => {
         setEmails(data);
       });
     }
-  }, [msgClicked, emails]);
+  }, [emails]);
 
   useEffect(() => {
     if (selectedMessage.id && !selectedMessage.message.read) {
@@ -84,9 +83,7 @@ const Inbox = () => {
       if (result.isConfirmed) {
         fetchIt(`${APIROOT}employeemessages/${id}`, {
           method: "DELETE",
-        }).then(() => {
-          setMsgClicked((x) => !x); //sends signal to refresh the inbox
-        });
+        })
       }
     });
   };
@@ -100,24 +97,14 @@ const Inbox = () => {
               key={`table-row-${el.id}`}
               className="bg-white border-b dark:bg-stone-800 dark:border-stone-800 hover:bg-stone-50 dark:hover:bg-stone-600"
             >
-              <td
-                scope="row"
-                className=""
-              >
+              <td scope="row" className="">
                 {el.message.read ? (
-                  <img src={read} alt="read" className="w-10 sm:w-8" />
+                  <img src={read} alt="read" className="w-7 sm:w-8" />
                 ) : (
-                  <img
-                    src={unread}
-                    alt="unread"
-                    className= "w-8"
-                  />
+                  <img src={unread} alt="unread" className="w-7" />
                 )}
               </td>
-              <td
-                scope="row"
-                className=" text-stone-900"
-              >
+              <td scope="row" className=" text-stone-900">
                 {`${el.sender.user.first_name.slice(0, 1)}. ${
                   el.sender.user.last_name
                 }`}
@@ -131,10 +118,8 @@ const Inbox = () => {
                       : "text-sky-800 hover:underline"
                   }
                   onClick={() => {
-                    setMsgClicked((x) => !x);
                     setShowModal(true);
                     setSelectedMessage(el);
-                    ;
                   }}
                 >
                   {el.message.subject}
@@ -149,7 +134,7 @@ const Inbox = () => {
                     src={discard}
                     alt="delete"
                     id={`delete--${el.id}`}
-                    className="w-5 md:w-6 cursor-pointer opacity-90"
+                    className="w-6 md:w-6 cursor-pointer opacity-90"
                     onClick={(evt) => {
                       const [_, id] = evt.target.id.split("--");
                       deleteEmail(id);
@@ -191,21 +176,21 @@ const Inbox = () => {
             </Link>
           </h3>
         </div>
-        <div className=" flex flex-col m-auto overflow-auto sm:shadow-md border-2 shadow-stone-400 sm:rounded-lg w-full md:w-2/3 font-body py-6 px-6 sm:px-8">
+        <div className=" flex flex-col m-auto overflow-auto sm:shadow-md border-2 shadow-stone-400 sm:rounded-lg w-full md:w-2/3 font-body py-6 px-6 sm:px-12">
           <table className="table-auto text-md text-left text-stone-700 dark:text-stone-500">
             <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
               <tr>
-                <th scope="col" className=""></th>
-                <th scope="col" className="">
+                <th scope="col" className="py-4"></th>
+                <th scope="col" className="px-2 py-4">
                   Sender
                 </th>
-                <th scope="col" className="">
+                <th scope="col" className="px-2 py-4">
                   Subject
                 </th>
-                <th scope="col" className="">
+                <th scope="col" className="px-4 py-4">
                   Date
                 </th>
-                <th scope="col" className=""></th>
+                <th scope="col" className="px-2 py-4"></th>
               </tr>
             </thead>
             {makeTableRows()}
