@@ -50,7 +50,7 @@ const Inbox = () => {
         setEmails(data);
       });
     }
-  }, [msgClicked]);
+  }, [msgClicked, emails]);
 
   useEffect(() => {
     if (selectedMessage.id && !selectedMessage.message.read) {
@@ -131,9 +131,10 @@ const Inbox = () => {
                       : "text-sky-800 hover:underline"
                   }
                   onClick={() => {
+                    setMsgClicked((x) => !x);
                     setShowModal(true);
                     setSelectedMessage(el);
-                    setMsgClicked((x) => !x);
+                    ;
                   }}
                 >
                   {el.message.subject}
