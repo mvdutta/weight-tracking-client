@@ -110,19 +110,19 @@ const Inbox = () => {
                   <img
                     src={unread}
                     alt="unread"
-                    className= "w-10 sm:w-8"
+                    className= "w-8"
                   />
                 )}
               </td>
               <td
                 scope="row"
-                className="pl-5 py-4 text-stone-900"
+                className=" text-stone-900"
               >
                 {`${el.sender.user.first_name.slice(0, 1)}. ${
                   el.sender.user.last_name
                 }`}
               </td>
-              <td className=" pl-5 py-4">
+              <td className="">
                 <Link
                   to=""
                   className={
@@ -139,10 +139,10 @@ const Inbox = () => {
                   {el.message.subject}
                 </Link>{" "}
               </td>
-              <td className="pl-6 py-4 text-stone-900">
+              <td className="text-stone-900">
                 {formattedDate(new Date(el.message.date_created))}
               </td>
-              <td className="pl-6 lg:pl-0 py-4">
+              <td className="py-4">
                 {
                   <img
                     src={discard}
@@ -176,7 +176,11 @@ const Inbox = () => {
           </h1>
         </div>
         <div className="flex items-center md:justify-start md:ml-20 lg:ml-40 mt-5 mb-5">
-          <img src={compose} alt="compose" className="block w-20 sm:w-[100px] lg:w-[75px]" />
+          <img
+            src={compose}
+            alt="compose"
+            className="block w-20 sm:w-[100px] lg:w-[75px]"
+          />
           <h3>
             {" "}
             <Link to="/compose">
@@ -187,20 +191,20 @@ const Inbox = () => {
           </h3>
         </div>
         <div className=" flex flex-col m-auto overflow-auto sm:shadow-md border-2 shadow-stone-400 sm:rounded-lg w-full md:w-2/3 font-body py-6 px-6 sm:px-8">
-          <table className="text-md text-left text-stone-700 dark:text-stone-500">
+          <table className="table-auto text-md text-left text-stone-700 dark:text-stone-500">
             <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
               <tr>
                 <th scope="col" className=""></th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="">
                   Sender
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="">
                   Subject
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="">
                   Date
                 </th>
-                <th scope="col" className="px-6 py-3"></th>
+                <th scope="col" className=""></th>
               </tr>
             </thead>
             {makeTableRows()}
