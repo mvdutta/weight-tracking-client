@@ -14,9 +14,7 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
     const [newDate, setNewDate] = useState(formattedDate(new Date()))
     const [role, setRole] = useState("")
     const navigate = useNavigate();
-          const descriptor =
-            role === "RD" || role === "CNA" ? "Recent" : "Available";
-
+  
       useEffect(() => {
         const current_user = localStorage.getItem("wt_token");
         let address = ""
@@ -50,13 +48,9 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
 
     const makeDateList = () =>{
 
-      const recentDates = dates.length>4? dates.slice(0,4):dates
-      const dateList = role==="RD" || role === "CNA" ? recentDates : dates
-
-      
         return (
           <ul>
-            {dateList.map((el, index) => {
+            {dates.map((el, index) => {
                 const encodedDate = encodeURI(el)
              return (
                <li key={index}>
@@ -125,7 +119,7 @@ const WeightSheetMenuModal = ({ showModal, setShowModal}) => {
                       </Link>
                     </div>
                   </div>
-                  <p className="mb-4 sm:text-lg">{descriptor} Weight Sheets:</p>
+                  <p className="mb-4 sm:text-lg">Available Weight Sheets:</p>
                   <div className="overflow-auto w-1/3 h-28">{makeDateList()}</div>
                 </div>
                 {/*footer*/}

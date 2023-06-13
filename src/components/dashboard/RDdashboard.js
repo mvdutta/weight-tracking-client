@@ -232,14 +232,12 @@ const RDdashboard = () => {
             );
           })}
         </div>
-      ) : (
-        <div className="inline-block ml-40 mb-10"></div>
-      )}
+      ) : ""}
       {searchResults.length === 0 ? (
         ""
       ) : (
         <div>
-          <h1 className="text-lg ml-5 sm:ml-10 lg:ml-60 mt-5 mb-10 text-stone-800">
+          <h1 className="text-lg ml-5 sm:ml-10 lg:ml-60 mt-20 mb-10 text-stone-800">
             Weight Summary for:{" "}
             <span className="italic text-stone-700 ">
               {selectedResident.first_name} {selectedResident.last_name}
@@ -251,7 +249,7 @@ const RDdashboard = () => {
         ""
       ) : (
         <div className=" container flex flex-col m-auto sm:shadow-md sm:rounded-lg w-full lg:w-2/3 font-body border border-stone-600/30 pb-5 px-4 text-sm md:text-lg overflow-x-scroll">
-          <div className="w-auto overflow-x-auto">
+          <div className="w-auto overflow-x-scroll">
             <table className="text-md text-stone-700 dark:text-stone-500">
               <caption className="p-5 text-lg font-semibold text-stone-800 bg-white dark:text-white dark:bg-gray-800">
                 <p className="text-left">

@@ -136,7 +136,6 @@ const handleSubmit = () =>{
                {el.role}
              </td>
              <td
-               scope="row"
                className="px-6 py-4 text-sm text-stone-900 whitespace-nowrap dark:text-white"
              >
                {`${el.user.first_name.slice(0, 1)}. ${el.user.last_name}`}
@@ -149,7 +148,7 @@ const handleSubmit = () =>{
  );
   
   return (
-    <>
+    <div className="w-full">
       <NavBar />
       <header className="flex justify-center">
         <h1 className="font-semibold text-stone-700 text-3xl mt-10 md:my-10">
@@ -166,7 +165,7 @@ const handleSubmit = () =>{
           </div>
           <div className="flex flex-col md:flex-row justify-center mt-5 ml-[74px]">
             <div>
-              <div className=" container flex before:relative overflow-scroll shadow-md sm:rounded-lg h-40 md:h-60 w-[320px] font-body border-solid  border-2 border-stone-600/20 py-3 px-2">
+              <div className="container flex before:relative overflow-scroll shadow-md sm:rounded-lg h-40 md:h-60 w-[320px] font-body border-solid  border-2 border-stone-600/20 py-3 px-2">
                 <table className="text-md text-left m-auto w-full text-stone-700 dark:text-stone-500">
                   <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
                     <tr>
@@ -238,7 +237,7 @@ const handleSubmit = () =>{
             className={
               "bg-sky-600/90 hover:bg-sky-600 py-2 px-5 md:py-3 md:px-6 text-sm md:text-md text-white rounded-full font-bold border border-blue focus:outline-none focus:border-sky-700"
             }
-            onClick= {handleSubmit}
+            onClick={handleSubmit}
           >
             SEND
           </button>
@@ -256,7 +255,7 @@ const handleSubmit = () =>{
           </Link>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

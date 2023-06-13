@@ -176,8 +176,8 @@ const Inbox = () => {
             </Link>
           </h3>
         </div>
-        <div className=" flex flex-col m-auto overflow-auto sm:shadow-md border-2 shadow-stone-400 sm:rounded-lg w-full md:w-2/3 font-body py-6 px-6 sm:px-12">
-          <table className="table-auto text-md text-left text-stone-700 dark:text-stone-500">
+        <div className=" flex flex-col m-auto overflow-auto sm:shadow-md border-2 shadow-stone-400 sm:rounded-lg w-full sm:w-5/6 lg:w-2/3 font-body py-6 sm:px-12">
+          <table className="table-auto text-sm sm:text-md text-left text-stone-700 dark:text-stone-500">
             <thead className="text-sm text-sky-900 uppercase font-semibold bg-stone-100 dark:bg-stone-700 dark:text-stone-400">
               <tr>
                 <th scope="col" className="py-4"></th>
@@ -187,7 +187,7 @@ const Inbox = () => {
                 <th scope="col" className="px-2 py-4">
                   Subject
                 </th>
-                <th scope="col" className="px-4 py-4">
+                <th scope="col" className="px-2 py-4">
                   Date
                 </th>
                 <th scope="col" className="px-2 py-4"></th>
