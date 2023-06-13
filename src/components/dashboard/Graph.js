@@ -86,7 +86,7 @@ export const Graph = ({id, name}) => {
       ],
     };
   return (
-    <div className="relative mx-auto h-[300px] w-full md:w-1/2 mt-20 border p-4 border-sky-600/30 shadow-md sm:rounded-lg">
+    <div className="relative mx-auto h-[300px] w-full lg:w-2/3 mt-20 border p-4 border-stone-600/30 sm:shadow-md sm:rounded-lg">
       <Line options={options} data={data} />
     </div>
   );

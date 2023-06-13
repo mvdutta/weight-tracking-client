@@ -315,8 +315,8 @@ const WeightSheetSummary = () => {
           </h1>
         </header>
         <div className="container mx-auto flex flex-col">
-          <div className="flex justify-between content-center items-center text-md sm:text-lg mx-10">
-            <span>Date: {formattedDateUI(date)}</span>
+          <div className="flex flex-col sm:flex-row sm:justify-between content-center items-center text-md sm:text-lg mx-5 sm:mx-10">
+            <span className="text-xl sm:text-lg">Date: {formattedDateUI(date)}</span>
             <div className="flex justify-center sm:gap-20 gap-10 my-10">
               <button
                 className={
@@ -353,10 +353,10 @@ const WeightSheetSummary = () => {
                   Resident Name
                 </th>
                 <th className="bg-sky-600/20 border text-left px-8 py-4">
-                  Current Weight
+                  Current Weight (lbs)
                 </th>
                 <th className="bg-sky-600/20 border text-left px-8 py-4">
-                  Previous Weight
+                  Previous Weight (lbs)
                 </th>
                 <th className="bg-sky-600/20 border text-left px-8 py-4">
                   ReWeighed?
