@@ -111,7 +111,7 @@ export const Login = () => {
   return (
     <>
       <figure className="h-screen flex -mb-60">
-        <div className="w-full max-w-md m-auto bg-white rounded-lg border-2 shadow-md shadow-sky-800/30 pb-6 px-1">
+        <div className="w-full max-w-md m-auto bg-white rounded-lg border-2 shadow-md shadow-stone-800/30 pb-6 px-1">
           <div className="text-2xl font-medium text-center">
             <p className="-mt-[103px]">
               <img
@@ -198,9 +198,9 @@ export const Login = () => {
         >
           Guest User Sign In
         </a>
-        <BypassLoginModal 
-        showBypassModal={showBypassModal}
-        setShowBypassModal={setShowBypassModal}
+        <BypassLoginModal
+          showBypassModal={showBypassModal}
+          setShowBypassModal={setShowBypassModal}
         />
       </div>
     </>
