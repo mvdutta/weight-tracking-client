@@ -1,7 +1,7 @@
 # WeightTracker 
 
 ## ***An app to prevent unintentional weight loss in health care facilities*** 
->View Deployed App: [https://weight-tracking-client.vercel.app/]<br>
+>View Deployed App: [WeightTracker](https://weight-tracking-client.vercel.app/)<br>
     - Register a new employee or sign in as a guest user
  <br><br>
 
@@ -87,7 +87,8 @@ Requirements: [NPM](https://www.npmjs.com/)
  
 ## Author
 ### Maia Dutta
-[<img alt="Github" src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">](https://github.com/mvdutta)[<img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">](https://www.linkedin.com/in/maia-v-dutta/)
+[<img alt="Github" src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">](https://github.com/mvdutta)
+[<img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">](https://www.linkedin.com/in/maia-v-dutta/)
 [<img alt="Portfolio" src="https://img.shields.io/badge/PORTFOLIO-purple?style=for-the-badge&logo=l&logoColor=white">](https://maiadutta.com)
 
 
