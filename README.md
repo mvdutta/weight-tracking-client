@@ -1,6 +1,9 @@
 # WeightTracker 
 
-## ***An app to prevent unintentional weight loss in health care facilities***  <br><br>
+## ***An app to prevent unintentional weight loss in health care facilities*** 
+>View Deployed App: [https://weight-tracking-client.vercel.app/]<br>
+    - Register a new employee or sign in as a guest user
+ <br><br>
 
 # Application Overview  
 
@@ -18,7 +21,7 @@ Each user has different responsibilities:
 1. From their dashboard, CNAs can:
     - check and send messages to multiple users
     - view the current census list
-    - create a new weight sheet for the week and enter in data for each patient
+    - create a new weight sheet    
     - view previous weight sheets
     - save and update entered data at any time before the weight sheet is finalized by the RD
 2. From their dashboard, RDs can:
@@ -85,6 +88,8 @@ Requirements: [NPM](https://www.npmjs.com/)
 ## Author
 ### Maia Dutta
 [<img alt="Github" src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">](https://github.com/mvdutta)[<img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white">](https://www.linkedin.com/in/maia-v-dutta/)
+[<img alt="Portfolio" src="https://img.shields.io/badge/PORTFOLIO-purple?style=for-the-badge&logo=l&logoColor=white">](https://maiadutta.com)
+
 
 
 
