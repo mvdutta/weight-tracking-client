@@ -265,7 +265,7 @@ const RDdashboard = () => {
                   </p>
                 </div>
               </caption>
-              <thead className="text-xs sm:text-sm text-sky-900 font-semibold bg-stone-200 dark:bg-stone-700 dark:text-stone-400">
+              <thead className="text-xs sm:text-sm text-sky-900 font-semibold bg-stone-200 dark:bg-stone-700 dark:text-stone-400 sm:text-left">
                 <tr>
                   <th scope="col" className="px-2 py-2 sm:px-6 sm:py-3">
                     ABW (lbs)
